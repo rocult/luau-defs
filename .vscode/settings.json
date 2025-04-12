@@ -1,0 +1,5 @@
+{
+    "luau-lsp.types.definitionFiles": [
+        "environment.d.luau"
+    ]
+}
