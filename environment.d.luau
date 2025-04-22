@@ -108,3 +108,25 @@ declare function clonefunction<A..., R...>(function_to_clone: (A...) -> R...): (
     @return The SHA-384 hash in hexadecimal format
 ]=]
 declare function getfunctionhash(function_to_hash: AnyFunction): string
+
+--[=[
+    Functions made for encrypting and decrypting data.
+]=]
+type crypt = {
+    --[=[
+        Encodes a string with Base64 encoding.
+    
+        @param data - The data to encode.
+        @return The encoded string.
+    ]=]
+    base64encode: (data: string) -> string,
+
+    --[=[
+        Decodes a Base64 string into its original form.
+    
+        @param data - The data to decode.
+        @return The decoded string.
+    ]=]
+    base64decode: (data: string) -> string,
+}
+declare crypt: crypt
