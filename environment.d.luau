@@ -566,25 +566,25 @@ declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: bool
 --[=[
     Returns the metatable of `object`, bypassing the `__metatable` field.
     
-    @param object - The object to get the metatable of.
-    @return The metatable of the object.
+    @param object - The object to get the metatable of
+    @return The metatable of the object
 ]=]
 declare function getrawmetatable(object: any): AnyTable
 
 --[=[
     Sets the metatable of `object` to the provided metatable, bypassing the `__metatable` field.
 
-    @param object - The object whose metatable is to be set.
-    @param metatable - The metatable to set.
-    @return The object with the new metatable.
+    @param object - The object whose metatable is to be set
+    @param metatable - The metatable to set
+    @return The object with the new metatable
 ]=]
 declare function setrawmetatable<T>(object: T, metatable: { any }): T
 
 --[=[
     Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.
     
-    @param table - The table to change the read-only state on.
-    @param state - The desired read-only state.
+    @param table - The table to change the read-only state on
+    @param state - The desired read-only state
     @return ()
 ]=]
 declare function setreadonly(table: { any }, state: boolean): ()
@@ -592,8 +592,8 @@ declare function setreadonly(table: { any }, state: boolean): ()
 --[=[
     Checks whether the provided table is read-only.
     
-    @param table - The table to check.
-    @return `true` if the table is read-only; `false` otherwise.
+    @param table - The table to check
+    @return `true` if the table is read-only; `false` otherwise
 ]=]
 declare function isreadonly(table: { any }): boolean
 
@@ -601,15 +601,15 @@ declare function isreadonly(table: { any }): boolean
     Returns the name and version of the current executor.
     The first string is the executor's identifier and the second is the executor's version.
     
-    @return A tuple containing the executor's name and version.
+    @return A tuple containing the executor's name and version
 ]=]
 declare function identifyexecutor(): (string, string)
 
 --[=[
     Sends an HTTP request with the given options, yielding until the request is finished, and returns the response.
     
-    @param options - The options to use for the request.
-    @return The response from the request.
+    @param options - The options to use for the request
+    @return The response from the request
 ]=]
 declare function request(options: Request): Response
 
@@ -648,3 +648,60 @@ type Response = {
     Success: boolean,
     Headers: { [string]: any },
 }
+
+--[=[
+    Returns the hidden, non-scriptable property's value regardless of its type,
+    along with a boolean indicating if the property is hidden.
+    
+    @param instance - The instance that contains the property
+    @param property_name - The name of the property to be read
+    @return A tuple where the first value is the property value and the second is a boolean indicating if the property is hidden
+]=]
+declare function gethiddenproperty(instance: Instance, property_name: string): (any, boolean)
+
+--[=[
+    Sets the hidden, non-scriptable property's value regardless of its type,
+    such as `BinaryString`, `SharedString`, or `SystemAddress`.
+    This function avoids detection vectors and errors associated with using [setscriptable] directly.
+    
+    @param instance - The instance that contains the property
+    @param property_name - The name of the property to assign
+    @param property_value - The value to set for the property
+    @return A boolean indicating success or failure
+]=]
+declare function sethiddenproperty(instance: Instance, property_name: string, property_value: any): boolean
+
+--[=[
+    Sets a hidden property to be scriptable so that it can be indexed as if it weren't hidden.
+
+    [!WARNING] This function exposes detection vectors as game scripts can verify property indexability.
+    [!NOTE] This function is limited and may not work on all hidden properties; for those, use [gethiddenproperty].
+    
+    @param object - The instance whose property is to be modified
+    @param property - The property to set as scriptable
+    @param state - Whether to make the property scriptable (true) or non-scriptable (false)
+    @return A boolean indicating success, or nil if the operation fails
+]=]
+declare function setscriptable(object: Instance, property: string, state: boolean): boolean | nil
+
+--[=[
+    Determines whether the function was called from the executor's thread.
+    
+    @return True if called from the executor's thread; false otherwise
+]=]
+declare function checkcaller(): boolean
+
+--[=[
+    Sets the current thread's identity to the specified value.
+    
+    @param id - The identity value to change to
+    @return ()
+]=]
+declare function setthreadidentity(id: number): ()
+
+--[=[
+    Retrieves the identity of the current thread.
+    
+    @return The current thread's identity as a number
+]=]
+declare function getthreadidentity(): number
