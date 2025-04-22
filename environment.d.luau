@@ -233,7 +233,7 @@ type DrawingBase = {
     ZIndex: number,
     Transparency: number,
     Color: Color3,
-    __OBJECT_EXISTS: boolean
+    __OBJECT_EXISTS: boolean,
     Remove: (self: DrawingBase) -> (),
     Destroy: (self: DrawingBase) -> (),
 }
@@ -329,7 +329,7 @@ declare function getrenv(): { unknown }
     @param include_tables? - Whether to include tables in the result
     @return A table containing collectible values
 ]=]
-declare function getgc(include_tables?: boolean): { { unknown } | unknown }
+declare function getgc(include_tables: boolean?): { { unknown } | unknown }
 
 --[=[
     Similar to `getgc`, returns Lua values that are referenced and match the specified criteria.
@@ -342,7 +342,7 @@ declare function getgc(include_tables?: boolean): { { unknown } | unknown }
 declare function filtergc(
     filter_type: "function" | "table",
     filter_options: FunctionFilterOptions | TableFilterOptions,
-    return_one?: boolean
+    return_one: boolean?
 ): AnyFunction | AnyTable | { AnyFunction | AnyTable }
 
 --[=[
