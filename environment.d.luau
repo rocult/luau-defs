@@ -164,7 +164,7 @@ type debug = {
         @param func - The Lua function/level from which the upvalues are obtained
         @return An array of upvalues
     ]=]
-    getupvalues: (func_or_level: AnyFunction | number) -> { unknown },
+    getupvalues: (func_or_level: AnyFunction | number) -> { any },
 
     --[=[
         Returns the upvalue at the specified index.
@@ -174,7 +174,7 @@ type debug = {
         @error "Unknown" -- errors if the index is invalid
         @return The upvalue at the specified index
     ]=]
-    getupvalue: (func_or_level: AnyFunction | number, index: number) -> unknown,
+    getupvalue: (func_or_level: AnyFunction | number, index: number) -> any,
 
     --[=[
         Replaces the upvalue at the specified index in the given Lua function.
@@ -195,7 +195,7 @@ type debug = {
         @param index? - The position within the stack frame
         @return Either a single value or an array of values from the stack
     ]=]
-    getstack: (level: number, index: number?) -> unknown | { unknown },
+    getstack: (level: number, index: number?) -> any | { any },
 
     --[=[
         Sets a new value in the call stack at the specified level and index.
@@ -317,7 +317,7 @@ declare Drawing: Drawing
     
     @return A table containing executor functions
 ]=]
-declare function getgenv(): { unknown }
+declare function getgenv(): { any }
 
 --[=[
     Returns a table containing the Roblox environment.
@@ -327,7 +327,7 @@ declare function getgenv(): { unknown }
     
     @return A table containing the Roblox environment
 ]=]
-declare function getrenv(): { unknown }
+declare function getrenv(): { any }
 
 --[=[
     Returns a table with all collectible values that aren't dead (referenced by active scripts).
@@ -336,7 +336,7 @@ declare function getrenv(): { unknown }
     @param include_tables? - Whether to include tables in the result
     @return A table containing collectible values
 ]=]
-declare function getgc(include_tables: boolean?): { { unknown } | unknown }
+declare function getgc(include_tables: boolean?): { { any } | any }
 
 --[=[
     Similar to `getgc`, returns Lua values that are referenced and match the specified criteria.
