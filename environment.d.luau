@@ -1,4 +1,5 @@
 type GenericFunction<T..., U...> = (U...) -> T...
+type GenericScript = LocalScript | ModuleScript
 type AnyFunction = GenericFunction<...any, ...any>
 type AnyTable = { [any]: any }
 type BuiltIn = nil | string | number | boolean
@@ -705,3 +706,77 @@ declare function setthreadidentity(id: number): ()
     @return The current thread's identity as a number
 ]=]
 declare function getthreadidentity(): number
+
+--[=[
+    Returns the bytecode of the given script. If the script has no bytecode, returns `nil`.
+    
+    @param script - The script to retrieve bytecode from
+    @return The bytecode as a `string`, or `nil`
+]=]
+declare function getscriptbytecode(script: GenericScript): string?
+
+--[=[
+    Returns a SHA384 hash (in hex) of the given script's compressed and encrypted bytecode.
+    If the script has no bytecode, returns nil.
+    
+    @param script - The script to get the hash from
+    @return The SHA384 hash in hexadecimal format as a string, or nil
+]=]
+declare function getscripthash(script: GenericScript): string?
+
+--[=[
+    Creates a new closure (function) from the provided script's bytecode.
+    This closure is typically used to retrieve constants.
+    
+    @param script - The script to obtain the closure from
+    @return A function representing the script's closure, or nil
+]=]
+declare function getscriptclosure(script: GenericScript): AnyFunction?
+
+--[=[
+    Returns the environment (globals table) of the given script thread.
+    
+    @param script - The script whose environment is to be retrieved
+    @return A table representing the script's environment
+]=]
+declare function getsenv(script: GenericScript): { [any]: any }
+
+--[=[
+    Returns all the scripts in the game. `CoreScripts` are filtered by default.
+    
+    @return An array of script objects
+]=]
+declare function getscripts(): { GenericScript }
+
+--[=[
+    Returns all the running scripts in the caller's global state. `CoreScripts` are filtered by default.
+    
+    @return An array of script objects
+]=]
+declare function getrunningscripts(): { GenericScript }
+
+--[=[
+    Returns all ModuleScripts that are currently loaded in the caller's global state.
+    
+    @return An array of [ModuleScript] objects
+]=]
+declare function getloadedmodules(): { ModuleScript }
+
+--[=[
+    Returns the script that is currently executing.
+    For executor threads, this function returns nil. If a game thread's global `script` is set to `nil`,
+    it must still return the correct script.
+    
+    @return The calling script, if there is one
+]=]
+declare function getcallingscript(): GenericScript?
+
+--[=[
+    Compiles the given Lua source into a function.
+    The returned function is runnable and its environment becomes 'unsafe'.
+    
+    @param src - The source code to compile
+    @param chunkname - The name to assign to the chunk
+    @return A tuple: the compiled function (or `nil` if an error occurred) and an error message (or `nil` on success)
+]=]
+declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> any)?, string?)
