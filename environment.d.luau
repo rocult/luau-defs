@@ -852,46 +852,46 @@ declare function replicatesignal(signal: RBXScriptSignal, ...: any): ()
     The [WebSocket] type provides a simple interface for sending and receiving data
     over a WebSocket connection.
 ]=]
-declare class WebSocket
-    --[=[
-        Event triggered when a message is received over the WebSocket connection.
-        
-        @return RBXScriptSignal that fires with a message (string)
-    ]=]
-    OnMessage: RBXScriptSignal
-    
-    --[=[
-        Event triggered when the WebSocket connection closes.
-        
-        @return RBXScriptSignal
-    ]=]
-    OnClose: RBXScriptSignal
-end
-
-declare WebSocket: {
-    --[=[
-        Establishes a WebSocket connection to the specified URL.
-        
-        @param url -- The WebSocket URL
-        @return A WebSocket object
-    ]=]
-    connect: (url: string) -> WebSocket,
-
-    
+type WebSocketConnection = {
     --[=[
         Sends a message over the WebSocket connection.
         
-        @param self -- The WebSocket instance
-        @param message -- The message to send
+        @param self -- The [WebSocket] instance.
+        @param message -- The message to send.
         @return ()
     ]=]
-    Send: (ws: WebSocket, message: string) -> (),
-    
+    Send: (self: WebSocketConnection, message: string) -> (),
+
     --[=[
         Closes the WebSocket connection.
         
-        @param self -- The WebSocket instance
+        @param self -- The [WebSocket] instance.
         @return ()
     ]=]
-    Close: (ws: WebSocket) -> (),
+    Close: (self: WebSocketConnection) -> (),
+
+    --[=[
+        Event triggered when a message is received over the WebSocket connection.
+        
+        @return RBXScriptSignal that fires with a message (string).
+    ]=]
+    OnMessage: RBXScriptSignal,
+
+    --[=[
+        Event triggered when the WebSocket connection closes.
+        
+        @return RBXScriptSignal.
+    ]=]
+    OnClose: RBXScriptSignal,
 }
+
+type WebSocket = {
+    --[=[
+        Establishes a WebSocket connection to the specified URL.
+        
+        @param url - The WebSocket URL.
+        @return A [WebSocket] object.
+    ]=]
+    connect: (url: string) -> WebSocketConnection
+}
+declare WebSocket: WebSocket
