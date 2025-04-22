@@ -356,11 +356,11 @@ declare function filtergc(
 --[=[
     Options for filtering functions in [filtergc].
     
-    @field Name - Include functions with this name
-    @field IgnoreExecutor - If `true`, exclude executor functions. Defaults to `true`
-    @field Hash - Include functions with the specified hash of their bytecode
-    @field Constants - Include functions with constants matching all values in this array
-    @field Upvalues - Include functions with upvalues matching all values in this array
+    .Name - Include functions with this name
+    .IgnoreExecutor - If `true`, exclude executor functions. Defaults to `true`
+    .Hash - Include functions with the specified hash of their bytecode
+    .Constants - Include functions with constants matching all values in this array
+    .Upvalues - Include functions with upvalues matching all values in this array
 ]=]
 type FunctionFilterOptions = {
     Name: string?,
@@ -373,10 +373,10 @@ type FunctionFilterOptions = {
 --[=[
     Options for filtering tables in [filtergc].
     
-    @field Keys - Include tables with keys corresponding to all values in this array
-    @field Values - Include tables with values corresponding to all values in this array
-    @field KeyValuePairs - Include tables with key/value pairs matching all values in this table
-    @field Metatable - Include tables with the specified metatable
+    .Keys - Include tables with keys corresponding to all values in this array
+    .Values - Include tables with values corresponding to all values in this array
+    .KeyValuePairs - Include tables with key/value pairs matching all values in this table
+    .Metatable - Include tables with the specified metatable
 ]=]
 type TableFilterOptions = {
     Keys: { any }?,
@@ -596,3 +596,55 @@ declare function setreadonly(table: { any }, state: boolean): ()
     @return `true` if the table is read-only; `false` otherwise.
 ]=]
 declare function isreadonly(table: { any }): boolean
+
+--[=[
+    Returns the name and version of the current executor.
+    The first string is the executor's identifier and the second is the executor's version.
+    
+    @return A tuple containing the executor's name and version.
+]=]
+declare function identifyexecutor(): (string, string)
+
+--[=[
+    Sends an HTTP request with the given options, yielding until the request is finished, and returns the response.
+    
+    @param options - The options to use for the request.
+    @return The response from the request.
+]=]
+declare function request(options: Request): Response
+
+--[=[
+    @interface Request
+    The Request type used for making HTTP requests.
+    
+    .Url - The URL for the request.
+    .Method - The HTTP method to use. Can be GET, POST, PATCH, or PUT.
+    .Body - The body of the request.
+    .Headers - A table of headers.
+    .Cookies - A table of cookies.
+]=]
+type Request = {
+    Url: string,
+    Method: string,
+    Body: string?,
+    Headers: { [string]: any }?,
+    Cookies: { [string]: any }?,
+}
+
+--[=[
+    @interface Response
+    The Response type returned after making an HTTP request.
+    
+    .Body - The body of the response.
+    .StatusCode - The HTTP status code of the response.
+    .StatusMessage - The status message of the response.
+    .Success - Whether the request was successful.
+    .Headers - A dictionary of response headers.
+]=]
+type Response = {
+    Body: string,
+    StatusCode: number,
+    StatusMessage: string,
+    Success: boolean,
+    Headers: { [string]: any },
+}
