@@ -249,12 +249,24 @@ type DrawingText = DrawingBase & {
     Position: Vector2,
     TextBounds: Vector2, --readonly
 }
+type DrawingImage = DrawingBase & {
+    Data: string, --writeonly
+    Size: Vector2,
+    Position: Vector2,
+    Rounding: number,   
+}
 type DrawingCircle = DrawingBase & {
     Thickness: number,
     NumSides: number,
     Radius: number,
     Filled: boolean,
     Position: Vector2,
+}
+type DrawingSquare = DrawingBase & {
+    Thickness: number,
+    Size: Vector2,
+    Position: Vector2,
+    Filled: boolean,
 }
 type DrawingQuad = DrawingBase & {
     Thickness: number,
