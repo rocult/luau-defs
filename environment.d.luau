@@ -110,16 +110,16 @@ type crypt = {
     --[=[
         Encodes a string with Base64 encoding.
     
-        @param data - The data to encode.
-        @return The encoded string.
+        @param data - The data to encode
+        @return The encoded string
     ]=]
     base64encode: (data: string) -> string,
 
     --[=[
         Decodes a Base64 string into its original form.
     
-        @param data - The data to decode.
-        @return The decoded string.
+        @param data - The data to decode
+        @return The decoded string
     ]=]
     base64decode: (data: string) -> string,
 }
@@ -132,28 +132,28 @@ type debug = {
     --[=[
         Returns the constants of the specified Lua function.
         
-        @param func_or_level - The Lua function/level from which the constants are obtained.
-        @error "Unknown" -- errors on C closures, since they have no constants.
-        @return An array of constants (BuiltIn).
+        @param func_or_level - The Lua function/level from which the constants are obtained
+        @error "Unknown" -- errors on C closures, since they have no constants
+        @return An array of constants (BuiltIn)
     ]=]
     getconstants: (func_or_level: AnyFunction | number) -> { BuiltIn },
 
     --[=[
         Returns the constant at the specified index. If there is no constant at that index, nil is returned.
         
-        @param func - The Lua function/level from which the constant is obtained.
-        @param index - The position of the desired constant.
-        @return The constant at the specified index, or nil if it doesn't exist.
+        @param func - The Lua function/level from which the constant is obtained
+        @param index - The position of the desired constant
+        @return The constant at the specified index, or nil if it doesn't exist
     ]=]
     getconstant: (func_or_level: AnyFunction | number, index: number) -> BuiltIn,
 
     --[=[
         Sets the constant at the specified index in the given Lua function.
         
-        @param func - The Lua function/level whose constant is to be set.
-        @param index - The position of the constant.
-        @param value - The new constant replacing the old one.
-        @error "Unknown" -- errors if the index is invalid.
+        @param func - The Lua function/level whose constant is to be set
+        @param index - The position of the constant
+        @param value - The new constant replacing the old one
+        @error "Unknown" -- errors if the index is invalid
         @return ()
     ]=]
     setconstant: (func_or_level: AnyFunction | number, index: number, value: BuiltIn) -> (),
@@ -161,28 +161,28 @@ type debug = {
     --[=[
         Returns the upvalues of the specified Lua function. Returns nil if there are no upvalues.
         
-        @param func - The Lua function/level from which the upvalues are obtained.
-        @return An array of upvalues.
+        @param func - The Lua function/level from which the upvalues are obtained
+        @return An array of upvalues
     ]=]
     getupvalues: (func_or_level: AnyFunction | number) -> { unknown },
 
     --[=[
         Returns the upvalue at the specified index.
         
-        @param func - The Lua function/level from which the upvalue is obtained.
-        @param index - The position of the desired upvalue.
-        @error "Unknown" -- errors if the index is invalid.
-        @return The upvalue at the specified index.
+        @param func - The Lua function/level from which the upvalue is obtained
+        @param index - The position of the desired upvalue
+        @error "Unknown" -- errors if the index is invalid
+        @return The upvalue at the specified index
     ]=]
     getupvalue: (func_or_level: AnyFunction | number, index: number) -> unknown,
 
     --[=[
         Replaces the upvalue at the specified index in the given Lua function.
         
-        @param func - The Lua function/level whose upvalue is to be set.
-        @param index - The position of the desired upvalue.
-        @param value - The new upvalue replacing the old one.
-        @error "Unknown" -- errors if the index is invalid.
+        @param func - The Lua function/level whose upvalue is to be set
+        @param index - The position of the desired upvalue
+        @param value - The new upvalue replacing the old one
+        @error "Unknown" -- errors if the index is invalid
         @return ()
     ]=]
     setupvalue: (func_or_level: AnyFunction | number, index: number, value: any) -> (),
@@ -191,18 +191,18 @@ type debug = {
         Returns all values used in the call stack of the provided level. If `index` is given, returns the value
         at that position inside the stack frame.
         
-        @param level - The call stack level.
-        @param index? - The position within the stack frame.
-        @return Either a single value or an array of values from the stack.
+        @param level - The call stack level
+        @param index? - The position within the stack frame
+        @return Either a single value or an array of values from the stack
     ]=]
     getstack: (level: number, index?: number) -> unknown | { unknown },
 
     --[=[
         Sets a new value in the call stack at the specified level and index.
         
-        @param level - The call stack level.
-        @param index - The position within the stack frame.
-        @param value - The new value to set.
+        @param level - The call stack level
+        @param index - The position within the stack frame
+        @param value - The new value to set
         @return ()
     ]=]
     setstack: (level: number, index: number, value: any) -> (),
@@ -210,8 +210,8 @@ type debug = {
     --[=[
         Returns all the functions (protos) defined within the given Lua function.
         
-        @param func - The function from which the protos are obtained.
-        @return An array of functions representing the protos.
+        @param func - The function from which the protos are obtained
+        @return An array of functions representing the protos
     ]=]
     getprotos: (func: AnyFunction | number) -> { AnyFunction },
 
@@ -219,10 +219,10 @@ type debug = {
         Returns the proto at the specified index. If the third argument is true, returns a table containing the
         active functions of the proto.
         
-        @param func - The function from which to obtain the proto.
-        @param index - The position of the proto.
-        @param activated? - Whether to search the GC for the active function of the proto.
-        @return Either a function or an array of functions representing the active proto.
+        @param func - The function from which to obtain the proto
+        @param index - The position of the proto
+        @param activated? - Whether to search the GC for the active function of the proto
+        @return Either a function or an array of functions representing the active proto
     ]=]
     getproto: (func: AnyFunction | number, index: number, activated?: boolean) -> AnyFunction | { AnyFunction },
 }
@@ -290,3 +290,75 @@ export type Drawing = {
     new: DrawingNewFunction
 }
 declare Drawing: Drawing
+
+--[=[
+    Returns a table containing all executor functions, serving as the shared environment for all scripts executed by the executor.
+    
+    @return A table containing executor functions
+]=]
+declare function getgenv(): { unknown }
+
+--[=[
+    Returns a table containing the Roblox environment.
+    
+    [!NOTE]
+    Any changes to this environment shouldn't affect the executor; however it should affect game scripts.
+    
+    @return A table containing the Roblox environment
+]=]
+declare function getrenv(): { unknown }
+
+--[=[
+    Returns a table with all collectible values that aren't dead (referenced by active scripts).
+    By default, it excludes tables; use `include_tables` to also include tables.
+    
+    @param include_tables? - Whether to include tables in the result
+    @return A table containing collectible values
+]=]
+declare function getgc(include_tables?: boolean): { { unknown } | unknown }
+
+--[=[
+    Similar to `getgc`, returns Lua values that are referenced and match the specified criteria.
+    
+    @param filter_type - The type of Lua value to search for ("function" or "table")
+    @param filter_options - Criteria used to filter the search results based on the specified type
+    @param return_one? - If true, returns only the first match; otherwise, returns all matches
+    @return Filtered Lua value(s) matching the criteria
+]=]
+declare function filtergc(
+    filter_type: "function" | "table",
+    filter_options: FunctionFilterOptions | TableFilterOptions,
+    return_one?: boolean
+): AnyFunction | AnyTable | { AnyFunction | AnyTable }
+
+--[=[
+    Options for filtering functions in `filtergc`.
+    
+    @field Name - Include functions with this name
+    @field IgnoreExecutor - If true, exclude executor functions. Defaults to true
+    @field Hash - Include functions with the specified hash of their bytecode
+    @field Constants - Include functions with constants matching all values in this array
+    @field Upvalues - Include functions with upvalues matching all values in this array
+]=]
+type FunctionFilterOptions = {
+    Name: string?,
+    IgnoreExecutor: boolean?,
+    Hash: string?,
+    Constants: { any }?,
+    Upvalues: { any }?,
+}
+
+--[=[
+    Options for filtering tables in `filtergc`.
+    
+    @field Keys - Include tables with keys corresponding to all values in this array
+    @field Values - Include tables with values corresponding to all values in this array
+    @field KeyValuePairs - Include tables with key/value pairs matching all values in this table
+    @field Metatable - Include tables with the specified metatable
+]=]
+type TableFilterOptions = {
+    Keys: { any }?,
+    Values: { any }?,
+    KeyValuePairs: AnyTable?,
+    Metatable: any?,
+}
