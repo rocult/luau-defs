@@ -756,7 +756,7 @@ declare function getscripts(): { GenericScript }
 declare function getrunningscripts(): { GenericScript }
 
 --[=[
-    Returns all ModuleScripts that are currently loaded in the caller's global state.
+    Returns all [ModuleScript]s that are currently loaded in the caller's global state.
     
     @return An array of [ModuleScript] objects
 ]=]
@@ -780,3 +780,70 @@ declare function getcallingscript(): GenericScript?
     @return A tuple: the compiled function (or `nil` if an error occurred) and an error message (or `nil` on success)
 ]=]
 declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> any)?, string?)
+
+--[=[
+    Returns the connections of the specified [RBXScriptSignal].
+    
+    @param signal - The signal whose connections you want to retrieve.
+    @return An array of [CustomConnection] objects.
+    
+    Each Connection object contains the following fields:
+      - Enabled: boolean - Whether the connection can receive events.
+      - ForeignState: boolean - True if the connection was created by a foreign Lua state.
+      - LuaConnection: boolean - True if the connection was created in Luau code.
+      - Function: function? - The function bound to this connection (nil if inaccessible).
+      - Thread: thread? - The thread that created the connection (nil if inaccessible).
+    
+    And the following methods:
+      - Fire(...: ...any): () - Fires this connection with the provided arguments.
+      - Defer(...: ...any): () - Defers the event to the connection.
+      - Disconnect(): () - Disconnects the connection.
+      - Disable(): () - Prevents the connection from firing.
+      - Enable(): () - Enables the connection.
+]=]
+declare function getconnections(signal: RBXScriptSignal): { CustomConnection }
+
+--[=[
+    @interface CustomConnection
+
+    .Enabled - Whether the connection can receive events.
+    .ForeignState - `true` if the connection was created by a foreign Lua state.
+    .LuaConnection - `true` if the connection was created in Luau code.
+    .Function - The function bound to this connection (`nil`, if inaccessible).
+    .Thread - The thread that created the connection (`nil`, if inaccessible).
+
+    .Fire(...: ...any) - Fires this connection with the provided arguments.
+    .Defer(...: ...any) - Defers the event to the connection.
+    .Disconnect() - Disconnects the connection.
+    .Disable() - Prevents the connection from firing.
+    .Enable()- Enables the connection.
+]=]
+type CustomConnection = { 
+    Enabled: boolean,
+    ForeignState: boolean,
+    LuaConnection: boolean,
+    Function: AnyFunction?,
+    Thread: thread?,
+    Fire: ((...any) -> ()),
+    Defer: ((...any) -> ()),
+    Disconnect: () -> (),
+    Disable: () -> (),
+    Enable: () -> ()
+}
+
+--[=[
+    Fires a signal's Lua connections.
+    
+    @param signal - The [RBXScriptSignal] to fire.
+    @param ... - The arguments to pass into the fired connections.
+]=]
+declare function firesignal(signal: RBXScriptSignal, ...: any): ()
+
+--[=[
+    If possible, replicates the specified signal to the server with the provided arguments.
+    The arguments must match the signal's expected parameters.
+    
+    @param signal - The [RBXScriptSignal] to replicate.
+    @param ... - The arguments to pass into the signal.
+]=]
+declare function replicatesignal(signal: RBXScriptSignal, ...: any): ()
