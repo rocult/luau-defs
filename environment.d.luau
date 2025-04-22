@@ -35,8 +35,8 @@ type Metamethods =
     The hook shouldn't have more upvalues than the function you want to hook.
     
     @tag closures
-    @param function_to_hook - The function that will be hooked
-    @param hook - The function that will be used as a hook
+    @param function_to_hook -- The function that will be hooked
+    @param hook -- The function that will be used as a hook
     @return The original unhooked function
 ]=]
 declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., hook: (A1...) -> R1...): (A1...) -> R1...
@@ -46,9 +46,9 @@ declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., 
     using the hookfunction.
     
     @tag closures
-    @param object - The object which has the metatable
-    @param metamethod_name - The name of the metamethod to hook
-    @param hook - The function that will be used as a hook
+    @param object -- The object which has the metatable
+    @param metamethod_name -- The name of the metamethod to hook
+    @param hook -- The function that will be used as a hook
     @return The original unhooked metamethod
 ]=]
 declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: string, hook: AnyFunction): AnyFunction
@@ -59,7 +59,7 @@ declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: st
     and its returned values are passed to the caller.
     
     @tag closures
-    @param function_to_wrap - A function to be wrapped
+    @param function_to_wrap -- A function to be wrapped
     @return The original function wrapped in a new C closure
 ]=]
 declare function newcclosure<A..., R...>(function_to_wrap: (A...) -> R...): (A...) -> R...
@@ -67,7 +67,7 @@ declare function newcclosure<A..., R...>(function_to_wrap: (A...) -> R...): (A..
 --[=[
     Checks if a given function is a C closure.
     
-    @param func - The function to check
+    @param func -- The function to check
     @return `true` if the function is a C closure, `false` otherwise
 ]=]
 declare function iscclosure(func: AnyFunction): boolean
@@ -75,7 +75,7 @@ declare function iscclosure(func: AnyFunction): boolean
 --[=[
     Checks if a given function is a Lua closure.
     
-    @param func - The function to check
+    @param func -- The function to check
     @return `true` if the function is a Lua closure, `false` otherwise
 ]=]
 declare function islclosure(func: AnyFunction): boolean
@@ -83,7 +83,7 @@ declare function islclosure(func: AnyFunction): boolean
 --[=[
     Checks if a given function is the executor's closure.
     
-    @param func - The function to check
+    @param func -- The function to check
     @return `true` if the function is the executor's closure, `false` otherwise
 ]=]
 declare function isexecutorclosure(func: AnyFunction): boolean
@@ -92,7 +92,7 @@ declare function isexecutorclosure(func: AnyFunction): boolean
     Creates and returns a new function that has the same behavior as the given function.
     
     @tag closures
-    @param function_to_clone - The function to clone
+    @param function_to_clone -- The function to clone
     @return A new function replicating the behavior of the original
 ]=]
 declare function clonefunction<A..., R...>(function_to_clone: (A...) -> R...): (A...) -> R...
@@ -100,7 +100,7 @@ declare function clonefunction<A..., R...>(function_to_clone: (A...) -> R...): (
 --[=[
     Returns the hex-represented SHA-384 hash of a function's instructions and constants.
     
-    @param function_to_hash - The function whose hash is to be computed
+    @param function_to_hash -- The function whose hash is to be computed
     @return The SHA-384 hash in hexadecimal format
 ]=]
 declare function getfunctionhash(function_to_hash: AnyFunction): string
@@ -112,7 +112,7 @@ type crypt = {
     --[=[
         Encodes a string with Base64 encoding.
     
-        @param data - The data to encode
+        @param data -- The data to encode
         @return The encoded string
     ]=]
     base64encode: (data: string) -> string,
@@ -120,7 +120,7 @@ type crypt = {
     --[=[
         Decodes a Base64 string into its original form.
     
-        @param data - The data to decode
+        @param data -- The data to decode
         @return The decoded string
     ]=]
     base64decode: (data: string) -> string,
@@ -134,7 +134,7 @@ type debug = {
     --[=[
         Returns the constants of the specified Lua function.
         
-        @param func_or_level - The Lua function/level from which the constants are obtained
+        @param func_or_level -- The Lua function/level from which the constants are obtained
         @error "Unknown" -- errors on C closures, since they have no constants
         @return An array of constants (BuiltIn)
     ]=]
@@ -143,8 +143,8 @@ type debug = {
     --[=[
         Returns the constant at the specified index. If there is no constant at that index, `nil` is returned.
         
-        @param func_or_level - The Lua function/level from which the constant is obtained
-        @param index - The position of the desired constant
+        @param func_or_level -- The Lua function/level from which the constant is obtained
+        @param index -- The position of the desired constant
         @return The constant at the specified index, or `nil` if it doesn't exist
     ]=]
     getconstant: (func_or_level: AnyFunction | number, index: number) -> BuiltIn,
@@ -152,9 +152,9 @@ type debug = {
     --[=[
         Sets the constant at the specified index in the given Lua function.
         
-        @param func - The Lua function/level whose constant is to be set
-        @param index - The position of the constant
-        @param value - The new constant replacing the old one
+        @param func -- The Lua function/level whose constant is to be set
+        @param index -- The position of the constant
+        @param value -- The new constant replacing the old one
         @error "Unknown" -- errors if the index is invalid
         @return ()
     ]=]
@@ -163,7 +163,7 @@ type debug = {
     --[=[
         Returns the upvalues of the specified Lua function.
         
-        @param func_or_level - The Lua function/level from which the upvalues are obtained
+        @param func_or_level -- The Lua function/level from which the upvalues are obtained
         @return An array of upvalues, if there are any
     ]=]
     getupvalues: (func_or_level: AnyFunction | number) -> { any }?,
@@ -171,8 +171,8 @@ type debug = {
     --[=[
         Returns the upvalue at the specified index.
         
-        @param func_or_level - The Lua function/level from which the upvalue is obtained
-        @param index - The position of the desired upvalue
+        @param func_or_level -- The Lua function/level from which the upvalue is obtained
+        @param index -- The position of the desired upvalue
         @error "Unknown" -- errors if the index is invalid
         @return The upvalue at the specified index
     ]=]
@@ -181,9 +181,9 @@ type debug = {
     --[=[
         Replaces the upvalue at the specified index in the given Lua function.
         
-        @param func_or_level - The Lua function/level whose upvalue is to be set
-        @param index - The position of the desired upvalue
-        @param value - The new upvalue replacing the old one
+        @param func_or_level -- The Lua function/level whose upvalue is to be set
+        @param index -- The position of the desired upvalue
+        @param value -- The new upvalue replacing the old one
         @error "Unknown" -- errors if the index is invalid
         @return ()
     ]=]
@@ -193,8 +193,8 @@ type debug = {
         Returns all values used in the call stack of the provided level. If `index` is given, returns the value
         at that position inside the stack frame.
         
-        @param level - The call stack level
-        @param index - The position within the stack frame
+        @param level -- The call stack level
+        @param index -- The position within the stack frame
         @return Either a single value or an array of values from the stack
     ]=]
     getstack: (level: number, index: number?) -> any | { any },
@@ -202,9 +202,9 @@ type debug = {
     --[=[
         Sets a new value in the call stack at the specified level and index.
         
-        @param level - The call stack level
-        @param index - The position within the stack frame
-        @param value - The new value to set
+        @param level -- The call stack level
+        @param index -- The position within the stack frame
+        @param value -- The new value to set
         @return ()
     ]=]
     setstack: (level: number, index: number, value: any) -> (),
@@ -212,7 +212,7 @@ type debug = {
     --[=[
         Returns all the functions (protos) defined within the given Lua function.
         
-        @param func_or_level - The function from which the protos are obtained
+        @param func_or_level -- The function from which the protos are obtained
         @return An array of functions representing the protos
     ]=]
     getprotos: (func_or_level: AnyFunction | number) -> { AnyFunction },
@@ -221,9 +221,9 @@ type debug = {
         Returns the proto at the specified index. If the third argument is `true`, returns a table containing the
         active functions of the proto.
         
-        @param func_or_level - The function from which to obtain the proto
-        @param index - The position of the proto
-        @param activated - Whether to search the GC for the active function of the proto
+        @param func_or_level -- The function from which to obtain the proto
+        @param index -- The position of the proto
+        @param activated -- Whether to search the GC for the active function of the proto
         @return Either a function or an array of functions representing the active proto
     ]=]
     getproto: (func_or_level: AnyFunction | number, index: number, activated: boolean?) -> AnyFunction | { AnyFunction },
@@ -335,7 +335,7 @@ declare function getrenv(): { any }
     Returns a table with all collectible values that aren't dead (referenced by active scripts).
     By default, it excludes tables; use `include_tables` to also include tables.
     
-    @param include_tables - Whether to include tables in the result
+    @param include_tables -- Whether to include tables in the result
     @return A table containing collectible values
 ]=]
 declare function getgc(include_tables: boolean?): { { any } | any }
@@ -343,9 +343,9 @@ declare function getgc(include_tables: boolean?): { { any } | any }
 --[=[
     Similar to [getgc], returns Lua values that are referenced and match the specified criteria.
     
-    @param filter_type - The type of Lua value to search for (`function` or `table`)
-    @param filter_options - Criteria used to filter the search results based on the specified type
-    @param return_one - If `true`, returns only the first match; otherwise, returns all matches
+    @param filter_type -- The type of Lua value to search for (`function` or `table`)
+    @param filter_options -- Criteria used to filter the search results based on the specified type
+    @param return_one -- If `true`, returns only the first match; otherwise, returns all matches
     @return Filtered Lua value(s) matching the criteria
 ]=]
 declare function filtergc(
@@ -389,8 +389,8 @@ type TableFilterOptions = {
 --[=[
     Writes data to a specified file path.
     
-    @param path - The path to the file that will be wrote to
-    @param data - The data to be written into the file
+    @param path -- The path to the file that will be wrote to
+    @param data -- The data to be written into the file
     @return ()
 ]=]
 declare function writefile(path: string, data: string): ()
@@ -398,7 +398,7 @@ declare function writefile(path: string, data: string): ()
 --[=[
     Retrieves the content of the file at the specified path.
     
-    @param path - The path to the file that will be read
+    @param path -- The path to the file that will be read
     @return The file content as a string
 ]=]
 declare function readfile(path: string): string
@@ -406,7 +406,7 @@ declare function readfile(path: string): string
 --[=[
     Provides a list of files and folders within a specified directory.
     
-    @param path - The path to the directory
+    @param path -- The path to the directory
     @return An array of file and folder names
 ]=]
 declare function listfiles(path: string): { string }
@@ -414,7 +414,7 @@ declare function listfiles(path: string): { string }
 --[=[
     Determines if the specified path is a file.
     
-    @param path - The path to the file
+    @param path -- The path to the file
     @return True if the path is a file; false otherwise
 ]=]
 declare function isfile(path: string): boolean
@@ -422,8 +422,8 @@ declare function isfile(path: string): boolean
 --[=[
     Appends data to the end of the file at the specified path, creating the file if it doesn't already exist.
     
-    @param path - The path to the file
-    @param contents - The content to append
+    @param path -- The path to the file
+    @param contents -- The content to append
     @return ()
 ]=]
 declare function appendfile(path: string, contents: string): ()
@@ -431,7 +431,7 @@ declare function appendfile(path: string, contents: string): ()
 --[=[
     Deletes the file at the specified path.
     
-    @param path - The path to the file
+    @param path -- The path to the file
     @return ()
 ]=]
 declare function delfile(path: string): ()
@@ -440,7 +440,7 @@ declare function delfile(path: string): ()
     Generates a chunk from the file at the given path, using the global environment.
     Returns the chunk or nil with an error message.
     
-    @param path - The path to the file
+    @param path -- The path to the file
     @return A function representing the chunk, or nil and an error message
 ]=]
 declare function loadfile(path: string): AnyFunction
@@ -448,7 +448,7 @@ declare function loadfile(path: string): AnyFunction
 --[=[
     Creates a folder at the specified path if it doesn't already exist.
     
-    @param path - The location where you want to create the folder
+    @param path -- The location where you want to create the folder
     @return ()
 ]=]
 declare function makefolder(path: string): ()
@@ -456,7 +456,7 @@ declare function makefolder(path: string): ()
 --[=[
     Determines if the specified path is a folder.
     
-    @param path - The path to check
+    @param path -- The path to check
     @return True if the path is a folder; false otherwise
 ]=]
 declare function isfolder(path: string): boolean
@@ -464,7 +464,7 @@ declare function isfolder(path: string): boolean
 --[=[
     Deletes the folder at the specified path.
     
-    @param path - The path to the folder
+    @param path -- The path to the folder
     @return ()
 ]=]
 declare function delfolder(path: string): ()
@@ -473,7 +473,7 @@ declare function delfolder(path: string): ()
     Returns a content URL (e.g., `rbxasset://`) that can be used with UI elements, sounds, meshes, and more.
     Internally, files are copied to the game's content directory.
     
-    @param path - The path to the file
+    @param path -- The path to the file
     @return A content URL as a string
 ]=]
 declare function getcustomasset(path: string): string
@@ -498,7 +498,7 @@ declare function getnilinstances(): { Instance }
     Returns a copy of the given [Instance].
     The copy should not be equal to the original [Instance].
     
-    @param object - The [Instance] to clone
+    @param object -- The [Instance] to clone
     @return A new [Instance] copy of the given object
 ]=]
 declare function cloneref<T>(object: T & Instance): T
@@ -507,8 +507,8 @@ declare function cloneref<T>(object: T & Instance): T
     Checks if two instances are equal.
     This is primarily used for comparing instances returned by [cloneref] since the normal equality check may fail.
     
-    @param object1 - The first [Instance] to compare
-    @param object2 - The second [Instance] to compare
+    @param object1 -- The first [Instance] to compare
+    @param object2 -- The second [Instance] to compare
     @return `true` if the instances are considered equal; `false` otherwise
 ]=]
 declare function compareinstances(object1: Instance, object2: Instance): boolean
@@ -525,8 +525,8 @@ declare function gethui(): Instance
     Returns the callback function assigned to an object's callback property.
     This function retrieves the underlying function that is otherwise inaccessible through normal indexing.
     
-    @param object - The [Instance] from which to get the callback
-    @param property - The name of the callback property
+    @param object -- The [Instance] from which to get the callback
+    @param property -- The name of the callback property
     @return The callback function
 ]=]
 declare function getcallbackvalue(object: Instance, property: string): AnyFunction
@@ -534,9 +534,9 @@ declare function getcallbackvalue(object: Instance, property: string): AnyFuncti
 --[=[
     Triggers a specified event on a [ClickDetector].
     
-    @param object - The [ClickDetector] to trigger
-    @param distance - The distance from which to trigger the [ClickDetector`], defaults to [`math.huge]
-    @param event -  The event to trigger; defaults to [`ClickDetector.MouseClick]`
+    @param object -- The [ClickDetector] to trigger
+    @param distance -- The distance from which to trigger the [ClickDetector`], defaults to [`math.huge]
+    @param event --  The event to trigger; defaults to [`ClickDetector.MouseClick]`
     @return ()
 ]=]
 declare function fireclickdetector(object: ClickDetector, distance: number?, event: ("MouseClick" | "MouseHoverEnter" | "MouseHoverLeave" | "RightMouseClick")?): ()
@@ -544,7 +544,7 @@ declare function fireclickdetector(object: ClickDetector, distance: number?, eve
 --[=[
     Triggers a [ProximityPrompt] instantly, regardless of distance or duration.
     
-    @param object - The [ProximityPrompt] to fire
+    @param object -- The [ProximityPrompt] to fire
     @return ()
 ]=]
 declare function fireproximityprompt(object: ProximityPrompt): ()
@@ -557,9 +557,9 @@ declare function fireproximityprompt(object: ProximityPrompt): ()
     
     When firing touch interests, the function should yield between calls to prevent overlaps.
     
-    @param part - The [BasePart] initiating the touch
-    @param part2 - The [BasePart] to be touched
-    @param toggle - Determines whether to start (`false`/`0`) or end (`true`/`1`) the touch event
+    @param part -- The [BasePart] initiating the touch
+    @param part2 -- The [BasePart] to be touched
+    @param toggle -- Determines whether to start (`false`/`0`) or end (`true`/`1`) the touch event
     @return ()
 ]=]
 declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: boolean | BooleanNumber): ()
@@ -567,7 +567,7 @@ declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: bool
 --[=[
     Returns the metatable of `object`, bypassing the `__metatable` field.
     
-    @param object - The object to get the metatable of
+    @param object -- The object to get the metatable of
     @return The metatable of the object
 ]=]
 declare function getrawmetatable(object: any): AnyTable
@@ -575,8 +575,8 @@ declare function getrawmetatable(object: any): AnyTable
 --[=[
     Sets the metatable of `object` to the provided metatable, bypassing the `__metatable` field.
 
-    @param object - The object whose metatable is to be set
-    @param metatable - The metatable to set
+    @param object -- The object whose metatable is to be set
+    @param metatable -- The metatable to set
     @return The object with the new metatable
 ]=]
 declare function setrawmetatable<T>(object: T, metatable: { any }): T
@@ -584,8 +584,8 @@ declare function setrawmetatable<T>(object: T, metatable: { any }): T
 --[=[
     Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.
     
-    @param table - The table to change the read-only state on
-    @param state - The desired read-only state
+    @param table -- The table to change the read-only state on
+    @param state -- The desired read-only state
     @return ()
 ]=]
 declare function setreadonly(table: { any }, state: boolean): ()
@@ -593,7 +593,7 @@ declare function setreadonly(table: { any }, state: boolean): ()
 --[=[
     Checks whether the provided table is read-only.
     
-    @param table - The table to check
+    @param table -- The table to check
     @return `true` if the table is read-only; `false` otherwise
 ]=]
 declare function isreadonly(table: { any }): boolean
@@ -609,7 +609,7 @@ declare function identifyexecutor(): (string, string)
 --[=[
     Sends an HTTP request with the given options, yielding until the request is finished, and returns the response.
     
-    @param options - The options to use for the request
+    @param options -- The options to use for the request
     @return The response from the request
 ]=]
 declare function request(options: Request): Response
@@ -654,8 +654,8 @@ type Response = {
     Returns the hidden, non-scriptable property's value regardless of its type,
     along with a boolean indicating if the property is hidden.
     
-    @param instance - The instance that contains the property
-    @param property_name - The name of the property to be read
+    @param instance -- The instance that contains the property
+    @param property_name -- The name of the property to be read
     @return A tuple where the first value is the property value and the second is a boolean indicating if the property is hidden
 ]=]
 declare function gethiddenproperty(instance: Instance, property_name: string): (any, boolean)
@@ -665,9 +665,9 @@ declare function gethiddenproperty(instance: Instance, property_name: string): (
     such as `BinaryString`, `SharedString`, or `SystemAddress`.
     This function avoids detection vectors and errors associated with using [setscriptable] directly.
     
-    @param instance - The instance that contains the property
-    @param property_name - The name of the property to assign
-    @param property_value - The value to set for the property
+    @param instance -- The instance that contains the property
+    @param property_name -- The name of the property to assign
+    @param property_value -- The value to set for the property
     @return A boolean indicating success or failure
 ]=]
 declare function sethiddenproperty(instance: Instance, property_name: string, property_value: any): boolean
@@ -678,9 +678,9 @@ declare function sethiddenproperty(instance: Instance, property_name: string, pr
     [!WARNING] This function exposes detection vectors as game scripts can verify property indexability.
     [!NOTE] This function is limited and may not work on all hidden properties; for those, use [gethiddenproperty].
     
-    @param object - The instance whose property is to be modified
-    @param property - The property to set as scriptable
-    @param state - Whether to make the property scriptable (true) or non-scriptable (false)
+    @param object -- The instance whose property is to be modified
+    @param property -- The property to set as scriptable
+    @param state -- Whether to make the property scriptable (true) or non-scriptable (false)
     @return A boolean indicating success, or nil if the operation fails
 ]=]
 declare function setscriptable(object: Instance, property: string, state: boolean): boolean | nil
@@ -695,7 +695,7 @@ declare function checkcaller(): boolean
 --[=[
     Sets the current thread's identity to the specified value.
     
-    @param id - The identity value to change to
+    @param id -- The identity value to change to
     @return ()
 ]=]
 declare function setthreadidentity(id: number): ()
@@ -710,7 +710,7 @@ declare function getthreadidentity(): number
 --[=[
     Returns the bytecode of the given script. If the script has no bytecode, returns `nil`.
     
-    @param script - The script to retrieve bytecode from
+    @param script -- The script to retrieve bytecode from
     @return The bytecode as a `string`, or `nil`
 ]=]
 declare function getscriptbytecode(script: GenericScript): string?
@@ -719,7 +719,7 @@ declare function getscriptbytecode(script: GenericScript): string?
     Returns a SHA384 hash (in hex) of the given script's compressed and encrypted bytecode.
     If the script has no bytecode, returns nil.
     
-    @param script - The script to get the hash from
+    @param script -- The script to get the hash from
     @return The SHA384 hash in hexadecimal format as a string, or nil
 ]=]
 declare function getscripthash(script: GenericScript): string?
@@ -728,7 +728,7 @@ declare function getscripthash(script: GenericScript): string?
     Creates a new closure (function) from the provided script's bytecode.
     This closure is typically used to retrieve constants.
     
-    @param script - The script to obtain the closure from
+    @param script -- The script to obtain the closure from
     @return A function representing the script's closure, or nil
 ]=]
 declare function getscriptclosure(script: GenericScript): AnyFunction?
@@ -736,7 +736,7 @@ declare function getscriptclosure(script: GenericScript): AnyFunction?
 --[=[
     Returns the environment (globals table) of the given script thread.
     
-    @param script - The script whose environment is to be retrieved
+    @param script -- The script whose environment is to be retrieved
     @return A table representing the script's environment
 ]=]
 declare function getsenv(script: GenericScript): { [any]: any }
@@ -775,8 +775,8 @@ declare function getcallingscript(): GenericScript?
     Compiles the given Lua source into a function.
     The returned function is runnable and its environment becomes 'unsafe'.
     
-    @param src - The source code to compile
-    @param chunkname - The name to assign to the chunk
+    @param src -- The source code to compile
+    @param chunkname -- The name to assign to the chunk
     @return A tuple: the compiled function (or `nil` if an error occurred) and an error message (or `nil` on success)
 ]=]
 declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> any)?, string?)
@@ -784,8 +784,8 @@ declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> 
 --[=[
     Returns the connections of the specified [RBXScriptSignal].
     
-    @param signal - The signal whose connections you want to retrieve.
-    @return An array of [CustomConnection] objects.
+    @param signal -- The signal whose connections you want to retrieve
+    @return An array of [CustomConnection] objects
     
     Each Connection object contains the following fields:
       - Enabled: boolean - Whether the connection can receive events.
@@ -834,8 +834,8 @@ type CustomConnection = {
 --[=[
     Fires a signal's Lua connections.
     
-    @param signal - The [RBXScriptSignal] to fire.
-    @param ... - The arguments to pass into the fired connections.
+    @param signal -- The [RBXScriptSignal] to fire
+    @param ... -- The arguments to pass into the fired connections
 ]=]
 declare function firesignal(signal: RBXScriptSignal, ...: any): ()
 
@@ -843,8 +843,8 @@ declare function firesignal(signal: RBXScriptSignal, ...: any): ()
     If possible, replicates the specified signal to the server with the provided arguments.
     The arguments must match the signal's expected parameters.
     
-    @param signal - The [RBXScriptSignal] to replicate.
-    @param ... - The arguments to pass into the signal.
+    @param signal -- The [RBXScriptSignal] to replicate
+    @param ... -- The arguments to pass into the signal
 ]=]
 declare function replicatesignal(signal: RBXScriptSignal, ...: any): ()
 
@@ -856,14 +856,14 @@ declare class WebSocket
     --[=[
         Event triggered when a message is received over the WebSocket connection.
         
-        @return RBXScriptSignal that fires with a message (string).
+        @return RBXScriptSignal that fires with a message (string)
     ]=]
     OnMessage: RBXScriptSignal
     
     --[=[
         Event triggered when the WebSocket connection closes.
         
-        @return RBXScriptSignal.
+        @return RBXScriptSignal
     ]=]
     OnClose: RBXScriptSignal
 end
@@ -872,8 +872,8 @@ declare WebSocket: {
     --[=[
         Establishes a WebSocket connection to the specified URL.
         
-        @param url - The WebSocket URL.
-        @return A WebSocket object.
+        @param url -- The WebSocket URL
+        @return A WebSocket object
     ]=]
     connect: (url: string) -> WebSocket,
 
@@ -881,8 +881,8 @@ declare WebSocket: {
     --[=[
         Sends a message over the WebSocket connection.
         
-        @param self - The WebSocket instance.
-        @param message - The message to send.
+        @param self -- The WebSocket instance
+        @param message -- The message to send
         @return ()
     ]=]
     Send: (ws: WebSocket, message: string) -> (),
@@ -890,7 +890,7 @@ declare WebSocket: {
     --[=[
         Closes the WebSocket connection.
         
-        @param self - The WebSocket instance.
+        @param self -- The WebSocket instance
         @return ()
     ]=]
     Close: (ws: WebSocket) -> (),
