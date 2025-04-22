@@ -2,6 +2,7 @@ type GenericFunction<T..., U...> = (U...) -> T...
 type AnyFunction = GenericFunction<...any, ...any>
 type AnyTable = { [any]: any }
 type BuiltIn = nil | string | number | boolean
+type BooleanNumber = number 
 type Metamethods =
     "__index" |
     "__newindex" |
@@ -139,11 +140,11 @@ type debug = {
     getconstants: (func_or_level: AnyFunction | number) -> { BuiltIn },
 
     --[=[
-        Returns the constant at the specified index. If there is no constant at that index, nil is returned.
+        Returns the constant at the specified index. If there is no constant at that index, `nil` is returned.
         
-        @param func - The Lua function/level from which the constant is obtained
+        @param func_or_level - The Lua function/level from which the constant is obtained
         @param index - The position of the desired constant
-        @return The constant at the specified index, or nil if it doesn't exist
+        @return The constant at the specified index, or `nil` if it doesn't exist
     ]=]
     getconstant: (func_or_level: AnyFunction | number, index: number) -> BuiltIn,
 
@@ -159,17 +160,17 @@ type debug = {
     setconstant: (func_or_level: AnyFunction | number, index: number, value: BuiltIn) -> (),
 
     --[=[
-        Returns the upvalues of the specified Lua function. Returns nil if there are no upvalues.
+        Returns the upvalues of the specified Lua function.
         
-        @param func - The Lua function/level from which the upvalues are obtained
-        @return An array of upvalues
+        @param func_or_level - The Lua function/level from which the upvalues are obtained
+        @return An array of upvalues, if there are any
     ]=]
-    getupvalues: (func_or_level: AnyFunction | number) -> { any },
+    getupvalues: (func_or_level: AnyFunction | number) -> { any }?,
 
     --[=[
         Returns the upvalue at the specified index.
         
-        @param func - The Lua function/level from which the upvalue is obtained
+        @param func_or_level - The Lua function/level from which the upvalue is obtained
         @param index - The position of the desired upvalue
         @error "Unknown" -- errors if the index is invalid
         @return The upvalue at the specified index
@@ -179,7 +180,7 @@ type debug = {
     --[=[
         Replaces the upvalue at the specified index in the given Lua function.
         
-        @param func - The Lua function/level whose upvalue is to be set
+        @param func_or_level - The Lua function/level whose upvalue is to be set
         @param index - The position of the desired upvalue
         @param value - The new upvalue replacing the old one
         @error "Unknown" -- errors if the index is invalid
@@ -192,7 +193,7 @@ type debug = {
         at that position inside the stack frame.
         
         @param level - The call stack level
-        @param index? - The position within the stack frame
+        @param index - The position within the stack frame
         @return Either a single value or an array of values from the stack
     ]=]
     getstack: (level: number, index: number?) -> any | { any },
@@ -210,21 +211,21 @@ type debug = {
     --[=[
         Returns all the functions (protos) defined within the given Lua function.
         
-        @param func - The function from which the protos are obtained
+        @param func_or_level - The function from which the protos are obtained
         @return An array of functions representing the protos
     ]=]
-    getprotos: (func: AnyFunction | number) -> { AnyFunction },
+    getprotos: (func_or_level: AnyFunction | number) -> { AnyFunction },
 
     --[=[
-        Returns the proto at the specified index. If the third argument is true, returns a table containing the
+        Returns the proto at the specified index. If the third argument is `true`, returns a table containing the
         active functions of the proto.
         
-        @param func - The function from which to obtain the proto
+        @param func_or_level - The function from which to obtain the proto
         @param index - The position of the proto
-        @param activated? - Whether to search the GC for the active function of the proto
+        @param activated - Whether to search the GC for the active function of the proto
         @return Either a function or an array of functions representing the active proto
     ]=]
-    getproto: (func: AnyFunction | number, index: number, activated: boolean?) -> AnyFunction | { AnyFunction },
+    getproto: (func_or_level: AnyFunction | number, index: number, activated: boolean?) -> AnyFunction | { AnyFunction },
 }
 declare debug: debug
 
@@ -333,17 +334,17 @@ declare function getrenv(): { any }
     Returns a table with all collectible values that aren't dead (referenced by active scripts).
     By default, it excludes tables; use `include_tables` to also include tables.
     
-    @param include_tables? - Whether to include tables in the result
+    @param include_tables - Whether to include tables in the result
     @return A table containing collectible values
 ]=]
 declare function getgc(include_tables: boolean?): { { any } | any }
 
 --[=[
-    Similar to `getgc`, returns Lua values that are referenced and match the specified criteria.
+    Similar to [getgc], returns Lua values that are referenced and match the specified criteria.
     
-    @param filter_type - The type of Lua value to search for ("function" or "table")
+    @param filter_type - The type of Lua value to search for (`function` or `table`)
     @param filter_options - Criteria used to filter the search results based on the specified type
-    @param return_one? - If true, returns only the first match; otherwise, returns all matches
+    @param return_one - If `true`, returns only the first match; otherwise, returns all matches
     @return Filtered Lua value(s) matching the criteria
 ]=]
 declare function filtergc(
@@ -353,10 +354,10 @@ declare function filtergc(
 ): AnyFunction | AnyTable | { AnyFunction | AnyTable }
 
 --[=[
-    Options for filtering functions in `filtergc`.
+    Options for filtering functions in [filtergc].
     
     @field Name - Include functions with this name
-    @field IgnoreExecutor - If true, exclude executor functions. Defaults to true
+    @field IgnoreExecutor - If `true`, exclude executor functions. Defaults to `true`
     @field Hash - Include functions with the specified hash of their bytecode
     @field Constants - Include functions with constants matching all values in this array
     @field Upvalues - Include functions with upvalues matching all values in this array
@@ -370,7 +371,7 @@ type FunctionFilterOptions = {
 }
 
 --[=[
-    Options for filtering tables in `filtergc`.
+    Options for filtering tables in [filtergc].
     
     @field Keys - Include tables with keys corresponding to all values in this array
     @field Values - Include tables with values corresponding to all values in this array
@@ -468,10 +469,96 @@ declare function isfolder(path: string): boolean
 declare function delfolder(path: string): ()
 
 --[=[
-    Returns a content URL (e.g., rbxasset://) that can be used with UI elements, sounds, meshes, and more.
+    Returns a content URL (e.g., `rbxasset://`) that can be used with UI elements, sounds, meshes, and more.
     Internally, files are copied to the game's content directory.
     
     @param path - The path to the file
     @return A content URL as a string
 ]=]
 declare function getcustomasset(path: string): string
+
+--[=[
+    Returns a list of all instances referenced by the client.
+    
+    Should be able to return instances outside of `game`/[DataModel].
+    
+    @return An array of [Instance] objects
+]=]
+declare function getinstances(): { Instance }
+
+--[=[
+    Returns a list of instances that have their [Instance.Parent] property set to `nil`.
+    
+    @return An array of [Instance`] objects with [`Instance.Parent] equal to `nil`
+]=]
+declare function getnilinstances(): { Instance }
+
+--[=[
+    Returns a copy of the given [Instance].
+    The copy should not be equal to the original [Instance].
+    
+    @param object - The [Instance] to clone
+    @return A new [Instance] copy of the given object
+]=]
+declare function cloneref<T>(object: T & Instance): T
+
+--[=[
+    Checks if two instances are equal.
+    This is primarily used for comparing instances returned by [cloneref] since the normal equality check may fail.
+    
+    @param object1 - The first [Instance] to compare
+    @param object2 - The second [Instance] to compare
+    @return `true` if the instances are considered equal; `false` otherwise
+]=]
+declare function compareinstances(object1: Instance, object2: Instance): boolean
+
+--[=[
+    Returns a hidden UI container that minimizes detection.
+    This container should not be directly discoverable via standard search methods.
+    
+    @return An [Instance] representing the hidden UI container
+]=]
+declare function gethui(): Instance
+
+--[=[
+    Returns the callback function assigned to an object's callback property.
+    This function retrieves the underlying function that is otherwise inaccessible through normal indexing.
+    
+    @param object - The [Instance] from which to get the callback
+    @param property - The name of the callback property
+    @return The callback function
+]=]
+declare function getcallbackvalue(object: Instance, property: string): AnyFunction
+
+--[=[
+    Triggers a specified event on a [ClickDetector].
+    
+    @param object - The [ClickDetector] to trigger
+    @param distance - The distance from which to trigger the [ClickDetector`], defaults to [`math.huge]
+    @param event -  The event to trigger; defaults to [`ClickDetector.MouseClick]`
+    @return ()
+]=]
+declare function fireclickdetector(object: ClickDetector, distance: number?, event: ("MouseClick" | "MouseHoverEnter" | "MouseHoverLeave" | "RightMouseClick")?): ()
+
+--[=[
+    Triggers a [ProximityPrompt] instantly, regardless of distance or duration.
+    
+    @param object - The [ProximityPrompt] to fire
+    @return ()
+]=]
+declare function fireproximityprompt(object: ProximityPrompt): ()
+
+--[=[
+    Triggers a [BasePart.Touched`] event on a [`BasePart].
+    This function supports both numbers and booleans as the toggle parameter:
+      - `false` or `0` starts the [BasePart.Touched] event.
+      - `true` or `1` ends the [BasePart.Touched] event.
+    
+    When firing touch interests, the function should yield between calls to prevent overlaps.
+    
+    @param part - The [BasePart] initiating the touch
+    @param part2 - The [BasePart] to be touched
+    @param toggle - Determines whether to start (`false`/`0`) or end (`true`/`1`) the touch event
+    @return ()
+]=]
+declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: boolean | BooleanNumber): ()
