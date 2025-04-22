@@ -39,7 +39,6 @@ type Metamethods =
 ]=]
 declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., hook: (A1...) -> R1...): (A1...) -> R1...
 
-
 --[=[
     Takes any Lua value that can have a metatable and attempts to hook the specified metamethod
     using the hookfunction.
@@ -52,7 +51,6 @@ declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., 
 ]=]
 declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: string, hook: AnyFunction): AnyFunction
 
-
 --[=[
     Wraps a Lua function into a C closure.
     When the returned function is called, the original Lua closure is invoked,
@@ -64,7 +62,6 @@ declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: st
 ]=]
 declare function newcclosure<A..., R...>(function_to_wrap: (A...) -> R...): (A...) -> R...
 
-
 --[=[
     Checks if a given function is a C closure.
     
@@ -72,7 +69,6 @@ declare function newcclosure<A..., R...>(function_to_wrap: (A...) -> R...): (A..
     @return `true` if the function is a C closure, `false` otherwise
 ]=]
 declare function iscclosure(func: AnyFunction): boolean
-
 
 --[=[
     Checks if a given function is a Lua closure.
@@ -82,7 +78,6 @@ declare function iscclosure(func: AnyFunction): boolean
 ]=]
 declare function islclosure(func: AnyFunction): boolean
 
-
 --[=[
     Checks if a given function is the executor's closure.
     
@@ -90,7 +85,6 @@ declare function islclosure(func: AnyFunction): boolean
     @return `true` if the function is the executor's closure, `false` otherwise
 ]=]
 declare function isexecutorclosure(func: AnyFunction): boolean
-
 
 --[=[
     Creates and returns a new function that has the same behavior as the given function.
@@ -100,7 +94,6 @@ declare function isexecutorclosure(func: AnyFunction): boolean
     @return A new function replicating the behavior of the original
 ]=]
 declare function clonefunction<A..., R...>(function_to_clone: (A...) -> R...): (A...) -> R...
-
 
 --[=[
     Returns the hex-represented SHA-384 hash of a function's instructions and constants.
@@ -234,3 +227,66 @@ type debug = {
     getproto: (func: AnyFunction | number, index: number, activated?: boolean) -> AnyFunction | { AnyFunction },
 }
 declare debug: debug
+
+type DrawingBase = {
+    Visible: boolean,
+    ZIndex: number,
+    Transparency: number,
+    Color: Color3,
+    Remove: (self: DrawingBase) -> (),
+}
+type DrawingLine = DrawingBase & {
+    Thickness: number,
+    From: Vector2,
+    To: Vector2,
+}
+type DrawingText = DrawingBase & {
+    Text: string,
+    Size: number,
+    Center: boolean,
+    Outline: boolean,
+    OutlineColor: Color3,
+    Position: Vector2,
+    TextBounds: Vector2, --readonly
+}
+type DrawingCircle = DrawingBase & {
+    Thickness: number,
+    NumSides: number,
+    Radius: number,
+    Filled: boolean,
+    Position: Vector2,
+}
+type DrawingQuad = DrawingBase & {
+    Thickness: number,
+    PointA: Vector2,
+    PointB: Vector2,
+    PointC: Vector2,
+    PointD: Vector2,
+    Filled: boolean,
+}
+type DrawingFonts = {
+    UI: number,
+    System: number,
+    Plex: number,
+    Monospace: number,
+}
+type DrawingFontsData = {
+    UI: number?,
+    System: number?,
+    Plex: number?,
+    Monospace: number?,
+}
+export type DrawingNewTypes = "Line" | "Text" | "Image" | "Circle" | "Square" | "Quad" | "Triangle"
+export type DrawingNewFunction =
+    (("Line") -> DrawingLine)
+    & (("Text") -> DrawingText)
+    & (("Image") -> DrawingImage)
+    & (("Circle") -> DrawingCircle)
+    & (("Square") -> DrawingSquare)
+    & (("Quad") -> DrawingQuad)
+    & (("Triangle") -> DrawingTriangle)
+export type Drawing = {
+    Fonts: DrawingFonts,
+    new: DrawingNewFunction
+}
+declare Drawing: Drawing
