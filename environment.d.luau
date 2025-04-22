@@ -195,7 +195,7 @@ type debug = {
         @param index? - The position within the stack frame
         @return Either a single value or an array of values from the stack
     ]=]
-    getstack: (level: number, index?: number) -> unknown | { unknown },
+    getstack: (level: number, index: number?) -> unknown | { unknown },
 
     --[=[
         Sets a new value in the call stack at the specified level and index.
@@ -224,7 +224,7 @@ type debug = {
         @param activated? - Whether to search the GC for the active function of the proto
         @return Either a function or an array of functions representing the active proto
     ]=]
-    getproto: (func: AnyFunction | number, index: number, activated?: boolean) -> AnyFunction | { AnyFunction },
+    getproto: (func: AnyFunction | number, index: number, activated: boolean?) -> AnyFunction | { AnyFunction },
 }
 declare debug: debug
 
@@ -233,7 +233,9 @@ type DrawingBase = {
     ZIndex: number,
     Transparency: number,
     Color: Color3,
+    __OBJECT_EXISTS: boolean
     Remove: (self: DrawingBase) -> (),
+    Destroy: (self: DrawingBase) -> (),
 }
 type DrawingLine = DrawingBase & {
     Thickness: number,
