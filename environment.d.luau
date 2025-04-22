@@ -383,3 +383,95 @@ type TableFilterOptions = {
     KeyValuePairs: AnyTable?,
     Metatable: any?,
 }
+
+--[=[
+    Writes data to a specified file path.
+    
+    @param path - The path to the file that will be wrote to
+    @param data - The data to be written into the file
+    @return ()
+]=]
+declare function writefile(path: string, data: string): ()
+
+--[=[
+    Retrieves the content of the file at the specified path.
+    
+    @param path - The path to the file that will be read
+    @return The file content as a string
+]=]
+declare function readfile(path: string): string
+
+--[=[
+    Provides a list of files and folders within a specified directory.
+    
+    @param path - The path to the directory
+    @return An array of file and folder names
+]=]
+declare function listfiles(path: string): { string }
+
+--[=[
+    Determines if the specified path is a file.
+    
+    @param path - The path to the file
+    @return True if the path is a file; false otherwise
+]=]
+declare function isfile(path: string): boolean
+
+--[=[
+    Appends data to the end of the file at the specified path, creating the file if it doesn't already exist.
+    
+    @param path - The path to the file
+    @param contents - The content to append
+    @return ()
+]=]
+declare function appendfile(path: string, contents: string): ()
+
+--[=[
+    Deletes the file at the specified path.
+    
+    @param path - The path to the file
+    @return ()
+]=]
+declare function delfile(path: string): ()
+
+--[=[
+    Generates a chunk from the file at the given path, using the global environment.
+    Returns the chunk or nil with an error message.
+    
+    @param path - The path to the file
+    @return A function representing the chunk, or nil and an error message
+]=]
+declare function loadfile(path: string): AnyFunction
+
+--[=[
+    Creates a folder at the specified path if it doesn't already exist.
+    
+    @param path - The location where you want to create the folder
+    @return ()
+]=]
+declare function makefolder(path: string): ()
+
+--[=[
+    Determines if the specified path is a folder.
+    
+    @param path - The path to check
+    @return True if the path is a folder; false otherwise
+]=]
+declare function isfolder(path: string): boolean
+
+--[=[
+    Deletes the folder at the specified path.
+    
+    @param path - The path to the folder
+    @return ()
+]=]
+declare function delfolder(path: string): ()
+
+--[=[
+    Returns a content URL (e.g., rbxasset://) that can be used with UI elements, sounds, meshes, and more.
+    Internally, files are copied to the game's content directory.
+    
+    @param path - The path to the file
+    @return A content URL as a string
+]=]
+declare function getcustomasset(path: string): string
