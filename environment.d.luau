@@ -278,6 +278,13 @@ type DrawingQuad = DrawingBase & {
     PointD: Vector2,
     Filled: boolean,
 }
+type DrawingTriangle = DrawingBase & {
+    Thickness: number,
+    PointA: Vector2,
+    PointB: Vector2,
+    PointC: Vector2,
+    Filled: boolean,
+}
 type DrawingFonts = {
     UI: number,
     System: number,
