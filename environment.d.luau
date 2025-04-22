@@ -49,7 +49,7 @@ declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., 
     @param hook - The function that will be used as a hook
     @return The original unhooked metamethod
 ]=]
-declare function hookmetamethod(object: AnyTable | Instance | userdata, metamethod_name: string, hook: AnyFunction): AnyFunction
+declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: string, hook: AnyFunction): AnyFunction
 
 
 --[=[
