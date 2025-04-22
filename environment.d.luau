@@ -562,3 +562,37 @@ declare function fireproximityprompt(object: ProximityPrompt): ()
     @return ()
 ]=]
 declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: boolean | BooleanNumber): ()
+
+--[=[
+    Returns the metatable of `object`, bypassing the `__metatable` field.
+    
+    @param object - The object to get the metatable of.
+    @return The metatable of the object.
+]=]
+declare function getrawmetatable(object: any): AnyTable
+
+--[=[
+    Sets the metatable of `object` to the provided metatable, bypassing the `__metatable` field.
+
+    @param object - The object whose metatable is to be set.
+    @param metatable - The metatable to set.
+    @return The object with the new metatable.
+]=]
+declare function setrawmetatable<T>(object: T, metatable: { any }): T
+
+--[=[
+    Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.
+    
+    @param table - The table to change the read-only state on.
+    @param state - The desired read-only state.
+    @return ()
+]=]
+declare function setreadonly(table: { any }, state: boolean): ()
+
+--[=[
+    Checks whether the provided table is read-only.
+    
+    @param table - The table to check.
+    @return `true` if the table is read-only; `false` otherwise.
+]=]
+declare function isreadonly(table: { any }): boolean
