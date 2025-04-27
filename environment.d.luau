@@ -226,7 +226,8 @@ type debug = {
         @param activated -- Whether to search the GC for the active function of the proto
         @return Either a function or an array of functions representing the active proto
     ]=]
-    getproto: (func_or_level: AnyFunction | number, index: number, activated: boolean?) -> AnyFunction | { AnyFunction },
+    getproto: ((func_or_level: AnyFunction | number, index: number, activated: true) -> { AnyFunction }) &
+              ((func_or_level: AnyFunction | number, index: number, activated: false?) -> AnyFunction),
 }
 declare debug: debug
 
@@ -779,7 +780,7 @@ declare function getcallingscript(): GenericScript?
     @param chunkname -- The name to assign to the chunk
     @return A tuple: the compiled function (or `nil` if an error occurred) and an error message (or `nil` on success)
 ]=]
-declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> any)?, string?)
+declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> any) | nil, string?)
 
 --[=[
     Returns the connections of the specified [RBXScriptSignal].
