@@ -11,7 +11,6 @@ This project provides type definitions for Roblox exploit environments, allowing
 - Autocomplete support for exploit-specific functions
 - Type checking to reduce scripting errors
 - Improved linting and code analysis with Luau LSP
-- Supports [Luarmor](https://docs.luarmor.net/) & [Luraph](https://lura.ph/dashboard/documents/macros)
 
 ## Installation
 
@@ -24,4 +23,4 @@ This project provides type definitions for Roblox exploit environments, allowing
 Place the definition files in your workspace and ensure your language server is configured to recognize them. This will enable better autocompletion and error checking for exploit-specific APIs.
 
 ## Contributing
-If you find any missing definitions or issues, feel free to submit a pull request.
+If you find any missing definitions or issues, feel free to submit a pull request and message me on Discord to let me know.
