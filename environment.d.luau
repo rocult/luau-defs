@@ -349,11 +349,15 @@ declare function getgc(include_tables: boolean?): { { any } | any }
     @param return_one -- If `true`, returns only the first match; otherwise, returns all matches
     @return Filtered Lua value(s) matching the criteria
 ]=]
-declare function filtergc(
-    filter_type: "function" | "table",
-    filter_options: FunctionFilterOptions | TableFilterOptions,
-    return_one: boolean?
-): AnyFunction | AnyTable | { AnyFunction | AnyTable }
+declare filtergc: (
+    (filter_type: "table", filter_options: TableFilterOptions, return_one: true) -> AnyTable?
+) & (
+    (filter_type: "table", filter_options: TableFilterOptions, return_one: boolean?) -> { AnyTable }
+) & (
+    (filter_type: "function", filter_options: FunctionFilterOptions, return_one: true) -> AnyFunction?
+) & (
+    (filter_type: "function", filter_options: FunctionFilterOptions, return_one: boolean?) -> { AnyFunction }
+)
 
 --[=[
     Options for filtering functions in [filtergc].
