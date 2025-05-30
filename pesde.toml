@@ -8,7 +8,8 @@ includes = [
     "pesde.toml",
     "README.md",
     "LICENSE",
-    "environment.d.luau",
+    "types",
+    "docs",
 ]
 
 [target]

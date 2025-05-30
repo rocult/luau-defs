@@ -1,0 +1,110 @@
+{
+    "@roblox/global/LPH_ENCFUNC": {
+        "documentation": "This macro will cryptographically encrypt the passed function with the provided encryption key and decrypt and load it at runtime with the passed decryption key. The encryption key must be a 64-length hex-encoded string. For security purposes, obfuscation will fail if the encryption key is encoded anywhere else in the script's strings/constants.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local function getDecryptionKey()\n\t--[[\n\tWARNING: **DO NOT ACTUALLY DO THIS! THIS IS JUST AN EXAMPLE!**\n\t\n\tBy including the decryption key in your compiled script, it is possible for an attacker to still decode your script.\n\t\n\tInstead, your whitelist server or other server-side security should return the correct key to prevent unauthorized users from accessing your script.\n\t]]\n\n\treturn \"6c7572617068203e20616c6c21202331\" .. \"6c7572617068203e20616c6c21202331\"\nend\n\nlocal decryptionKey = getDecryptionKey()\nlocal myFunction = LPH_ENCFUNC(\n\tfunction()\n\t\tsomeImportantLogic()\n\tend,\n\t\"6c7572617068203e20616c6c212023316c7572617068203e20616c6c21202331\",\n\tdecryptionKey\n)\n\nmyFunction()",
+        "params": [
+            { 
+                "name": "func",
+                "type": "GenericFunction<T, U...>",
+                "documentation": "The encrypted version of the function."
+            }
+        ],
+        "returns": ["GenericFunction<T, U...>"]
+    },
+    "@roblox/global/LPH_ENCSTR": {
+        "documentation": "Encrypts the specified string constant using a more intense encryption algorithm.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myString = LPH_ENCSTR(\"Important String\")\nprint(LPH_ENCSTR(\"Hello, World!\"))\nreturn LPH_ENCSTR(\"Goodbye!\")",
+        "params": [
+            {
+                "name": "toEncrypt",
+                "type": "string",
+                "documentation": "The string to encrypt."
+            }
+        ],
+        "returns": ["string"]
+    },
+    "@roblox/global/LPH_ENCNUM": {
+        "documentation": "Encrypts the specified number constant using a more intense encryption algorithm. `LPH_ENCNUM` works on doubles and integers (*integers only exist in Lua 5.3+*) and always preserves types when encrypting.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myNumber = LPH_ENCNUM(1000)\nprint(LPH_ENCNUM(1), LPH_ENCNUM(1.0))\nreturn LPH_ENCNUM(1E100))",
+        "params": [
+            {
+                "name": "toEncrypt",
+                "type": "number",
+                "documentation": "The number to encrypt."
+            }
+        ],
+        "returns": ["string"]
+    },
+    "@roblox/global/LPH_CRASH": {
+        "documentation": "Securely crashes the VM and corrupts the VM context.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "LPH_CRASH()\nreturn LPH_CRASH()",
+        "params": [],
+        "returns": ["never"]
+    },
+    "@roblox/global/LPH_JIT": {
+        "documentation": "These macros heavily optimize the passed function to run at exponentially higher speeds (in most cases). These macros should be used on large pieces of code that should run fast and don't intensive security (like rendering loops or math calculations). You should use this macro on any parts of your script that are performance-critical. `LPH_JIT_MAX` is a more intense version of `LPH_JIT` that applies even more optimization.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myFunction = LPH_JIT(function() end)\nLPH_JIT(function() end)()\nsomeFunction(LPH_JIT(function() end))",
+        "params": [
+            {
+                "name": "toEnhance",
+                "type": "GenericFunction<T, U...>",
+                "documentation": "The function to optimize."
+            }
+        ],
+        "returns": ["GenericFunction<T, U...>"]
+    },
+    "@roblox/global/LPH_JIT_MAX": {
+        "documentation": "These macros heavily optimize the passed function to run at exponentially higher speeds (in most cases). These macros should be used on large pieces of code that should run fast and don't intensive security (like rendering loops or math calculations). You should use this macro on any parts of your script that are performance-critical. `LPH_JIT_MAX` is a more intense version of `LPH_JIT` that applies even more optimization.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myFunction = LPH_JIT_MAX(function() end)\nLPH_JIT_MAX(function() end)()\nsomeFunction(LPH_JIT_MAX(function() end))",
+        "params": [
+            {
+                "name": "toEnhance",
+                "type": "GenericFunction<T, U...>",
+                "documentation": "The function to optimize."
+            }
+        ],
+        "returns": ["GenericFunction<T, U...>"]
+    },
+    "@roblox/global/LPH_NO_VIRTUALIZE": {
+        "documentation": "## Warning\n\nThis macro will expose your code, minified and stripped of comments and variable names.\nUse this macro carefully on code that does not require obfuscation.\n\n## Description\n\nThis macro is used to disable obfuscation for certain sections of your code and can be utilized similarly to `LPH_JIT`.\nYour code will be stripped of local and upvalue names, comments, and line information.\nRaw strings and other components of your code will still be exposed.\nYou should only use this macro on functions that do not need any security.\n\n## Limitations\n\nCode wrapped by this macro has more restrictions than virtualized code because non-virtualized code is subject to Lua's syntax/VM limitations instead of Luraph's syntax/VM limitations.\n\nSome characteristics that are different inside `LPH_NO_VIRTUALIZE` are but not limited to:\n\n- Syntax extensions accepted by Luraph's compiler that are unsupported in vanilla Lua may cause syntax errors.\n- Register allocation: Luraph may allocate internal registers or temporary locals that count towards the limit.\n- Syntax recursion depth: Luraph may add additional levels/depth to the file's syntax tree that can cause overflow.\n\nTo prevent these issues, please ensure your code works unobfuscated on your platform and is not structured in a way that could exceed Lua's limits (e.g., having very long/deep syntax chains, or defining mass quantities of locals).",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myFunction = LPH_NO_VIRTUALIZE(function()\n\nend)\nLPH_NO_VIRTUALIZE(function()\n\nend)()\nsomeFunction(LPH_NO_VIRTUALIZE(function()\n\nend))\ntask.spawn(LPH_NO_VIRTUALIZE(function()\n\nend))\ngame:GetService(\"RunService\").RenderStepped:Connect(LPH_NO_VIRTUALIZE(function()\n\nend))\nhookmetamethod(game, \"__index\", LPH_NO_VIRTUALIZE(function()\n\nend))\n",
+        "params": [
+            {
+                "name": "toDevirtualize",
+                "type": "GenericFunction<T, U...>",
+                "documentation": "The function to devirtualize."
+            }
+        ],
+        "returns": ["GenericFunction<T, U...>"]
+    },
+    "@roblox/global/LPH_NO_UPVALUES": {
+        "documentation": "## Warning\n\nThis macro does not work when `Static Environment` is enabled or on platforms with `_ENV`.\n\n## Description\n\nDue to the structure of Luraph, virtualized functions will have a much larger amount of upvalues than normal.\nTo fix this, `LPH_NO_UPVALUES` will wrap the passed function in a proxy function with 0 upvalues to fix bugs in certain programs that do not work with high upvalue counts.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myFunction = LPH_NO_UPVALUES(function() end)\nLPH_NO_UPVALUES(function() end)()\nsomeFunction(LPH_NO_UPVALUES(function() end))",
+        "params": [
+            {
+                "name": "toFix",
+                "type": "GenericFunction<T, U...>",
+                "documentation": "The function to fix."
+            }
+        ],
+        "returns": ["GenericFunction<T, U...>"]
+    },
+    "@roblox/global/LPH_OBFUSCATED": {
+        "documentation": "This macro is a constant value that is set as `true` during obfuscation, which can allow certain code paths to only run in an obfuscated or unobfuscated context. Any conditions containing this macro will be simplified at compile time, and unreachable code will be removed entirely.\n\n## Limitations\n\nThis macro does not remove the extra scope created for the condition body when used in conditions (e.g., if statements, or while statements).\n*This means that locals inside of `LPH_OBFUSCATED` branches will not be visible even if the condition passes.*",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "local myFunction = LPH_OBFUSCATED(function() end)\nLPH_OBFUSCATED(function() end)()\nsomeFunction(LPH_OBFUSCATED(function() end))"
+    },
+    "@roblox/global/LPH_LINE": {
+        "documentation": "This macro is a constant value that is replaced with the current line during compilation. This macro is replaced with a constant value, so line information is not required to be enabled for it to work.",
+        "learn_more_link": "https://lura.ph/dashboard/documents/macros",
+        "code_sample": "## Before\n\n```lua\n1 | local firstLine = LPH_LINE\n2 | print(\"Current Line \", LPH_LINE)\n3 | error(\"Error on line: \" .. LPH_LINE)\n```\n\n## After\n\n```lua\n1 | local firstLine = 1\n2 | print(\"Current Line \", 2)\n3 | error(\"Error on line: 3\")\n```"
+    }
+}

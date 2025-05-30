@@ -1,0 +1,15 @@
+{
+    "@roblox/global/iscclosure": {
+        "documentation": "Checks if the given function is a C closure.",
+        "learn_more_link": "https://docs.sunc.su/Closures/iscclosure/",
+        "code_sample": "local function getDecryptionKey()\n\t--[[\n\tWARNING: **DO NOT ACTUALLY DO THIS! THIS IS JUST AN EXAMPLE!**\n\t\n\tBy including the decryption key in your compiled script, it is possible for an attacker to still decode your script.\n\t\n\tInstead, your whitelist server or other server-side security should return the correct key to prevent unauthorized users from accessing your script.\n\t]]\n\n\treturn \"6c7572617068203e20616c6c21202331\" .. \"6c7572617068203e20616c6c21202331\"\nend\n\nlocal decryptionKey = getDecryptionKey()\nlocal myFunction = LPH_ENCFUNC(\n\tfunction()\n\t\tsomeImportantLogic()\n\tend,\n\t\"6c7572617068203e20616c6c212023316c7572617068203e20616c6c21202331\",\n\tdecryptionKey\n)\n\nmyFunction()",
+        "params": [
+            { 
+                "name": "func",
+                "type": "AnyFunction",
+                "documentation": "The function to check."
+            }
+        ],
+        "returns": ["boolean"]
+    }
+}
