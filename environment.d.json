@@ -1,0 +1,15 @@
+{
+    "@roblox/global/iscclosure": {
+        "documentation": "Checks if the given function is a C closure.",
+        "learn_more_link": "https://docs.sunc.su/Closures/iscclosure/",
+        "code_sample": "local function dummy_lua_function()\n    print(\"This is an executor Luau closure\")\nend\n\nlocal dummy_cfunction = newcclosure(function()\n    print(\"This is an Executor C Closure\")\nend)\n\nlocal dummy_standard_function = print\nlocal dummy_global_cfunction = getgc\n\nprint(iscclosure(dummy_cfunction)) -- Output: true\nprint(iscclosure(dummy_global_cfunction)) -- Output: true\nprint(iscclosure(dummy_standard_function)) -- Output: true\nprint(iscclosure(dummy_lua_function)) -- Output: false",
+        "params": [
+            { 
+                "name": "func",
+                "type": "AnyFunction",
+                "documentation": "The function to check."
+            }
+        ],
+        "returns": ["boolean"]
+    }
+}

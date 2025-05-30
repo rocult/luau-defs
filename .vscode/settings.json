@@ -1,5 +1,8 @@
 {
     "luau-lsp.types.definitionFiles": [
         "environment.d.luau"
+    ],
+    "luau-lsp.types.documentationFiles": [
+        "environment.d.json"
     ]
 }

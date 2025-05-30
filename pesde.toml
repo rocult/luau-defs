@@ -1,0 +1,15 @@
+name = "stefanuk12/luau_defs"
+version = "0.1.0"
+description = "Luau definitions for a Roblox exploit environment, based upon sUNC."
+authors = ["Stefanuk12"]
+repository = "https://github.com/rocult/luau-defs"
+license = "MIT"
+includes = [
+    "pesde.toml",
+    "README.md",
+    "LICENSE",
+    "environment.d.luau",
+]
+
+[target]
+environment = "luau"
