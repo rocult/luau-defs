@@ -1,12 +1,10 @@
 {
     "luau-lsp.types.definitionFiles": [
-        "./types/drawing.d.luau",
         "./types/environment.d.luau",
         "./types/luarmor.d.luau",
         "./types/luraph.d.luau",
     ],
     "luau-lsp.types.documentationFiles": [
-        "./docs/drawing.d.json",
         "./docs/environment.d.json",
         "./docs/luarmor.d.json",
         "./docs/luraph.d.json",

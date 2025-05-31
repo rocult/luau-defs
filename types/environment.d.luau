@@ -231,74 +231,68 @@ type debug = {
 }
 declare debug: debug
 
-type DrawingBase = {
-    Visible: boolean,
-    ZIndex: number,
-    Transparency: number,
-    Color: Color3,
-    __OBJECT_EXISTS: boolean,
-    Remove: (self: DrawingBase) -> (),
-    Destroy: (self: DrawingBase) -> (),
-}
-type DrawingLine = DrawingBase & {
-    Thickness: number,
-    From: Vector2,
-    To: Vector2,
-}
-type DrawingText = DrawingBase & {
-    Text: string,
-    Size: number,
-    Center: boolean,
-    Outline: boolean,
-    OutlineColor: Color3,
-    Position: Vector2,
-    TextBounds: Vector2, --readonly
-}
-type DrawingImage = DrawingBase & {
-    Data: string, --writeonly
-    Size: Vector2,
-    Position: Vector2,
-    Rounding: number,   
-}
-type DrawingCircle = DrawingBase & {
-    Thickness: number,
-    NumSides: number,
-    Radius: number,
-    Filled: boolean,
-    Position: Vector2,
-}
-type DrawingSquare = DrawingBase & {
-    Thickness: number,
-    Size: Vector2,
-    Position: Vector2,
-    Filled: boolean,
-}
-type DrawingQuad = DrawingBase & {
-    Thickness: number,
-    PointA: Vector2,
-    PointB: Vector2,
-    PointC: Vector2,
-    PointD: Vector2,
-    Filled: boolean,
-}
-type DrawingTriangle = DrawingBase & {
-    Thickness: number,
-    PointA: Vector2,
-    PointB: Vector2,
-    PointC: Vector2,
-    Filled: boolean,
-}
+declare class DrawingObject
+    Visible: boolean
+    ZIndex: number
+    Transparency: number
+    Color: Color3
+    __OBJECT_EXISTS: boolean
+    function Remove(self)
+    function Destroy(self)
+end
+declare class DrawingLine extends DrawingObject
+    Thickness: number
+    From: Vector2
+    To: Vector2
+end
+declare class DrawingText extends DrawingObject
+    Text: string
+    Size: number
+    Center: boolean
+    Outline: boolean
+    OutlineColor: Color3
+    Position: Vector2
+    TextBounds: Vector2 --readonly
+end
+declare class DrawingImage extends DrawingObject
+    Data: string --writeonly
+    Size: Vector2
+    Position: Vector2
+    Rounding: number
+end
+declare class DrawingCircle extends DrawingObject
+    Thickness: number
+    NumSides: number
+    Radius: number
+    Filled: boolean
+    Position: Vector2
+end
+declare class DrawingSquare extends DrawingObject
+    Thickness: number
+    Size: Vector2
+    Position: Vector2
+    Filled: boolean
+end
+declare class DrawingQuad extends DrawingObject
+    Thickness: number
+    PointA: Vector2
+    PointB: Vector2
+    PointC: Vector2
+    PointD: Vector2
+    Filled: boolean
+end
+declare class DrawingTriangle extends DrawingObject
+    Thickness: number
+    PointA: Vector2
+    PointB: Vector2
+    PointC: Vector2
+    Filled: boolean
+end
 type DrawingFonts = {
     UI: number,
     System: number,
     Plex: number,
     Monospace: number,
-}
-type DrawingFontsData = {
-    UI: number?,
-    System: number?,
-    Plex: number?,
-    Monospace: number?,
 }
 export type DrawingNewTypes = "Line" | "Text" | "Image" | "Circle" | "Square" | "Quad" | "Triangle"
 export type DrawingNewFunction =
@@ -314,6 +308,12 @@ export type Drawing = {
     new: DrawingNewFunction
 }
 declare Drawing: Drawing
+
+declare function cleardrawcache(): ()
+-- btw you can probably make this better by overloading each possible combination, but that's a lot of options...
+declare function getrenderproperty(drawing: DrawingObject, property: string): any
+declare function setrenderproperty(drawing: DrawingObject, property: string, value: any): ()
+declare function isrenderobj(object: any): boolean
 
 --[=[
     Returns a table containing all executor functions, serving as the shared environment for all scripts executed by the executor.
@@ -339,7 +339,9 @@ declare function getrenv(): { any }
     @param include_tables -- Whether to include tables in the result
     @return A table containing collectible values
 ]=]
-declare function getgc(include_tables: boolean?): { { any } | any }
+declare getgc:
+    ((include_tables: false?) -> AnyTable)
+    & ((include_tables: true) -> { any | AnyTable })
 
 --[=[
     Similar to [getgc], returns Lua values that are referenced and match the specified criteria.
@@ -352,11 +354,11 @@ declare function getgc(include_tables: boolean?): { { any } | any }
 declare filtergc: (
     (filter_type: "table", filter_options: TableFilterOptions, return_one: true) -> AnyTable?
 ) & (
-    (filter_type: "table", filter_options: TableFilterOptions, return_one: boolean?) -> { AnyTable }
+    (filter_type: "table", filter_options: TableFilterOptions, return_one: false?) -> { AnyTable }
 ) & (
     (filter_type: "function", filter_options: FunctionFilterOptions, return_one: true) -> AnyFunction?
 ) & (
-    (filter_type: "function", filter_options: FunctionFilterOptions, return_one: boolean?) -> { AnyFunction }
+    (filter_type: "function", filter_options: FunctionFilterOptions, return_one: false?) -> { AnyFunction }
 )
 
 --[=[
@@ -448,7 +450,7 @@ declare function delfile(path: string): ()
     @param path -- The path to the file
     @return A function representing the chunk, or nil and an error message
 ]=]
-declare function loadfile(path: string): AnyFunction
+declare function loadfile(path: string): (AnyFunction?, string?)
 
 --[=[
     Creates a folder at the specified path if it doesn't already exist.
@@ -540,7 +542,7 @@ declare function getcallbackvalue(object: Instance, property: string): AnyFuncti
     Triggers a specified event on a [ClickDetector].
     
     @param object -- The [ClickDetector] to trigger
-    @param distance -- The distance from which to trigger the [ClickDetector`], defaults to [`math.huge]
+    @param distance -- The distance from which to trigger the [ClickDetector`], defaults to [`math.huge`]
     @param event --  The event to trigger; defaults to [`ClickDetector.MouseClick]`
     @return ()
 ]=]
@@ -584,7 +586,7 @@ declare function getrawmetatable(object: any): AnyTable
     @param metatable -- The metatable to set
     @return The object with the new metatable
 ]=]
-declare function setrawmetatable<T>(object: T, metatable: { any }): T
+declare function setrawmetatable<T>(object: T, metatable: AnyTable): T
 
 --[=[
     Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.
@@ -593,7 +595,7 @@ declare function setrawmetatable<T>(object: T, metatable: { any }): T
     @param state -- The desired read-only state
     @return ()
 ]=]
-declare function setreadonly(table: { any }, state: boolean): ()
+declare function setreadonly(table: AnyTable, state: boolean): ()
 
 --[=[
     Checks whether the provided table is read-only.
@@ -601,7 +603,7 @@ declare function setreadonly(table: { any }, state: boolean): ()
     @param table -- The table to check
     @return `true` if the table is read-only; `false` otherwise
 ]=]
-declare function isreadonly(table: { any }): boolean
+declare function isreadonly(table: AnyTable): boolean
 
 --[=[
     Returns the name and version of the current executor.
@@ -688,7 +690,7 @@ declare function sethiddenproperty(instance: Instance, property_name: string, pr
     @param state -- Whether to make the property scriptable (true) or non-scriptable (false)
     @return A boolean indicating success, or nil if the operation fails
 ]=]
-declare function setscriptable(object: Instance, property: string, state: boolean): boolean | nil
+declare function setscriptable(object: Instance, property: string, state: boolean): boolean?
 
 --[=[
     Determines whether the function was called from the executor's thread.
@@ -790,7 +792,7 @@ declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> 
     Returns the connections of the specified [RBXScriptSignal].
     
     @param signal -- The signal whose connections you want to retrieve
-    @return An array of [CustomConnection] objects
+    @return An array of [Connection] objects
     
     Each Connection object contains the following fields:
       - Enabled: boolean - Whether the connection can receive events.
@@ -806,10 +808,10 @@ declare function loadstring<A...>(src: string, chunkname: string?): (((A...) -> 
       - Disable(): () - Prevents the connection from firing.
       - Enable(): () - Enables the connection.
 ]=]
-declare function getconnections(signal: RBXScriptSignal): { CustomConnection }
+declare function getconnections<T...>(signal: RBXScriptSignal<T...>): { Connection }
 
 --[=[
-    @interface CustomConnection
+    @interface Connection
 
     .Enabled - Whether the connection can receive events.
     .ForeignState - `true` if the connection was created by a foreign Lua state.
@@ -823,18 +825,18 @@ declare function getconnections(signal: RBXScriptSignal): { CustomConnection }
     .Disable() - Prevents the connection from firing.
     .Enable()- Enables the connection.
 ]=]
-type CustomConnection = { 
-    Enabled: boolean,
-    ForeignState: boolean,
-    LuaConnection: boolean,
-    Function: AnyFunction?,
-    Thread: thread?,
-    Fire: ((...any) -> ()),
-    Defer: ((...any) -> ()),
-    Disconnect: () -> (),
-    Disable: () -> (),
-    Enable: () -> ()
-}
+declare class Connection
+    Enabled: boolean
+    ForeignState: boolean
+    LuaConnection: boolean
+    Function: AnyFunction?
+    Thread: thread?
+    function Fire(self, ...: any): ()
+    function Defer(self, ...: any): ()
+    function Disconnect(self): ()
+    function Disable(self): ()
+    function Enable(self): ()
+end
 
 --[=[
     Fires a signal's Lua connections.
@@ -842,7 +844,7 @@ type CustomConnection = {
     @param signal -- The [RBXScriptSignal] to fire
     @param ... -- The arguments to pass into the fired connections
 ]=]
-declare function firesignal(signal: RBXScriptSignal, ...: any): ()
+declare function firesignal<T...>(signal: RBXScriptSignal<T...>, ...: T...): ()
 
 --[=[
     If possible, replicates the specified signal to the server with the provided arguments.
@@ -851,7 +853,7 @@ declare function firesignal(signal: RBXScriptSignal, ...: any): ()
     @param signal -- The [RBXScriptSignal] to replicate
     @param ... -- The arguments to pass into the signal
 ]=]
-declare function replicatesignal(signal: RBXScriptSignal, ...: any): ()
+declare function replicatesignal<T...>(signal: RBXScriptSignal<T...>, ...: T...): ()
 
 --[=[
     The [WebSocket] type provides a simple interface for sending and receiving data
@@ -880,14 +882,14 @@ type WebSocketConnection = {
         
         @return RBXScriptSignal that fires with a message (string).
     ]=]
-    OnMessage: RBXScriptSignal,
+    OnMessage: RBXScriptSignal<string>,
 
     --[=[
         Event triggered when the WebSocket connection closes.
         
         @return RBXScriptSignal.
     ]=]
-    OnClose: RBXScriptSignal,
+    OnClose: RBXScriptSignal<()>,
 }
 
 type WebSocket = {
