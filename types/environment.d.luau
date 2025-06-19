@@ -229,7 +229,7 @@ type debug = {
     getproto: ((func_or_level: AnyFunction | number, index: number, activated: true) -> { AnyFunction }) &
               ((func_or_level: AnyFunction | number, index: number, activated: false?) -> AnyFunction),
 }
-declare debug: debug
+declare debug: typeof(debug) & debug
 
 declare class DrawingObject
     Visible: boolean
