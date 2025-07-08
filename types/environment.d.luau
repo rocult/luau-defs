@@ -330,7 +330,7 @@ declare function getgenv(): AnyTable
     
     @return A table containing the Roblox environment
 ]=]
-declare function getrenv(): { any }
+declare function getrenv(): AnyTable
 
 --[=[
     Returns a table with all collectible values that aren't dead (referenced by active scripts).
