@@ -320,7 +320,7 @@ declare function isrenderobj(object: any): boolean
     
     @return A table containing executor functions
 ]=]
-declare function getgenv(): { any }
+declare function getgenv(): AnyTable
 
 --[=[
     Returns a table containing the Roblox environment.
