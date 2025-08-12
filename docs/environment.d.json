@@ -596,6 +596,15 @@
             "AnyTable"
         ]
     },
+    "@roblox/global/getreg": {
+        "documentation": "Returns the Lua registry table for the current state.",
+        "learn_more_link": "https://docs.sunc.su/Environment/getreg/",
+        "code_sample": "local registry = getreg()\nprint(\"Registry type:\", type(registry)) -- Output: table\n\n-- Show a few string-keyed entries\nlocal shown = 0\nfor k, v in pairs(registry) do\n    if type(k) == \"string\" then\n        print(k, type(v))\n        shown = shown + 1\n        if shown >= 5 then break end\n    end\nend",
+        "params": [],
+        "returns": [
+            "AnyArray"
+        ]
+    },
     "@roblox/global/getrenv": {
         "documentation": "Returns a table containing the Roblox environment.",
         "learn_more_link": "https://docs.sunc.su/Environment/getrenv/",
