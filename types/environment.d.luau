@@ -51,6 +51,14 @@ declare function restorefunction(functionToRestore: (...any) -> (...any)): ()
 
 declare function getnamecallmethod(): string
 
+--#region Console
+declare function rconsoleclear(): ()
+declare function rconsolecreate(): ()
+declare function rconsoledestroy(): ()
+declare function rconsoleinput(): string
+declare function rconsoleprint(text: string): ()
+declare function rconsolesettitle(title: string): ()
+
 --#region Cryptography
 type crypt = {
     base64decode: (data: string) -> string,

@@ -261,6 +261,62 @@
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/metatable.md#L77",
         "code_sample": "local old; old = hookmetamethod(game, \"__namecall\", function(self, ...)\n    local method = getnamecallmethod()\n    if method == \"FireServer\" then\n        print(\"Intercepted FireServer\")\n    end\n    return old(self, ...)\nend)"
     },
+    "@roblox/global/rconsoleclear": {
+        "documentation": "Clears the output of the console window.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleclear",
+        "code_sample": "-- Create the console window\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsolecreate()\n\n-- Clears the output \"Hello, world!\"\nrconsoleclear()",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/rconsolecreate": {
+        "documentation": "Opens the console window. Text previously output to the console will not be cleared.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsolecreate",
+        "code_sample": "-- Create the console window\nrconsolesettitle(\"Beautiful Mountains\")\nrconsolecreate()\n\nlocal function generate()\n\t-- Generate a random decimal number for noise\n\tlocal seed = math.random(100, 999) + math.random()\n\n\t-- Prints 25 lines of text\n\tfor i = 1, 25 do\n\t\tlocal noise = math.noise(i / 8, seed) + 0.5\n\t\tlocal height = math.floor(noise * 50)\n\t\tlocal line = string.rep(\"*\", height)\n\t\trconsoleprint(line .. \"\n\")\n\tend\n\n\t-- Prompts the user to generate a new set of mountains\n\t-- or exit the console window\n\trconsoleprint(\"\nEnter 'Y' to generate a new landscape, or nothing to exit\n\")\n\n\tlocal input = rconsoleinput()\n\n\tif string.lower(input) == \"y\" then\n\t\trconsoleclear()\n\t\tgenerate()\n\telse\n\t\trconsoledestroy()\n\tend\nend\n\ngenerate()",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/rconsoledestroy": {
+        "documentation": "Closes the console window and clears its output. The title will not be changed.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoledestroy",
+        "code_sample": "-- Create a console window titled \"New console\" and with the output \"Hello, world!\"\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsolecreate()\n\n-- Close the console window, clearing its output\nrconsoledestroy()\n\n-- Reopen the console window titled \"New console\" with no output\nrconsolecreate()",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/rconsoleinput": {
+        "documentation": "Waits for the user to input text into the console window. Returns the result.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleinput",
+        "code_sample": "-- Create the console window\nrconsolesettitle(\"Your Info\")\nrconsoleprint(\"What is your name?\nMy name is: \")\nrconsolecreate()\n\n-- Retrieve the user's input\nlocal name = rconsoleinput()\nrconsoleprint(\"Hello, \" .. name .. \"!\")\n\n-- Cleanup\ntask.wait(1)\nrconsoledestroy()",
+        "params": [],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/rconsoleprint": {
+        "documentation": "Prints `text` to the console window. Does not clear existing text or create a new line.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleprint",
+        "code_sample": "-- Create a console window titled \"New console\" with the\n-- output \"Hello, world!! How are you today?\"\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsoleprint(\"! How are you today?\")\nrconsolecreate()",
+        "params": [
+            {
+                "name": "text",
+                "type": "string",
+                "documentation": "The text to write to the console."
+            }
+        ],
+        "returns": []
+    },
+    "@roblox/global/rconsolesettitle": {
+        "documentation": "Sets the title of the console window to `title`.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsolesettitle",
+        "code_sample": "-- Create a console window titled \"My console\"\nrconsolesettitle(\"My console\")\nrconsolecreate()",
+        "params": [
+            {
+                "name": "title",
+                "type": "string",
+                "documentation": "The window title text."
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/crypt": {
         "documentation": "Functions made for encrypting and decrypting data.",
         "keys": [
