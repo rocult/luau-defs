@@ -26,7 +26,9 @@
                 "optional": true
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
     "@roblox/global/game.HttpGetAsync": {
         "documentation": "Performs an HTTP GET request to the given URL and returns the response body. Despite the name, most implementations yield until the request completes.",
@@ -43,14 +45,16 @@
                 "documentation": "A hint for classifying the request (e.g., Enum.HttpRequestType.Default)"
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
     "@roblox/global/hookfunction": {
         "documentation": "Hooks a function with another wanted function, returning the original unhooked function.",
         "learn_more_link": "https://docs.sunc.su/Closures/hookfunction/",
         "code_sample": "local function DummyFunction()\n\tprint(\"I am not hooked!\")\nend\n\nlocal function DummyHook()\n\tprint(\"I am hooked!\")\nend\n\nDummyFunction() -- Output: I am not hooked!\n\nlocal OldFunction = hookfunction(DummyFunction, DummyHook)\n\nDummyFunction() -- Output: I am hooked!\nOldFunction() -- Output: I am not hooked!",
         "params": [
-            { 
+            {
                 "name": "function_to_hook",
                 "type": "AnyFunction",
                 "documentation": "The function that will be hooked"
@@ -61,14 +65,16 @@
                 "documentation": "The function that will be used as a hook"
             }
         ],
-        "returns": ["AnyFunction"]
+        "returns": [
+            "AnyFunction"
+        ]
     },
     "@roblox/global/hookmetamethod": {
         "documentation": "Takes any lua value that can have metatable and attempts to hook the specified metamethod of the lua value with the hookfunction function.",
         "learn_more_link": "https://docs.sunc.su/Closures/hookmetamethod/",
         "code_sample": "local Original; Original = hookmetamethod(game, \"__index\", function(...)\n\tlocal Key = select(2, ...)\n\tprint(Key)\n\treturn Original(...)\nend)\n\nlocal _ = game.PlaceId\nhookmetamethod(game, \"__index\", Original) -- Restores game's __index\n\n-- Output: PlaceId",
         "params": [
-            { 
+            {
                 "name": "object",
                 "type": "AnyTable | Instance | userdata",
                 "documentation": "The object which has the metatable."
@@ -84,7 +90,9 @@
                 "documentation": "The function that will be used as a hook."
             }
         ],
-        "returns": ["AnyFunction"]
+        "returns": [
+            "AnyFunction"
+        ]
     },
     "@roblox/global/getnamecallmethod": {
         "documentation": "Returns the current `__namecall` method name inside a namecall hook.",
@@ -96,80 +104,91 @@
         "learn_more_link": "https://docs.sunc.su/Closures/newcclosure/",
         "code_sample": "local DummyFunction = function(...)\n\treturn ...\nend\n\nprint(iscclosure(DummyFunction)) -- Output: false\n\nlocal WrappedFunction = newcclosure(DummyFunction)\n\nprint(iscclosure(WrappedFunction)) -- Output: true\n\nlocal FunctionResults = WrappedFunction(\"Hello\")\nprint(FunctionResults) -- Output: Hello",
         "params": [
-            { 
+            {
                 "name": "function_to_wrap",
                 "type": "AnyFunction",
                 "documentation": "A function to be wrapped."
             }
         ],
-        "returns": ["AnyFunction"]
+        "returns": [
+            "AnyFunction"
+        ]
     },
     "@roblox/global/iscclosure": {
         "documentation": "Checks if the given function is a C closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/iscclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an Executor C Closure\")\nend)\n\nlocal DummyStandardCFunction = print\nlocal DummyGlobalCFunction = getgc\n\nprint(iscclosure(DummyCFunction)) -- Output: true\nprint(iscclosure(DummyGlobalCFunction)) -- Output: true\nprint(iscclosure(DummyStandardCFunction)) -- Output: true\nprint(iscclosure(DummyLuaFunction)) -- Output: false",
         "params": [
-            { 
+            {
                 "name": "func",
                 "type": "AnyFunction",
                 "documentation": "The function to check."
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/islclosure": {
         "documentation": "Checks if a given function is a L closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/islclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an executor C closure\")\nend)\n\nlocal DummyStandardCFunction = print\n\nprint(islclosure(DummyLuaFunction)) -- Output: true\nprint(islclosure(DummyStandardCFunction)) -- Output: false\nprint(islclosure(DummyCFunction)) -- Output: false",
         "params": [
-            { 
+            {
                 "name": "func",
                 "type": "AnyFunction",
                 "documentation": "The function to check."
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/isexecutorclosure": {
         "documentation": "Checks if a given function is the executor's closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/isexecutorclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an executor C closure\")\nend)\n\nlocal DummyStandardCFunction = print\nlocal DummyGlobalCFunction = getgc\n\nprint(isexecutorclosure(DummyLuaFunction)) -- Output: true\nprint(isexecutorclosure(DummyCFunction)) -- Output: true\nprint(isexecutorclosure(DummyGlobalCFunction)) -- Output: true\nprint(isexecutorclosure(DummyStandardCFunction)) -- Output: false",
         "params": [
-            { 
+            {
                 "name": "func",
                 "type": "AnyFunction",
                 "documentation": "The function to check."
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/clonefunction": {
         "documentation": "Creates and returns a new function that has the same behaviour as the passed function.",
         "learn_more_link": "https://docs.sunc.su/Closures/clonefunction/",
         "code_sample": "local function DummyFunction()\n\tprint(\"Hello\")\nend\n\nlocal ClonedFunction = clonefunction(DummyFunction)\n\nprint(debug.info(ClonedFunction, \"l\")) -- Output: 1\nprint(debug.info(ClonedFunction, \"n\")) -- Output: DummyFunction\nprint(ClonedFunction == DummyFunction) -- Output: false\nprint(getfenv(ClonedFunction) == getfenv(DummyFunction)) -- Output: true",
         "params": [
-            { 
+            {
                 "name": "function_to_clone",
                 "type": "AnyFunction",
                 "documentation": "The function to clone."
             }
         ],
-        "returns": ["AnyFunction"]
+        "returns": [
+            "AnyFunction"
+        ]
     },
     "@roblox/global/getfunctionhash": {
         "documentation": "Returns the hex-represented SHA-384 hash of a provided function's instructions (code) and constants.",
         "learn_more_link": "https://docs.sunc.su/Closures/getfunctionhash/",
         "code_sample": "local function isSHA384Hex(hash)\n\tif #hash ~= 96 then\n\t\treturn false\n\tend\n\tif not hash:match(\"^[0-9a-fA-F]+$\") then\n\t\treturn false\n\tend\n\treturn true\nend\n\nlocal DummyFunction0 = function() end\nlocal DummyFunction1 = function(...) end\nlocal DummyFunction2 = function() end\nlocal DummyFunction3 = function() return \"Constant\" end\nlocal DummyFunction4 = function() return \"Constant2\" end\n\nprint(isSHA384Hex(getfunctionhash(DummyFunction0))) -- Output: true\nprint(getfunctionhash(DummyFunction0) == getfunctionhash(DummyFunction1)) -- Output: false\nprint(getfunctionhash(DummyFunction0) == getfunctionhash(DummyFunction2)) -- Output: true\nprint(getfunctionhash(DummyFunction3) == getfunctionhash(DummyFunction4)) -- Output: false",
         "params": [
-            { 
+            {
                 "name": "function_to_hash",
                 "type": "AnyFunction",
                 "documentation": "The function whose hash is to be computed."
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
-
     "@roblox/global/crypt": {
         "documentation": "Functions made for encrypting and decrypting data.",
         "keys": [
@@ -182,47 +201,52 @@
         "learn_more_link": "https://docs.sunc.su/Cryptography/base64encode/",
         "code_sample": "print(crypt.base64encode(\"DummyString\\0\\2\")) -- Output: RHVtbXlTdHJpbmcAAg==",
         "params": [
-            { 
+            {
                 "name": "data",
                 "type": "string",
                 "documentation": "The data to encode."
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
     "@roblox/global/crypt.base64decode": {
         "documentation": "Decodes a Base64 string into its original form.",
         "learn_more_link": "https://docs.sunc.su/Cryptography/base64decode/",
         "code_sample": "local bytecode = game:HttpGet(\"https://rubis-api.numelon.com/v2/scrap/zuxQZuM9Tnl5MRbo/raw\")\nwritefile(\"sound.mp3\", crypt.base64decode(bytecode)) -- This file should be a valid and working mp3 file.",
         "params": [
-            { 
+            {
                 "name": "data",
                 "type": "string",
                 "documentation": "The data to decode."
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
-
     "@luau/global/debug.getconstants": {
         "documentation": "Returns the constants of the specified Lua function.",
         "learn_more_link": "https://docs.sunc.su/Closures/debug.getconstants/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nlocal Constants = debug.getconstants(DummyFunction)\nprint(Constants[1]) -- Output: Hello",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level from which the constants are obtained"
             }
         ],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@luau/global/debug.getconstant": {
         "documentation": "Returns the constant at the specified index. If there is no constant at that index, `nil` is returned.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getconstant/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nlocal Constant = debug.getconstant(DummyFunction, 1)\nprint(Constant) -- Output: Hello",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level from which the constant is obtained"
@@ -233,14 +257,16 @@
                 "documentation": "The position of the desired constant"
             }
         ],
-        "returns": ["any"]
+        "returns": [
+            "any"
+        ]
     },
     "@luau/global/debug.setconstant": {
         "documentation": "Sets the constant at the specified index in the given Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setconstant/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nprint(debug.getconstant(DummyFunction, 1)) -- Output: Hello\ndebug.setconstant(DummyFunction, 1, \"Goodbye\")\nprint(debug.getconstant(DummyFunction, 1)) -- Output: Goodbye",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level whose constant is to be set"
@@ -263,20 +289,22 @@
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getupvalues/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nlocal Upvalues = debug.getupvalues(DummyFunction)\nprint(Upvalues[1]) -- Output: Value: ",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level from which the upvalues are obtained"
             }
         ],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@luau/global/debug.getupvalue": {
         "documentation": "Returns the upvalue at the specified index.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getupvalue/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nlocal Upvalue = debug.getupvalue(DummyFunction, 1)\nprint(Upvalue) -- Output: Value: ",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level from which the upvalue is obtained"
@@ -287,14 +315,16 @@
                 "documentation": "The position of the desired upvalue"
             }
         ],
-        "returns": ["any"]
+        "returns": [
+            "any"
+        ]
     },
     "@luau/global/debug.setupvalue": {
         "documentation": "Replaces the upvalue at the specified index in the given Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setupvalue/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nprint(DummyFunction(\"Hello\")) -- Output: Value: Hello\ndebug.setupvalue(DummyFunction, 1, \"Modified: \")\nprint(DummyFunction(\"Hello\")) -- Output: Modified: Hello",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The Lua function/level whose upvalue is to be set"
@@ -317,7 +347,7 @@
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getstack/",
         "code_sample": "local function InnerFunction()\n\tlocal StackValues = debug.getstack(2)\n\tfor i, v in ipairs(StackValues) do\n\t\tprint(i, v)\n\tend\nend\n\nlocal function OuterFunction()\n\tlocal LocalVar = \"OuterValue\"\n\tInnerFunction()\nend\n\nOuterFunction()",
         "params": [
-            { 
+            {
                 "name": "level",
                 "type": "number",
                 "documentation": "The call stack level"
@@ -329,14 +359,16 @@
                 "optional": true
             }
         ],
-        "returns": ["any | table"]
+        "returns": [
+            "any | table"
+        ]
     },
     "@luau/global/debug.setstack": {
         "documentation": "Sets a new value in the call stack at the specified level and index.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setstack/",
         "code_sample": "local function InnerFunction()\n\tlocal Original = debug.getstack(2, 1)\n\tprint(\"Original value:\", Original)\n\tdebug.setstack(2, 1, \"Modified\")\n\tlocal Modified = debug.getstack(2, 1)\n\tprint(\"Modified value:\", Modified)\nend\n\nlocal function OuterFunction()\n\tlocal LocalVar = \"OuterValue\"\n\tInnerFunction()\n\tprint(\"Local variable after modification:\", LocalVar)\nend\n\nOuterFunction()",
         "params": [
-            { 
+            {
                 "name": "level",
                 "type": "number",
                 "documentation": "The call stack level"
@@ -359,20 +391,22 @@
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getprotos/",
         "code_sample": "local function OuterFunction()\n\tlocal function InnerFunction1()\n\t\treturn \"Inner1\"\n\tend\n\tlocal function InnerFunction2()\n\t\treturn \"Inner2\"\n\tend\n\treturn InnerFunction1() .. InnerFunction2()\nend\n\nlocal Protos = debug.getprotos(OuterFunction)\nprint(\"Number of inner functions:\", #Protos) -- Output: Number of inner functions: 2",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The function from which the protos are obtained"
             }
         ],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@luau/global/debug.getproto": {
         "documentation": "Returns the proto at the specified index. If the third argument is `true`, returns a table containing the active functions of the proto.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getproto/",
         "code_sample": "local function OuterFunction()\n\tlocal function InnerFunction1()\n\t\treturn \"Inner1\"\n\tend\n\tlocal function InnerFunction2()\n\t\treturn \"Inner2\"\n\tend\n\treturn InnerFunction1() .. InnerFunction2()\nend\n\nlocal Proto = debug.getproto(OuterFunction, 1)\nprint(Proto()) -- Output: Inner1",
         "params": [
-            { 
+            {
                 "name": "func_or_level",
                 "type": "AnyFunction | number",
                 "documentation": "The function from which to obtain the proto"
@@ -389,22 +423,27 @@
                 "optional": true
             }
         ],
-        "returns": ["AnyFunction | table"]
+        "returns": [
+            "AnyFunction | table"
+        ]
     },
-
     "@roblox/global/getgenv": {
         "documentation": "Returns a table containing all executor functions, serving as the shared environment for all scripts executed by the executor.",
         "learn_more_link": "https://docs.sunc.su/Environment/getgenv/",
         "code_sample": "local executorEnv = getgenv()\nexecutorEnv.MyGlobalVariable = \"This can be accessed from any script!\"\nprint(getgenv().MyGlobalVariable) -- Output: This can be accessed from any script!",
         "params": [],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getrenv": {
         "documentation": "Returns a table containing the Roblox environment.",
         "learn_more_link": "https://docs.sunc.su/Environment/getrenv/",
         "code_sample": "local robloxEnv = getrenv()\nprint(\"Number of items in Roblox environment:\", #robloxEnv) -- Output varies based on game",
         "params": [],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getgc": {
         "overloads": {
@@ -439,7 +478,7 @@
             "(\"table\", TableFilterOptions, true) -> AnyTable?": "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?",
             "(\"table\", TableFilterOptions, false?) -> {AnyTable}": "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}",
             "(\"function\", FunctionFilterOptions, true) -> AnyFunction?": "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> AnyFunction?",
-            "(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}" 
+            "(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}"
         }
     },
     "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?": {
@@ -460,7 +499,9 @@
                 "documentation": "If `true`, returns only the first match; otherwise, returns all matches"
             }
         ],
-        "returns": ["AnyTable?"]
+        "returns": [
+            "AnyTable?"
+        ]
     },
     "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}": {
         "documentation": "Returns a table with all Lua tables that match the specified criteria.",
@@ -480,7 +521,9 @@
                 "documentation": "If `true`, returns only the first match; otherwise, returns all matches"
             }
         ],
-        "returns": ["{AnyTable}"]
+        "returns": [
+            "{AnyTable}"
+        ]
     },
     "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> ((...any) -> (...any))?": {
         "documentation": "Returns a function that matches the specified criteria, or `nil` if no match is found.",
@@ -500,7 +543,9 @@
                 "documentation": "If `true`, returns only the first match; otherwise, returns all matches"
             }
         ],
-        "returns": ["AnyFunction?"]
+        "returns": [
+            "AnyFunction?"
+        ]
     },
     "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": {
         "documentation": "Returns a table with all Lua functions that match the specified criteria.",
@@ -520,9 +565,10 @@
                 "documentation": "If `true`, returns only the first match; otherwise, returns all matches"
             }
         ],
-        "returns": ["{AnyFunction}"]
+        "returns": [
+            "{AnyFunction}"
+        ]
     },
-
     "@roblox/global/writefile": {
         "documentation": "Writes data to a specified file path.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/writefile/",
@@ -552,7 +598,9 @@
                 "documentation": "The path to the file that will be read"
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
     "@roblox/global/listfiles": {
         "documentation": "Provides a list of files and folders within a specified directory.",
@@ -565,7 +613,9 @@
                 "documentation": "The path to the directory"
             }
         ],
-        "returns": ["{string}"]
+        "returns": [
+            "{string}"
+        ]
     },
     "@roblox/global/isfile": {
         "documentation": "Determines if the specified path is a file.",
@@ -578,7 +628,9 @@
                 "documentation": "The path to check"
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/appendfile": {
         "documentation": "Appends data to the end of the file at the specified path, creating the file if it doesn't already exist.",
@@ -622,7 +674,9 @@
                 "documentation": "The path to the file"
             }
         ],
-        "returns": ["(AnyFunction?, string?)"]
+        "returns": [
+            "(AnyFunction?, string?)"
+        ]
     },
     "@roblox/global/makefolder": {
         "documentation": "Creates a folder at the specified path if it doesn't already exist.",
@@ -648,7 +702,9 @@
                 "documentation": "The path to check"
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/delfolder": {
         "documentation": "Deletes the folder at the specified path.",
@@ -674,22 +730,27 @@
                 "documentation": "The path to the file"
             }
         ],
-        "returns": ["string"]
+        "returns": [
+            "string"
+        ]
     },
-
     "@roblox/global/getinstances": {
         "documentation": "Returns a list of all instances referenced by the client.",
         "learn_more_link": "https://docs.sunc.su/Instances/getinstances/",
         "code_sample": "local instances = getinstances()\nprint(\"Total instances:\", #instances)\n\n-- Count instances by class\nlocal classCounts = {}\nfor _, instance in ipairs(instances) do\n\tlocal className = instance.ClassName\n\tclassCounts[className] = (classCounts[className] or 0) + 1\nend\n\n-- Print the top 5 most common classes\nlocal sortedClasses = {}\nfor class, count in pairs(classCounts) do\n\ttable.insert(sortedClasses, {class = class, count = count})\nend\ntable.sort(sortedClasses, function(a, b) return a.count > b.count end)\n\nfor i = 1, math.min(5, #sortedClasses) do\n\tprint(sortedClasses[i].class, sortedClasses[i].count)\nend",
         "params": [],
-        "returns": ["{Instance}"]
+        "returns": [
+            "{Instance}"
+        ]
     },
     "@roblox/global/getnilinstances": {
         "documentation": "Returns a list of instances that have their Instance.Parent property set to `nil`.",
         "learn_more_link": "https://docs.sunc.su/Instances/getnilinstances/",
         "code_sample": "local nilInstances = getnilinstances()\nprint(\"Total nil instances:\", #nilInstances)\n\n-- Count nil instances by class\nlocal classCounts = {}\nfor _, instance in ipairs(nilInstances) do\n\tlocal className = instance.ClassName\n\tclassCounts[className] = (classCounts[className] or 0) + 1\nend\n\n-- Print classes\nfor class, count in pairs(classCounts) do\n\tprint(class, count)\nend",
         "params": [],
-        "returns": ["{Instance}"]
+        "returns": [
+            "{Instance}"
+        ]
     },
     "@roblox/global/cloneref": {
         "documentation": "Returns a copy of the given Instance. The copy should not be equal to the original Instance.",
@@ -702,7 +763,9 @@
                 "documentation": "The Instance to clone"
             }
         ],
-        "returns": ["T"]
+        "returns": [
+            "T"
+        ]
     },
     "@roblox/global/compareinstances": {
         "documentation": "Checks if two instances are equal. This is primarily used for comparing instances returned by [cloneref](https://docs.sunc.su/Instances/cloneref/) since the normal equality check may fail.",
@@ -720,16 +783,19 @@
                 "documentation": "The second Instance to compare"
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/gethui": {
         "documentation": "Returns a hidden UI container that minimizes detection. This container should not be directly discoverable via standard search methods.",
         "learn_more_link": "https://docs.sunc.su/Instances/gethui/",
         "code_sample": "local container = gethui()\n\n-- Create a UI element in the hidden container\nlocal frame = Instance.new(\"Frame\")\nframe.Size = UDim2.new(0, 200, 0, 100)\nframe.Position = UDim2.new(0.5, -100, 0.5, -50)\nframe.BackgroundColor3 = Color3.fromRGB(50, 50, 50)\nframe.Parent = container\n\nlocal text = Instance.new(\"TextLabel\")\ntext.Size = UDim2.new(1, 0, 1, 0)\ntext.Text = \"Hidden UI\"\ntext.TextColor3 = Color3.fromRGB(255, 255, 255)\ntext.Parent = frame",
         "params": [],
-        "returns": ["Instance"]
+        "returns": [
+            "Instance"
+        ]
     },
-    
     "@roblox/global/getcallbackvalue": {
         "documentation": "Returns the callback function assigned to an object's callback property. This function retrieves the underlying function that is otherwise inaccessible through normal indexing.",
         "learn_more_link": "https://docs.sunc.su/Instances/getcallbackvalue/",
@@ -746,7 +812,9 @@
                 "documentation": "The name of the callback property"
             }
         ],
-        "returns": ["AnyFunction"]
+        "returns": [
+            "AnyFunction"
+        ]
     },
     "@roblox/global/fireclickdetector": {
         "documentation": "Triggers a specified event on a [ClickDetector](https://create.roblox.com/docs/reference/engine/classes/ClickDetector).",
@@ -770,7 +838,7 @@
             }
         ],
         "returns": []
-    }, 
+    },
     "@roblox/global/fireproximityprompt": {
         "documentation": "Triggers a [ProximityPrompt](https://create.roblox.com/docs/reference/engine/classes/ProximityPrompt) instantly, regardless of distance or duration.",
         "learn_more_link": "https://docs.sunc.su/Instances/fireproximityprompt/",
@@ -807,7 +875,6 @@
         ],
         "returns": []
     },
-
     "@roblox/global/getrawmetatable": {
         "documentation": "Returns the metatable of object, bypassing the `__metatable` field.",
         "learn_more_link": "https://docs.sunc.su/Metatables/getrawmetatable/",
@@ -819,7 +886,9 @@
                 "documentation": "The object to get the metatable of"
             }
         ],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/setrawmetatable": {
         "documentation": "Sets the metatable of object to the provided metatable, bypassing the `__metatable` field.",
@@ -837,7 +906,9 @@
                 "documentation": "The metatable to set"
             }
         ],
-        "returns": ["T"]
+        "returns": [
+            "T"
+        ]
     },
     "@roblox/global/setreadonly": {
         "documentation": "Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.",
@@ -868,15 +939,19 @@
                 "documentation": "The table to check"
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
-
     "@roblox/global/identifyexecutor": {
         "documentation": "Returns the name and version of the current executor.",
         "learn_more_link": "https://docs.sunc.su/Miscellaneous/identifyexecutor/",
         "code_sample": "local executorName, executorVersion = identifyexecutor()\nprint(\"Running on\", executorName, \"version\", executorVersion)",
         "params": [],
-        "returns": ["string", "string"]
+        "returns": [
+            "string",
+            "string"
+        ]
     },
     "@roblox/global/request": {
         "documentation": "Sends an HTTP request with the given options, yielding until the request is finished, and returns the response.",
@@ -889,14 +964,20 @@
                 "documentation": "The options to use for the request"
             }
         ],
-        "returns": ["Response"]
+        "returns": [
+            "Response"
+        ]
     },
     "@roblox/global/setclipboard": {
         "documentation": "Copies `text` to the clipboard.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L202",
         "code_sample": "setclipboard(\"Copied from Roblox!\")",
         "params": [
-            { "name": "text", "type": "string", "documentation": "The text to copy." }
+            {
+                "name": "text",
+                "type": "string",
+                "documentation": "The text to copy."
+            }
         ],
         "returns": []
     },
@@ -905,11 +986,14 @@
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L228",
         "code_sample": "setfpscap(144)",
         "params": [
-            { "name": "fps", "type": "number", "documentation": "The FPS cap." }
+            {
+                "name": "fps",
+                "type": "number",
+                "documentation": "The FPS cap."
+            }
         ],
         "returns": []
     },
-
     "@roblox/global/gethiddenproperty": {
         "documentation": "Returns the hidden, non-scriptable property's value regardless of its type, along with a boolean indicating if the property is hidden.",
         "learn_more_link": "https://docs.sunc.su/Reflection/gethiddenproperty/",
@@ -926,7 +1010,10 @@
                 "documentation": "The name of the property to be read"
             }
         ],
-        "returns": ["any", "boolean"]
+        "returns": [
+            "any",
+            "boolean"
+        ]
     },
     "@roblox/global/sethiddenproperty": {
         "documentation": "Sets the hidden, non-scriptable property's value regardless of its type.",
@@ -949,7 +1036,9 @@
                 "documentation": "The value to set for the property"
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/setscriptable": {
         "documentation": "Sets a hidden property to be scriptable so that it can be indexed as if it weren't hidden.",
@@ -972,14 +1061,18 @@
                 "documentation": "Whether to make the property scriptable (`true`) or non-scriptable (`false`)"
             }
         ],
-        "returns": ["boolean?"]
+        "returns": [
+            "boolean?"
+        ]
     },
     "@roblox/global/checkcaller": {
         "documentation": "Determines whether the function was called from the executor's thread.",
         "learn_more_link": "https://docs.sunc.su/Environment/checkcaller/",
         "code_sample": "-- Function to demonstrate checkcaller\nlocal function testCaller()\n\tprint(\"Called from executor thread:\", checkcaller())\nend\n\n-- Call from executor thread\ntestCaller() -- Output: Called from executor thread: true\n\n-- Create a dummy event\nlocal bindable = Instance.new(\"BindableEvent\")\nbindable.Event:Connect(testCaller) -- This will call from a Roblox thread\nbindable:Fire() -- Output: Called from executor thread: false",
         "params": [],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/global/setthreadidentity": {
         "documentation": "Sets the current thread's identity to the specified value.",
@@ -993,15 +1086,16 @@
             }
         ],
         "returns": []
-    }, 
+    },
     "@roblox/global/getthreadidentity": {
         "documentation": "Retrieves the identity of the current thread.",
         "learn_more_link": "https://docs.sunc.su/Environment/getthreadidentity/",
         "code_sample": "print(\"Current thread identity:\", getthreadidentity())\n\n-- Different identities have different permissions\n-- Common values:\n-- 0: System/highest privilege\n-- 2: Regular game scripts\n-- 7: Executor thread (common default)",
         "params": [],
-        "returns": ["number"]
+        "returns": [
+            "number"
+        ]
     },
-
     "@roblox/global/getscriptbytecode": {
         "documentation": "Returns the bytecode of the given script. If the script has no bytecode, returns `nil`.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscriptbytecode/",
@@ -1013,7 +1107,9 @@
                 "documentation": "The script to retrieve bytecode from"
             }
         ],
-        "returns": ["string?"]
+        "returns": [
+            "string?"
+        ]
     },
     "@roblox/global/getscripthash": {
         "documentation": "Returns a SHA384 hash (in hex) of the given script's compressed and encrypted bytecode. If the script has no bytecode, returns `nil`.",
@@ -1026,7 +1122,9 @@
                 "documentation": "The script to get the hash from"
             }
         ],
-        "returns": ["string?"]
+        "returns": [
+            "string?"
+        ]
     },
     "@roblox/global/getscriptclosure": {
         "documentation": "Creates a new closure (function) from the provided script's bytecode. This closure is typically used to retrieve constants.",
@@ -1039,7 +1137,9 @@
                 "documentation": "The script to obtain the closure from"
             }
         ],
-        "returns": ["AnyFunction?"]
+        "returns": [
+            "AnyFunction?"
+        ]
     },
     "@roblox/global/getsenv": {
         "documentation": "Returns the environment (globals table) of the given script thread.",
@@ -1052,35 +1152,45 @@
                 "documentation": "The script whose environment is to be retrieved"
             }
         ],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getscripts": {
         "documentation": "Returns all the scripts in the game. CoreScripts are filtered by default.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscripts/",
         "code_sample": "local scripts = getscripts()\n\n-- Count scripts by type\nlocal scriptCounts = {\n\tLocalScript = 0,\n\tModuleScript = 0,\n\tOther = 0\n}\n\nfor _, script in ipairs(scripts) do\n\tif script:IsA(\"LocalScript\") then\n\t\tscriptCounts.LocalScript = scriptCounts.LocalScript + 1\n\telseif script:IsA(\"ModuleScript\") then\n\t\tscriptCounts.ModuleScript = scriptCounts.ModuleScript + 1\n\telse\n\t\tscriptCounts.Other = scriptCounts.Other + 1\n\tend\nend\n\nprint(\"Total scripts:\", #scripts)\nprint(\"LocalScripts:\", scriptCounts.LocalScript)\nprint(\"ModuleScripts:\", scriptCounts.ModuleScript)\nprint(\"Other scripts:\", scriptCounts.Other)",
         "params": [],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getrunningscripts": {
         "documentation": "Returns all the running scripts in the caller's global state. CoreScripts are filtered by default.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getrunningscripts/",
         "code_sample": "local runningScripts = getrunningscripts()\n\n-- Count scripts by type\nlocal scriptCounts = {\n\tLocalScript = 0,\n\tModuleScript = 0,\n\tOther = 0\n}\n\nfor _, script in ipairs(runningScripts) do\n\tif script:IsA(\"LocalScript\") then\n\t\tscriptCounts.LocalScript = scriptCounts.LocalScript + 1\n\telseif script:IsA(\"ModuleScript\") then\n\t\tscriptCounts.ModuleScript = scriptCounts.ModuleScript + 1\n\telse\n\t\tscriptCounts.Other = scriptCounts.Other + 1\n\tend\nend\n\nprint(\"Total running scripts:\", #runningScripts)\nprint(\"Running LocalScripts:\", scriptCounts.LocalScript)\nprint(\"Running ModuleScripts:\", scriptCounts.ModuleScript)\nprint(\"Other running scripts:\", scriptCounts.Other)",
         "params": [],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getloadedmodules": {
         "documentation": "Returns all ModuleScripts that are currently loaded in the caller's global state.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getloadedmodules/",
         "code_sample": "local loadedModules = getloadedmodules()\n\nprint(\"Total loaded modules:\", #loadedModules)\n\n-- Print the first few modules\nfor i = 1, math.min(5, #loadedModules) do\n\tlocal module = loadedModules[i]\n\tprint(i, module:GetFullName())\nend",
         "params": [],
-        "returns": ["AnyTable"]
+        "returns": [
+            "AnyTable"
+        ]
     },
     "@roblox/global/getcallingscript": {
         "documentation": "Returns the script that is currently executing. For executor threads, this function returns `nil`.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getcallingscript/",
         "code_sample": "-- This will return nil since it's run directly by the executor\nprint(\"Direct call:\", getcallingscript())\n\n-- Create a dummy script execution context\nlocal bindable = Instance.new(\"BindableFunction\")\nbindable.OnInvoke = function()\n\tlocal callingScript = getcallingscript()\n\treturn callingScript and callingScript:GetFullName() or \"nil\"\nend\n\nprint(\"From bindable:\", bindable:Invoke())",
         "params": [],
-        "returns": ["GenericScript?"]
+        "returns": [
+            "GenericScript?"
+        ]
     },
     "@roblox/global/loadstring": {
         "documentation": "Compiles the given Lua source into a function. The returned function is runnable and its environment becomes 'unsafe'.",
@@ -1099,9 +1209,11 @@
                 "optional": true
             }
         ],
-        "returns": ["function?", "string?"]
+        "returns": [
+            "function?",
+            "string?"
+        ]
     },
-
     "@roblox/globaltype/Connection": {
         "documentation": "Represents a connection to a signal, allowing you to disconnect it later.",
         "keys": [
@@ -1218,7 +1330,9 @@
                 "documentation": "The signal whose connections you want to retrieve."
             }
         ],
-        "returns": ["{Connection}"]
+        "returns": [
+            "{Connection}"
+        ]
     },
     "@roblox/global/firesignal": {
         "documentation": "Fires a signal's Lua connections.",
@@ -1258,7 +1372,6 @@
         ],
         "returns": []
     },
-
     "@roblox/global/WebSocket": {
         "documentation": "The WebSocket type provides a simple interface for sending and receiving data over a WebSocket connection.",
         "keys": [
@@ -1276,7 +1389,9 @@
                 "documentation": "The WebSocket URL to connect to."
             }
         ],
-        "returns": ["WebSocketConnection"]
+        "returns": [
+            "WebSocketConnection"
+        ]
     },
     "@roblox/globaltype/WebSocketConnection": {
         "documentation": "Represents a connection to a WebSocket server.",
@@ -1446,8 +1561,7 @@
         ],
         "returns": []
     },
-
-     "@roblox/global/Drawing": {
+    "@roblox/global/Drawing": {
         "documentation": "The Drawing library provides an interface for rendering shapes and text onto the game window.",
         "learn_more_link": "https://docs.sunc.su/Drawing/",
         "keys": [
@@ -1466,7 +1580,9 @@
                 "documentation": "The type of drawing object to create. Can be \"Line\", \"Text\", \"Image\", \"Circle\", \"Square\", \"Quad\", or \"Triangle\"."
             }
         ],
-        "returns": ["DrawingObject"]
+        "returns": [
+            "DrawingObject"
+        ]
     },
     "@roblox/global/Drawing.Fonts": {
         "documentation": "Contains font constants for use with [Text](https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text) drawing objects.",
@@ -1513,7 +1629,9 @@
                 "documentation": "The name of the property to get."
             }
         ],
-        "returns": ["any"]
+        "returns": [
+            "any"
+        ]
     },
     "@roblox/global/setrenderproperty": {
         "documentation": "Sets the value of a drawing property, functionally similar to `drawing[property] = value`.",
@@ -1549,7 +1667,9 @@
                 "documentation": "The object to check."
             }
         ],
-        "returns": ["boolean"]
+        "returns": [
+            "boolean"
+        ]
     },
     "@roblox/globaltype/DrawingObject": {
         "documentation": "Represents a drawing object that can be used to render 2D graphics in Roblox.",

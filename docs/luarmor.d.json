@@ -10,7 +10,9 @@
                 "documentation": "The function to run."
             }
         ],
-        "returns": ["GenericFunction<T, U...>"]
+        "returns": [
+            "GenericFunction<T, U...>"
+        ]
     },
     "@roblox/global/script_key": {
         "documentation": "The script key used to execute the script, if one was provided."

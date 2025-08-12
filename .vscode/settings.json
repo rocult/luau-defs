@@ -1,12 +1,12 @@
 {
-    "luau-lsp.types.definitionFiles": [
-        "./types/environment.d.luau",
-        "./types/luarmor.d.luau",
-        "./types/luraph.d.luau",
-    ],
-    "luau-lsp.types.documentationFiles": [
-        "./docs/environment.d.json",
-        "./docs/luarmor.d.json",
-        "./docs/luraph.d.json",
-    ]
+  "luau-lsp.types.definitionFiles": [
+    "./types/environment.d.luau",
+    "./types/luarmor.d.luau",
+    "./types/luraph.d.luau"
+  ],
+  "luau-lsp.types.documentationFiles": [
+    "./docs/environment.d.json",
+    "./docs/luarmor.d.json",
+    "./docs/luraph.d.json"
+  ]
 }
