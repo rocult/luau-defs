@@ -65,7 +65,7 @@ type CryptHashAlgorithm = "sha1" | "sha384" | "sha512" | "md5" | "sha256" | "sha
 type crypt = {
     base64decode: (data: string) -> string,
     base64encode: (data: string) -> string,
-    
+
     encrypt: (data: string, key: string, iv: string?, mode: CryptCipherMode?) -> (string, string),
     decrypt: (data: string, key: string, iv: string, mode: CryptCipherMode) -> string,
     generatebytes: (size: number) -> string,
@@ -75,6 +75,17 @@ type crypt = {
 declare crypt: crypt
 
 --#region Debug
+type DebugInfo = {
+    source: string,
+    short_src: string,
+    func: AnyFunction,
+    what: "Lua" | "C",
+    currentline: number,
+    name: string,
+    nups: number,
+    numparams: number,
+    is_vararg: BooleanNumber,
+}
 type debug = {
     getconstant: (func_or_level: AnyFunction | number, index: number) -> BuiltIn,
     getconstants: (func_or_level: AnyFunction | number) -> { BuiltIn },
@@ -87,6 +98,8 @@ type debug = {
     setconstant: (func_or_level: AnyFunction | number, index: number, value: BuiltIn) -> (),
     setstack: (level: number, index: number, value: any) -> (),
     setupvalue: (func_or_level: AnyFunction | number, index: number, value: any) -> (),
+
+    getinfo: (func_or_level: AnyFunction | number) -> DebugInfo,
 }
 declare debug: typeof(debug) & debug
 

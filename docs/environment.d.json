@@ -663,6 +663,21 @@
         ],
         "returns": []
     },
+    "@luau/global/debug.getinfo": {
+        "documentation": "Returns debugger information about a function or stack level.\n\n> 🪲 Compatibility\n> Some executors are missing certain fields.\n\n### DebugInfo\n\n| Field | Type | Description |\n| ----- | ---- | ----------- |\n| `source` | string | The name of the chunk that created the function. |\n| `short_src` | string | A \"printable\" version of `source` to be used in error messages. |\n| `func` | function | The function itself. |\n| `what` | string | The string \"Lua\" if the function is a Luau function, or \"C\" if it is a C function. |\n| `currentline` | number | The current line where the given function is executing. When no line information is available, `currentline` is set to -1. |\n| `name` | string | The name of the function. If it cannot find a name, then `name` is a blank string. |\n| `nups` | number | The number of upvalues in the function. |\n| `numparams` | number | The number of parameters in the function (always 0 for C functions). |\n| `is_vararg` | number | Whether the function has a variadic argument (1 if it does, 0 if it does not). |",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuggetinfo",
+        "code_sample": "local function foo()\n\tprint(\"Hello, world!\")\nend\n\nfor k, v in pairs(debug.getinfo(foo)) do\n\tprint(k, v, \"(\" .. type(v) .. \")\")\nend",
+        "params": [
+            {
+                "name": "func_or_level",
+                "type": "AnyFunction | number",
+                "documentation": "A function or stack level."
+            }
+        ],
+        "returns": [
+            "DebugInfo"
+        ]
+    },
     "@roblox/global/Drawing": {
         "documentation": "The Drawing library provides an interface for rendering shapes and text onto the game window.",
         "learn_more_link": "https://docs.sunc.su/Drawing/",
@@ -2174,5 +2189,56 @@
     "@roblox/globaltype/DrawingTriangle.Filled": {
         "documentation": "Whether the triangle should be filled.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
+    },
+    "@roblox/globaltype/DebugInfo": {
+        "documentation": "A table describing a function or stack level as returned by debug.getinfo.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo",
+        "keys": [
+            "@roblox/globaltype/DebugInfo.source",
+            "@roblox/globaltype/DebugInfo.short_src",
+            "@roblox/globaltype/DebugInfo.func",
+            "@roblox/globaltype/DebugInfo.what",
+            "@roblox/globaltype/DebugInfo.currentline",
+            "@roblox/globaltype/DebugInfo.name",
+            "@roblox/globaltype/DebugInfo.nups",
+            "@roblox/globaltype/DebugInfo.numparams",
+            "@roblox/globaltype/DebugInfo.is_vararg"
+        ]
+    },
+    "@roblox/globaltype/DebugInfo.source": {
+        "documentation": "string — The name of the chunk that created the function.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.short_src": {
+        "documentation": "string — A printable version of `source` to be used in error messages.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.func": {
+        "documentation": "function — The function itself.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.what": {
+        "documentation": "string — \"Lua\" if the function is a Luau function, or \"C\" if it is a C function.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.currentline": {
+        "documentation": "number — The current line where the given function is executing. When no line information is available, `currentline` is -1.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.name": {
+        "documentation": "string — The name of the function. If it cannot find a name, then `name` is a blank string.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.nups": {
+        "documentation": "number — The number of upvalues in the function.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.numparams": {
+        "documentation": "number — The number of parameters in the function (always 0 for C functions).",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
+    },
+    "@roblox/globaltype/DebugInfo.is_vararg": {
+        "documentation": "number — Whether the function has a variadic argument (1 if it does, 0 if it does not).",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     }
 }
