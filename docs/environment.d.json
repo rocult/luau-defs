@@ -114,6 +114,19 @@
             "AnyFunction"
         ]
     },
+    "@roblox/global/restorefunction": {
+        "documentation": "Restores a function that was previously hooked back to its original unhooked state.",
+        "learn_more_link": "https://docs.sunc.su/Closures/restorefunction/",
+        "code_sample": "local old; old = hookfunction(print, function(...)\n\treturn old(\"[hooked]\", ...)\nend)\n\nprint(\"Hello!\") -- Output: [hooked] Hello!\n\nrestorefunction(print)\nprint(\"Hello!\") -- Output: Hello!",
+        "params": [
+            {
+                "name": "functionToRestore",
+                "type": "AnyFunction",
+                "documentation": "The hooked function that you want to restore"
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/iscclosure": {
         "documentation": "Checks if the given function is a C closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/iscclosure/",

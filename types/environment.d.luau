@@ -39,6 +39,8 @@ declare function iscclosure(func: AnyFunction): boolean
 declare function isexecutorclosure(func: AnyFunction): boolean
 declare function islclosure(func: AnyFunction): boolean
 declare function newcclosure<A..., R...>(function_to_wrap: (A...) -> R...): (A...) -> R...
+declare function restorefunction(functionToRestore: (...any) -> (...any)): ()
+
 declare function getnamecallmethod(): string
 
 --#region Cryptography
@@ -165,6 +167,7 @@ declare getgc:
     ((include_tables: false?) -> AnyArray)
     & ((include_tables: true) -> { any | AnyArray })
 declare function getgenv(): AnyTable
+declare function getreg(): AnyArray
 declare function getrenv(): AnyTable
 declare filtergc: (
     (filter_type: "table", filter_options: TableFilterOptions, return_one: true) -> AnyTable?
@@ -197,8 +200,8 @@ declare function fireproximityprompt(object: ProximityPrompt): ()
 declare function firetouchinterest(part: BasePart, part2: BasePart, toggle: boolean | BooleanNumber): ()
 declare function getcallbackvalue(object: Instance, property: string): AnyFunction
 declare function gethui(): Instance
-declare function getnilinstances(): { Instance }
 declare function getinstances(): { Instance }
+declare function getnilinstances(): { Instance }
 
 --#region Metatable
 declare function getrawmetatable(object: any): AnyTable
@@ -227,6 +230,7 @@ type ExtraDataModel = {
 }
 declare function identifyexecutor(): (string, string)
 declare function request(options: Request): Response
+
 declare function setclipboard(text: string): ()
 declare function setfpscap(fps: number): ()
 declare game: typeof(game) & ExtraDataModel
