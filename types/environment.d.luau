@@ -229,6 +229,8 @@ declare function makefolder(path: string): ()
 declare function readfile(path: string): string
 declare function writefile(path: string, data: string): ()
 
+declare function dofile(path: string): ()
+
 --#region Instances
 declare function cloneref<T>(object: T & Instance): T
 declare function compareinstances(object1: Instance, object2: Instance): boolean

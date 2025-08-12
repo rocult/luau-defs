@@ -1104,6 +1104,18 @@
         ],
         "returns": []
     },
+    "@roblox/global/dofile": {
+        "documentation": "Attempts to load the file located at `path` and execute it on a new thread.",
+        "code_sample": "writefile(\"code.lua\", \"print('Hello, world!')\")\ndofile(\"code.lua\") --> \"Hello, world!\"",
+        "params": [
+            {
+                "name": "path",
+                "type": "string",
+                "documentation": "The path to the file."
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/cloneref": {
         "documentation": "Returns a copy of the given Instance. The copy should not be equal to the original Instance.",
         "learn_more_link": "https://docs.sunc.su/Instances/cloneref/",
