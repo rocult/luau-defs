@@ -29,6 +29,14 @@ type Metamethods =
     "__iter" |
     "__namecall"
 
+--#region Cache
+type cache = {
+    iscached: (object: Instance) -> boolean,
+    invalidate: (object: Instance) -> (),
+    replace: (object: Instance, newObject: Instance) -> (),
+}
+declare cache: cache
+
 --#region Closures
 declare function checkcaller(): boolean
 declare function clonefunction<A..., R...>(function_to_clone: (A...) -> R...): (A...) -> R...

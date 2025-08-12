@@ -49,6 +49,56 @@
             "string"
         ]
     },
+    "@roblox/global/cache": {
+        "documentation": "The cache library provides methods for modifying the internal Instance cache.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md"
+    },
+    "@roblox/global/cache.iscached": {
+        "documentation": "Checks whether `object` exists in the [Instance] cache.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cacheiscached",
+        "code_sample": "local Lighting = game:GetService(\"Lighting\")\ncache.invalidate(Lighting)\nprint(cache.iscached(Lighting)) --> false",
+        "params": [
+            {
+                "name": "object",
+                "type": "Instance",
+                "documentation": "The object to find."
+            }
+        ],
+        "returns": [
+            "boolean"
+        ]
+    },
+    "@roblox/global/cache.invalidate": {
+        "documentation": "Deletes `object` from the [Instance] cache. Effectively invalidates `object` as a reference to the underlying Instance.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cacheinvalidate",
+        "code_sample": "local Lighting = game:GetService(\"Lighting\")\ncache.invalidate(game:GetService(\"Lighting\"))\nprint(Lighting, Lighting == game:GetService(\"Lighting\")) --> Lighting, false",
+        "params": [
+            {
+                "name": "object",
+                "type": "Instance",
+                "documentation": "The object to invalidate."
+            }
+        ],
+        "returns": []
+    },
+    "@roblox/global/cache.replace": {
+        "documentation": "Replaces `object` in the [Instance] cache with `newObject`.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cachereplace",
+        "code_sample": "local Lighting = game:GetService(\"Lighting\")\nlocal Players = game:GetService(\"Players\")\n\ncache.replace(Lighting, Players)\n\nprint(Lighting) --> Players",
+        "params": [
+            {
+                "name": "object",
+                "type": "Instance",
+                "documentation": "The object to replace."
+            },
+            {
+                "name": "newObject",
+                "type": "Instance",
+                "documentation": "The new object to replace `object` with."
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/checkcaller": {
         "documentation": "Determines whether the function was called from the executor's thread.",
         "learn_more_link": "https://docs.sunc.su/Environment/checkcaller/",
@@ -558,7 +608,7 @@
             }
         ],
         "returns": []
-    }, 
+    },
     "@roblox/global/getgc": {
         "overloads": {
             "(false?) -> AnyTable": "@roblox/global/getgc/overload/(false?) -> AnyTable",
@@ -1015,7 +1065,7 @@
         "returns": [
             "{Instance}"
         ]
-    }, 
+    },
     "@roblox/global/getrawmetatable": {
         "documentation": "Returns the metatable of object, bypassing the `__metatable` field.",
         "learn_more_link": "https://docs.sunc.su/Metatables/getrawmetatable/",
