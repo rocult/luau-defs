@@ -93,6 +93,14 @@ declare function hookfunction<A1..., R1...>(function_to_hook: (A1...) -> R1..., 
 declare function hookmetamethod(object: AnyTable | Instance, metamethod_name: string, hook: AnyFunction): AnyFunction
 
 --[=[
+    Returns the current __namecall method name inside a namecall hook.
+    Intended for use within [hookmetamethod] on __namecall.
+    
+    @return The invoked namecall method (e.g., `FireServer`)
+]=]
+declare function getnamecallmethod(): string
+
+--[=[
     Wraps a Lua function into a C closure.
     When the returned function is called, the original Lua closure is invoked,
     and its returned values are passed to the caller.
@@ -695,6 +703,22 @@ type Response = {
     Success: boolean,
     Headers: { [string]: any },
 }
+
+--[=[
+    Copies text to the system clipboard.
+
+    @param text -- The text to copy to the clipboard
+    @return ()
+]=]
+declare function setclipboard(text: string): ()
+
+--[=[
+    Sets the in-game FPS cap to `fps`. If `fps` is 0, the FPS cap is disabled.
+
+    @param fps -- The FPS cap. 
+    @return ()
+]=]
+declare function setfpscap(fps: number): ()
 
 --[=[
     Returns the hidden, non-scriptable property's value regardless of its type,

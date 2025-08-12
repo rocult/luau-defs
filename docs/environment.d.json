@@ -86,6 +86,11 @@
         ],
         "returns": ["AnyFunction"]
     },
+    "@roblox/global/getnamecallmethod": {
+        "documentation": "Returns the current `__namecall` method name inside a namecall hook.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/metatable.md#L77",
+        "code_sample": "local old; old = hookmetamethod(game, \"__namecall\", function(self, ...)\n    local method = getnamecallmethod()\n    if method == \"FireServer\" then\n        print(\"Intercepted FireServer\")\n    end\n    return old(self, ...)\nend)"
+    },
     "@roblox/global/newcclosure": {
         "documentation": "This function takes in a function and wraps it into a C closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/newcclosure/",
@@ -885,6 +890,24 @@
             }
         ],
         "returns": ["Response"]
+    },
+    "@roblox/global/setclipboard": {
+        "documentation": "Copies `text` to the clipboard.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L202",
+        "code_sample": "setclipboard(\"Copied from Roblox!\")",
+        "params": [
+            { "name": "text", "type": "string", "documentation": "The text to copy." }
+        ],
+        "returns": []
+    },
+    "@roblox/global/setfpscap": {
+        "documentation": "Sets a frame-rate cap for the client (executor-specific behavior).",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L228",
+        "code_sample": "setfpscap(144)",
+        "params": [
+            { "name": "fps", "type": "number", "documentation": "The FPS cap." }
+        ],
+        "returns": []
     },
 
     "@roblox/global/gethiddenproperty": {
