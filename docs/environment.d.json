@@ -320,8 +320,13 @@
     "@roblox/global/crypt": {
         "documentation": "Functions made for encrypting and decrypting data.",
         "keys": [
+            "@roblox/global/crypt.base64decode",
             "@roblox/global/crypt.base64encode",
-            "@roblox/global/crypt.base64decode"
+            "@roblox/global/crypt.encrypt",
+            "@roblox/global/crypt.decrypt",
+            "@roblox/global/crypt.generatebytes",
+            "@roblox/global/crypt.generatekey",
+            "@roblox/global/crypt.hash"
         ]
     },
     "@roblox/global/crypt.base64decode": {
@@ -348,6 +353,109 @@
                 "name": "data",
                 "type": "string",
                 "documentation": "The data to encode."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/crypt.encrypt": {
+        "documentation": "Encrypts an unencoded string using AES encryption. Returns the base64 encoded and encrypted string, and the IV. If an AES IV is not provided, a random one will be generated for you, and returned as a 2nd base64 encoded string. The cipher mode default is `CBC`.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptencrypt",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The unencoded content."
+            },
+            {
+                "name": "key",
+                "type": "string",
+                "documentation": "A base64 256-bit key."
+            },
+            {
+                "name": "iv",
+                "type": "string?",
+                "documentation": "Optional base64 AES initialization vector."
+            },
+            {
+                "name": "mode",
+                "type": "CryptCipherMode?",
+                "documentation": "The AES cipher mode."
+            }
+        ],
+        "returns": [
+            "string",
+            "string"
+        ]
+    },
+    "@roblox/global/crypt.decrypt": {
+        "documentation": "Decrypts the base64 encoded and encrypted content. Returns the raw string.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptdecrypt",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The unencoded content."
+            },
+            {
+                "name": "key",
+                "type": "string",
+                "documentation": "A base64 256-bit key."
+            },
+            {
+                "name": "iv",
+                "type": "string",
+                "documentation": "The base64 AES initialization vector."
+            },
+            {
+                "name": "mode",
+                "type": "CryptCipherMode",
+                "documentation": "The AES cipher mode."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/crypt.generatebytes": {
+        "documentation": "Generates a random sequence of bytes of the given size. Returns the sequence as a base64 encoded string.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptgeneratebytes",
+        "code_sample": "local bytes = crypt.generatebytes(16)\nprint(bytes) --> bXlzcWwgYm9vbGVhbnM=\nprint(#crypt.base64decode(bytes)) --> 16",
+        "params": [
+            {
+                "name": "size",
+                "type": "number",
+                "documentation": "The number of bytes to generate."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/crypt.generatekey": {
+        "documentation": "Generates a base64 encoded 256-bit key. The result can be used as the second parameter for the [crypt.encrypt] and [crypt.decrypt] functions.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptgeneratekey",
+        "code_sample": "local bytes = crypt.generatekey()\nprint(#crypt.base64decode(bytes)) --> 32 (256 bits)",
+        "params": [],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/crypt.hash": {
+        "documentation": "Returns the result of hashing the data using the given algorithm.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#crypthash",
+        "code_sample": "local hash = crypt.hash(\"Hello, World!\", \"md5\")\nprint(hash) --> 65A8E27D8879283831B664BD8B7F0AD4",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The unencoded content."
+            },
+            {
+                "name": "algorithm",
+                "type": "CryptHashAlgorithm",
+                "documentation": "A hash algorithm."
             }
         ],
         "returns": [

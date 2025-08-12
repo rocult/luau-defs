@@ -60,9 +60,17 @@ declare function rconsoleprint(text: string): ()
 declare function rconsolesettitle(title: string): ()
 
 --#region Cryptography
+type CryptCipherMode = "CBC" | "ECB" | "CTR" | "CFB" | "OFB" | "GCM"
+type CryptHashAlgorithm = "sha1" | "sha384" | "sha512" | "md5" | "sha256" | "sha3-224" | "sha3-256" | "sha3-512"
 type crypt = {
     base64decode: (data: string) -> string,
     base64encode: (data: string) -> string,
+    
+    encrypt: (data: string, key: string, iv: string?, mode: CryptCipherMode?) -> (string, string),
+    decrypt: (data: string, key: string, iv: string, mode: CryptCipherMode) -> string,
+    generatebytes: (size: number) -> string,
+    generatekey: () -> string,
+    hash: (data: string, algorithm: CryptHashAlgorithm) -> string,
 }
 declare crypt: crypt
 
