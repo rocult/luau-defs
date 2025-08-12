@@ -321,6 +321,10 @@ declare class Connection
 end
 declare function firesignal<T...>(signal: RBXScriptSignal<T...>, ...: T...): ()
 declare function getconnections<T...>(signal: RBXScriptSignal<T...>): { Connection }
+declare function lz4compress(data: string): string
+declare function lz4decompress(data: string, size: number): string
+declare function messagebox(text: string, caption: string, flags: number): number
+declare function queue_on_teleport(code: string): ()
 declare function replicatesignal<T...>(signal: RBXScriptSignal<T...>, ...: T...): ()
 
 --#region WebSocket

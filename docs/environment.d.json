@@ -1754,6 +1754,79 @@
             "{Connection}"
         ]
     },
+    "@roblox/global/lz4compress": {
+        "documentation": "Compresses `data` using LZ4 compression.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#lz4compress",
+        "code_sample": "local text = \"Hello, world! Hello, world! Goodbye, world!\"\nprint(#text) --> 43\nprint(#lz4compress(text)) --> 34",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The uncompressed data."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/lz4decompress": {
+        "documentation": "Decompresses `data` using LZ4 compression, with the decompressed size specified by `size`.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#lz4decompress",
+        "code_sample": "local text = \"Hello, world! Hello, world!\"\nlocal compressed = lz4compress(text)\nprint(lz4decompress(compressed, #text)) --> \"Hello, world! Hello, world!\"",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The compressed data."
+            },
+            {
+                "name": "size",
+                "type": "number",
+                "documentation": "The size of the decompressed data."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+    "@roblox/global/messagebox": {
+        "documentation": "Creates a message box with the specified text, caption, and flags. Yields until the message box is closed, and returns the user input code.\n\nDocumentation regarding the flags and return codes can be found here: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#messagebox",
+        "code_sample": "local MB_ICONWARNING = 0x00000030\nlocal MB_CANCELTRYCONTINUE = 0x00000006\nlocal MB_DEFBUTTON2 = 0x00000100\n\nlocal IDCANCEL = 0x00000002\nlocal IDTRYAGAIN = 0x00000004\nlocal IDCONTINUE = 0x00000005\n\nlocal input = messagebox(\n\t\"Resource not available\\nDo you want to try again?\",\n\t\"Resource not found\",\n\tbit32.bor(MB_ICONWARNING, MB_CANCELTRYCONTINUE, MB_DEFBUTTON2)\n)\n\nif input == IDCANCEL then\n\tprint(\"Canceled\")\nelseif input == IDTRYAGAIN then\n\tprint(\"Try again\")\nelseif input == IDCONTINUE then\n\tprint(\"Continue\")\nend",
+        "params": [
+            {
+                "name": "text",
+                "type": "string",
+                "documentation": "The text to display in the message box."
+            },
+            {
+                "name": "caption",
+                "type": "string",
+                "documentation": "The caption of the message box."
+            },
+            {
+                "name": "flags",
+                "type": "number",
+                "documentation": "The flags to use."
+            }
+        ],
+        "returns": [
+            "number"
+        ]
+    },
+    "@roblox/global/queue_on_teleport": {
+        "documentation": "Queues the specified script to be executed after the player teleports to a different place.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#queue_on_teleport",
+        "code_sample": "local source = game:GetObjects(\"rbxassetid://1234\")[1].Source\nqueue_on_teleport(source)\nloadstring(source)()",
+        "params": [
+            {
+                "name": "code",
+                "type": "string",
+                "documentation": "The script to execute."
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/replicatesignal": {
         "documentation": "If possible, replicates the specified signal to the server with the provided arguments. The arguments must match the signal's expected parameters.",
         "learn_more_link": "https://docs.sunc.su/Signals/replicatesignal/",
