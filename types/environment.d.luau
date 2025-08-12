@@ -253,6 +253,8 @@ declare function getcallbackvalue(object: Instance, property: string): AnyFuncti
 declare function gethui(): Instance
 declare function getinstances(): { Instance }
 declare function getnilinstances(): { Instance }
+declare function isscriptable(object: Instance, property: string): boolean
+declare function setrbxclipboard(data: string): boolean
 
 --#region Metatable
 declare function getrawmetatable(object: any): AnyTable

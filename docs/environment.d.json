@@ -1350,6 +1350,40 @@
             "{Instance}"
         ]
     },
+    "@roblox/global/isscriptable": {
+        "documentation": "Returns whether the given property is scriptable (does not have the `notscriptable` tag).\n\nIf `true`, the property is scriptable and can be indexed normally. If `nil`, the property does not exist.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/instances.md#isscriptable",
+        "params": [
+            {
+                "name": "object",
+                "type": "Instance",
+                "documentation": "The object to index."
+            },
+            {
+                "name": "property",
+                "type": "string",
+                "documentation": "The name of the property."
+            }
+        ],
+        "returns": [
+            "boolean"
+        ]
+    },
+    "@roblox/global/setrbxclipboard": {
+        "documentation": "Sets the Studio client's clipboard to the given `rbxm` or `rbxmx` model data. This allows data from the game to be copied into a Studio client.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/instances.md#setrbxclipboard",
+        "code_sample": "local data = readfile(\"model.rbxm\")\nsetrbxclipboard(data) -- Can be pasted into Studio",
+        "params": [
+            {
+                "name": "data",
+                "type": "string",
+                "documentation": "The model data to copy to the clipboard."
+            }
+        ],
+        "returns": [
+            "boolean"
+        ]
+    },
     "@roblox/global/getrawmetatable": {
         "documentation": "Returns the metatable of object, bypassing the `__metatable` field.",
         "learn_more_link": "https://docs.sunc.su/Metatables/getrawmetatable/",
