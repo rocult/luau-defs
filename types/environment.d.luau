@@ -231,6 +231,18 @@ declare function writefile(path: string, data: string): ()
 
 declare function dofile(path: string): ()
 
+--#region Input
+declare function isrbxactive(): boolean
+declare function mouse1click(): ()
+declare function mouse1press(): ()
+declare function mouse1release(): ()
+declare function mouse2click(): ()
+declare function mouse2press(): ()
+declare function mouse2release(): ()
+declare function mousemoveabs(x: number, y: number): ()
+declare function mousemoverel(x: number, y: number): ()
+declare function mousescroll(pixels: number): ()
+
 --#region Instances
 declare function cloneref<T>(object: T & Instance): T
 declare function compareinstances(object1: Instance, object2: Instance): boolean

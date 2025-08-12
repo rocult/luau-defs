@@ -1116,6 +1116,99 @@
         ],
         "returns": []
     },
+    "@roblox/global/isrbxactive": {
+        "documentation": "Returns whether the game's window is in focus. Must be true for other input functions to work.\n\n### Aliases\n\n* `isgameactive`",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#isrbxactive",
+        "code_sample": "if isrbxactive() then\n\tmouse1click()\nend",
+        "params": [],
+        "returns": [
+            "boolean"
+        ]
+    },
+    "@roblox/global/mouse1click": {
+        "documentation": "Dispatches a left mouse button click.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1click",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mouse1press": {
+        "documentation": "Dispatches a left mouse button press.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1press",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mouse1release": {
+        "documentation": "Dispatches a left mouse button release.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1release",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mouse2click": {
+        "documentation": "Dispatches a right mouse button click.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2click",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mouse2press": {
+        "documentation": "Dispatches a right mouse button press.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2press",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mouse2release": {
+        "documentation": "Dispatches a right mouse button release.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2release",
+        "params": [],
+        "returns": []
+    },
+    "@roblox/global/mousemoveabs": {
+        "documentation": "Moves the mouse cursor to the specified absolute position.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousemoveabs",
+        "code_sample": "-- Wait for the game window to be selected\nwhile not isrbxactive() do\n\ttask.wait()\nend\n\nlocal size = workspace.CurrentCamera.ViewportSize\n\t\nfor i = 0, 50 do\n\tlocal x = math.sin(i / 50 * math.pi * 2) / 2 + 0.5\n\tlocal y = math.cos(i / 50 * math.pi * 2) / 2 + 0.5\n\tmousemoveabs(x * size.X, y * size.Y)\n\ttask.wait(0.05)\nend",
+        "params": [
+            {
+                "name": "x",
+                "type": "number",
+                "documentation": "The x-coordinate of the mouse cursor."
+            },
+            {
+                "name": "y",
+                "type": "number",
+                "documentation": "The y-coordinate of the mouse cursor."
+            }
+        ],
+        "returns": []
+    },
+    "@roblox/global/mousemoverel": {
+        "documentation": "Adjusts the mouse cursor by the specified relative amount.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousemoverel",
+        "code_sample": "-- Wait for the game window to be selected\nwhile not isrbxactive() do\n\ttask.wait()\nend\n\nfor i = 0, 20 do\n\tlocal x = math.sin(i / 20 * math.pi * 2)\n\tlocal y = math.cos(i / 20 * math.pi * 2)\n\tmousemoverel(x * 100, y * 100)\n\ttask.wait(0.05)\nend",
+        "params": [
+            {
+                "name": "x",
+                "type": "number",
+                "documentation": "The x-offset of the mouse cursor."
+            },
+            {
+                "name": "y",
+                "type": "number",
+                "documentation": "The y-offset of the mouse cursor."
+            }
+        ],
+        "returns": []
+    },
+    "@roblox/global/mousescroll": {
+        "documentation": "Dispatches a mouse scroll by the specified number of pixels.",
+        "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousescroll",
+        "params": [
+            {
+                "name": "pixels",
+                "type": "number",
+                "documentation": "The number of pixels to scroll."
+            }
+        ],
+        "returns": []
+    },
     "@roblox/global/cloneref": {
         "documentation": "Returns a copy of the given Instance. The copy should not be equal to the original Instance.",
         "learn_more_link": "https://docs.sunc.su/Instances/cloneref/",
