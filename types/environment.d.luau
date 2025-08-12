@@ -29,6 +29,45 @@ type Metamethods =
 
 
 --[=[
+    Additional functions added to the [DataModel].
+]=]
+type ExtraDataModel = {
+    --[=[
+        Performs an HTTP GET request to the given URL and returns the response body.
+
+        This is a convenience wrapper exposed on [DataModel] that proxies to the engine's HTTP layer.
+        It yields the current thread until the response has been received.
+
+        [!NOTE]
+        - HTTP requests must be permitted by the executor and/or game settings.
+        - Some parameters are executor-specific and may be ignored in certain environments.
+
+        @param url -- The absolute URL to request (e.g., "https://example.com/path")
+        @param synchronous -- If true (or omitted), the call yields until completion; if false, behavior is executor-specific
+        @param httpRequestType -- A hint for classifying the request (e.g., Enum.HttpRequestType.Default)
+        @param doNotAllowDiabolicalMode -- Advanced flag; when true, disables special/internal request modes if supported
+        @return The response body as a string
+    ]=]
+    HttpGet: (url: string, synchronous: boolean?, httpRequestType: Enum.HttpRequestType, doNotAllowDiabolicalMode: boolean?) -> string,
+
+    --[=[
+        Performs an HTTP GET request to the given URL and returns the response body.
+
+        Despite the name, this function typically yields until completion (consistent with other *Async Roblox APIs).
+        Prefer this over HttpGet when targeting parity with Roblox naming conventions.
+
+        [!NOTE]
+        Subject to the same executor/network restrictions as [HttpGet].
+
+        @param url -- The absolute URL to request (e.g., "https://example.com/path")
+        @param httpRequestType -- A hint for classifying the request (e.g., Enum.HttpRequestType.Default)
+        @return The response body as a string
+    ]=]
+    HttpGetAsync: (url: string, httpRequestType: Enum.HttpRequestType) -> string,
+}
+declare game: typeof(game) & ExtraDataModel
+
+--[=[
     Hooks a function with another wanted function, returning the original unhooked function.
     
     [!NOTE]

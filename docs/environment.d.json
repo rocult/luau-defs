@@ -1,4 +1,50 @@
 {
+    "@roblox/global/game.HttpGet": {
+        "documentation": "Performs an HTTP GET request to the given URL and returns the response body.",
+        "code_sample": "-- Basic GET\nlocal body = game:HttpGet(\"https://httpbin.org/get\")\nprint(string.sub(body, 1, 60) .. \"...\")\n\n-- With flags (executor-specific behavior may vary)\nlocal body2 = game:HttpGet(\n    \"https://httpbin.org/anything\",\n    true, -- synchronous (yield until finished)\n    Enum.HttpRequestType.Default,\n    false -- doNotAllowDiabolicalMode\n)\nprint(#body2)",
+        "params": [
+            {
+                "name": "url",
+                "type": "string",
+                "documentation": "The absolute URL to request (e.g., https://example.com/path)"
+            },
+            {
+                "name": "synchronous",
+                "type": "boolean",
+                "documentation": "If true (or omitted), the call yields until completion; if false, behavior is executor-specific",
+                "optional": true
+            },
+            {
+                "name": "httpRequestType",
+                "type": "Enum.HttpRequestType",
+                "documentation": "A hint for classifying the request (e.g., Enum.HttpRequestType.Default)"
+            },
+            {
+                "name": "doNotAllowDiabolicalMode",
+                "type": "boolean",
+                "documentation": "Advanced flag; when true, disables special/internal request modes if supported",
+                "optional": true
+            }
+        ],
+        "returns": ["string"]
+    },
+    "@roblox/global/game.HttpGetAsync": {
+        "documentation": "Performs an HTTP GET request to the given URL and returns the response body. Despite the name, most implementations yield until the request completes.",
+        "code_sample": "local body = game:HttpGetAsync(\"https://httpbin.org/get\", Enum.HttpRequestType.Default)\nprint(string.sub(body, 1, 60) .. \"...\")",
+        "params": [
+            {
+                "name": "url",
+                "type": "string",
+                "documentation": "The absolute URL to request (e.g., https://example.com/path)"
+            },
+            {
+                "name": "httpRequestType",
+                "type": "Enum.HttpRequestType",
+                "documentation": "A hint for classifying the request (e.g., Enum.HttpRequestType.Default)"
+            }
+        ],
+        "returns": ["string"]
+    },
     "@roblox/global/hookfunction": {
         "documentation": "Hooks a function with another wanted function, returning the original unhooked function.",
         "learn_more_link": "https://docs.sunc.su/Closures/hookfunction/",
