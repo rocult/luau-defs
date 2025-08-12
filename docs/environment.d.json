@@ -1609,7 +1609,13 @@
         "documentation": "Returns all ModuleScripts that are currently loaded in the caller's global state.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getloadedmodules/",
         "code_sample": "local loadedModules = getloadedmodules()\n\nprint(\"Total loaded modules:\", #loadedModules)\n\n-- Print the first few modules\nfor i = 1, math.min(5, #loadedModules) do\n\tlocal module = loadedModules[i]\n\tprint(i, module:GetFullName())\nend",
-        "params": [],
+        "params": [
+            {
+                "name": "excludeCore",
+                "type": "boolean?",
+                "documentation": "Whether or not to exclude core modules from the list."
+            }
+        ],
         "returns": [
             "AnyTable"
         ]

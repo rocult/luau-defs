@@ -297,7 +297,7 @@ declare function setthreadidentity(id: number): ()
 
 --#region Scripts
 declare function getcallingscript(): GenericScript?
-declare function getloadedmodules(): { ModuleScript }
+declare function getloadedmodules(excludeCore: boolean?): { ModuleScript }
 declare function getrunningscripts(): { GenericScript }
 declare function getscriptbytecode(script: GenericScript): string?
 declare function getscriptclosure(script: GenericScript): AnyFunction?
