@@ -31,12 +31,16 @@
         "documentation": "The total executions from this `script_key`. It will be `0` by default.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-totalexecutions"
     },
-    "@roblox/global/SecondsLeft": {
+    "@roblox/global/LRM_SecondsLeft": {
         "documentation": "The seconds left until expiry on this `script_key` from the time of execution. It will be `math.huge` if `auth_expire` isn't set.\n\n## Note\n\nThis does not update automatically.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-secondsleft"
     },
     "@roblox/global/LRM_UserNote": {
         "documentation": "The user note. It will be `Not specified` by default.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-usernote"
+    },
+    "@roblox/global/LRM_ScriptVersion": {
+        "documentation": "The version of the script. It's in the format of `x.x.x.x` where `x` is a number. For example: `0.0.1.2`.",
+        "learn_more_link": "https://docs.luarmor.net/luarmor-user-manual-and-f.a.q#runtime-variables"
     }
 }
