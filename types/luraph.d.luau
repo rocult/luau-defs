@@ -1,12 +1,12 @@
-type GenericFunction<T, U...> = (U...) -> T
+type GenericFunction<A..., R...> = (A...) -> R...
 
-declare function LPH_ENCFUNC<T, U...>(toEncrypt: GenericFunction<T, U...>, encKey: string, decKey: string): GenericFunction<T, U...> 
+declare function LPH_ENCFUNC<A..., R...>(toEncrypt: GenericFunction<A..., R...>, encKey: string, decKey: string): GenericFunction<A..., R...> 
 declare function LPH_ENCSTR(toEncrypt: string): string
 declare function LPH_ENCNUM(toEncrypt: number): number
 declare function LPH_CRASH(): never
-declare function LPH_JIT<T, U...>(toEnchance: GenericFunction<T, U...>): GenericFunction<T, U...>
-declare function LPH_JIT_MAX<T, U...>(toEnchance: GenericFunction<T, U...>): GenericFunction<T, U...>
-declare function LPH_NO_VIRTUALIZE<T, U...>(toDevirtualize: GenericFunction<T, U...>): GenericFunction<T, U...> 
-declare function LPH_NO_UPVALUES<T, U...>(toFix: GenericFunction<T, U...>): GenericFunction<T, U...>
+declare function LPH_JIT<A..., R...>(toEnchance: GenericFunction<A..., R...>): GenericFunction<A..., R...>
+declare function LPH_JIT_MAX<A..., R...>(toEnchance: GenericFunction<A..., R...>): GenericFunction<A..., R...>
+declare function LPH_NO_VIRTUALIZE<A..., R...>(toDevirtualize: GenericFunction<A..., R...>): GenericFunction<A..., R...> 
+declare function LPH_NO_UPVALUES<A..., R...>(toFix: GenericFunction<A..., R...>): GenericFunction<A..., R...>
 declare LPH_OBFUSCATED: boolean
 declare LPH_LINE: number

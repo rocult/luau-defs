@@ -2,5 +2,5 @@
 # It is not intended for manual editing.
 format = 2
 name = "stefanuk12/luau_defs"
-version = "0.1.0"
-target = "roblox"
+version = "0.2.1"
+target = "luau"

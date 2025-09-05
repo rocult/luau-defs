@@ -7,5 +7,4 @@ declare LRM_SecondsLeft: number
 declare LRM_UserNote: string
 declare LRM_ScriptVersion: string
 
-type GenericFunction<T, U...> = (U...) -> T
-declare function LRM_INIT_SCRIPT<T, U...>(f: GenericFunction<T, U...>): GenericFunction<T, U...> 
+declare function LRM_INIT_SCRIPT(f: () -> ()): ()
