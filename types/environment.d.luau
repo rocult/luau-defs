@@ -290,8 +290,7 @@ type Response = {
     Headers: { [string]: any },
 }
 type ExtraDataModel = {
-    HttpGet: (url: string, synchronous: boolean?, httpRequestType: Enum.HttpRequestType, doNotAllowDiabolicalMode: boolean?) -> string,
-    HttpGetAsync: (url: string, httpRequestType: Enum.HttpRequestType) -> string,
+    HttpGet: (self: typeof(game), url: string, synchronous: boolean?, httpRequestType: typeof(Enum.HttpRequestType)?, doNotAllowDiabolicalMode: boolean?) -> string,
 }
 declare function identifyexecutor(): (string, string)
 declare function request(options: Request): Response

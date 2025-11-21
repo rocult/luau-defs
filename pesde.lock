@@ -2,5 +2,5 @@
 # It is not intended for manual editing.
 format = 2
 name = "stefanuk12/luau_defs"
-version = "0.2.2"
+version = "0.2.3"
 target = "luau"
