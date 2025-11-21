@@ -1,5 +1,5 @@
 {
-    "@roblox/global/LRM_INIT_SCRIPT": {
+    "@luarmor/global/LRM_INIT_SCRIPT": {
         "documentation": "## Warning\n\nYou **must** yield somewhere, even if it's just a `task.wait()` at the end. Otherwise, `script_key` will read as nil.\n\n## Description\n\nThis macro allows you to run a piece of code before your script is ran. It accepts a **constant** function.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/macros#lrm-init-script",
         "code_sample": "LRM_INIT_SCRIPT(function()\n    -- some code\n\n    -- wait for the user to put the key in or something\n    while HasUserCompleted == false do\n        -- but this wait is needed!! \n        task.wait()\n    end\nend)",
@@ -14,34 +14,34 @@
             "GenericFunction<T, U...>"
         ]
     },
-    "@roblox/global/script_key": {
+    "@luarmor/global/script_key": {
         "documentation": "The script key used to execute the script, if one was provided."
     },
-    "@roblox/global/LRM_IsUserPremium": {
+    "@luarmor/global/LRM_IsUserPremium": {
         "documentation": "A `boolean` indicating if the user is premium or not. This is useful for FFA scripts ('freemium').\n\n## Note\n\nAd Reward keys are considered premium since a key was used to execute the script. Instead, you might want to check if `LRM_UserNote == \"Ad Reward\"`.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-isuserpremium"
     },
-    "@roblox/global/LRM_LinkedDiscordID": {
+    "@luarmor/global/LRM_LinkedDiscordID": {
         "documentation": "The linked Discord ID of the user.\n\n## Note\n\nThis is their ID, not username. You need to use some API to get their username.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-linkeddiscordid"
     },
-    "@roblox/global/LRM_ScriptName": {
+    "@luarmor/global/LRM_ScriptName": {
         "documentation": "The name of the current script.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-scriptname"
     },
-    "@roblox/global/LRM_TotalExecutions": {
+    "@luarmor/global/LRM_TotalExecutions": {
         "documentation": "The total executions from this `script_key`. It will be `0` by default.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-totalexecutions"
     },
-    "@roblox/global/LRM_SecondsLeft": {
+    "@luarmor/global/LRM_SecondsLeft": {
         "documentation": "The seconds left until expiry on this `script_key` from the time of execution. It will be `math.huge` if `auth_expire` isn't set.\n\n## Note\n\nThis does not update automatically.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-secondsleft"
     },
-    "@roblox/global/LRM_UserNote": {
+    "@luarmor/global/LRM_UserNote": {
         "documentation": "The user note. It will be `Not specified` by default.",
         "learn_more_link": "https://luarmor.mintlify.app/scripting/runtime-vars#lrm-usernote"
     },
-    "@roblox/global/LRM_ScriptVersion": {
+    "@luarmor/global/LRM_ScriptVersion": {
         "documentation": "The version of the script. It's in the format of `x.x.x.x` where `x` is a number. For example: `0.0.1.2`.",
         "learn_more_link": "https://docs.luarmor.net/luarmor-user-manual-and-f.a.q#runtime-variables"
     }

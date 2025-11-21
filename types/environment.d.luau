@@ -106,7 +106,7 @@ type debug = {
 
     getinfo: (func_or_level: AnyFunction | number) -> DebugInfo,
 }
-declare debug: typeof(debug) & debug
+declare debug: debug & typeof(debug)
 --#endregion
 
 --#region Drawing

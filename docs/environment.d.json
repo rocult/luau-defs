@@ -1,5 +1,5 @@
 {
-    "@roblox/global/game.HttpGet": {
+    "@custom/global/game.HttpGet": {
         "documentation": "Performs an HTTP GET request to the given URL and returns the response body.",
         "code_sample": "-- Basic GET\nlocal body = game:HttpGet(\"https://httpbin.org/get\")\nprint(string.sub(body, 1, 60) .. \"...\")\n\n-- With flags (executor-specific behavior may vary)\nlocal body2 = game:HttpGet(\n    \"https://httpbin.org/anything\",\n    true, -- synchronous (yield until finished)\n    Enum.HttpRequestType.Default,\n    false -- doNotAllowDiabolicalMode\n)\nprint(#body2)",
         "params": [
@@ -30,7 +30,7 @@
             "string"
         ]
     },
-    "@roblox/global/game.HttpGetAsync": {
+    "@custom/global/game.HttpGetAsync": {
         "documentation": "Performs an HTTP GET request to the given URL and returns the response body. Despite the name, most implementations yield until the request completes.",
         "code_sample": "local body = game:HttpGetAsync(\"https://httpbin.org/get\", Enum.HttpRequestType.Default)\nprint(string.sub(body, 1, 60) .. \"...\")",
         "params": [
@@ -49,11 +49,11 @@
             "string"
         ]
     },
-    "@roblox/global/cache": {
+    "@custom/global/cache": {
         "documentation": "The cache library provides methods for modifying the internal Instance cache.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md"
     },
-    "@roblox/global/cache.iscached": {
+    "@custom/global/cache.iscached": {
         "documentation": "Checks whether `object` exists in the [Instance] cache.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cacheiscached",
         "code_sample": "local Lighting = game:GetService(\"Lighting\")\ncache.invalidate(Lighting)\nprint(cache.iscached(Lighting)) --> false",
@@ -68,7 +68,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/cache.invalidate": {
+    "@custom/global/cache.invalidate": {
         "documentation": "Deletes `object` from the [Instance] cache. Effectively invalidates `object` as a reference to the underlying Instance.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cacheinvalidate",
         "code_sample": "local Lighting = game:GetService(\"Lighting\")\ncache.invalidate(game:GetService(\"Lighting\"))\nprint(Lighting, Lighting == game:GetService(\"Lighting\")) --> Lighting, false",
@@ -81,7 +81,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/cache.replace": {
+    "@custom/global/cache.replace": {
         "documentation": "Replaces `object` in the [Instance] cache with `newObject`.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/cache.md#cachereplace",
         "code_sample": "local Lighting = game:GetService(\"Lighting\")\nlocal Players = game:GetService(\"Players\")\n\ncache.replace(Lighting, Players)\n\nprint(Lighting) --> Players",
@@ -99,7 +99,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/checkcaller": {
+    "@custom/global/checkcaller": {
         "documentation": "Determines whether the function was called from the executor's thread.",
         "learn_more_link": "https://docs.sunc.su/Environment/checkcaller/",
         "code_sample": "-- Function to demonstrate checkcaller\nlocal function testCaller()\n\tprint(\"Called from executor thread:\", checkcaller())\nend\n\n-- Call from executor thread\ntestCaller() -- Output: Called from executor thread: true\n\n-- Create a dummy event\nlocal bindable = Instance.new(\"BindableEvent\")\nbindable.Event:Connect(testCaller) -- This will call from a Roblox thread\nbindable:Fire() -- Output: Called from executor thread: false",
@@ -108,7 +108,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/clonefunction": {
+    "@custom/global/clonefunction": {
         "documentation": "Creates and returns a new function that has the same behaviour as the passed function.",
         "learn_more_link": "https://docs.sunc.su/Closures/clonefunction/",
         "code_sample": "local function DummyFunction()\n\tprint(\"Hello\")\nend\n\nlocal ClonedFunction = clonefunction(DummyFunction)\n\nprint(debug.info(ClonedFunction, \"l\")) -- Output: 1\nprint(debug.info(ClonedFunction, \"n\")) -- Output: DummyFunction\nprint(ClonedFunction == DummyFunction) -- Output: false\nprint(getfenv(ClonedFunction) == getfenv(DummyFunction)) -- Output: true",
@@ -123,7 +123,7 @@
             "AnyFunction"
         ]
     },
-    "@roblox/global/getfunctionhash": {
+    "@custom/global/getfunctionhash": {
         "documentation": "Returns the hex-represented SHA-384 hash of a provided function's instructions (code) and constants.",
         "learn_more_link": "https://docs.sunc.su/Closures/getfunctionhash/",
         "code_sample": "local function isSHA384Hex(hash)\n\tif #hash ~= 96 then\n\t\treturn false\n\tend\n\tif not hash:match(\"^[0-9a-fA-F]+$\") then\n\t\treturn false\n\tend\n\treturn true\nend\n\nlocal DummyFunction0 = function() end\nlocal DummyFunction1 = function(...) end\nlocal DummyFunction2 = function() end\nlocal DummyFunction3 = function() return \"Constant\" end\nlocal DummyFunction4 = function() return \"Constant2\" end\n\nprint(isSHA384Hex(getfunctionhash(DummyFunction0))) -- Output: true\nprint(getfunctionhash(DummyFunction0) == getfunctionhash(DummyFunction1)) -- Output: false\nprint(getfunctionhash(DummyFunction0) == getfunctionhash(DummyFunction2)) -- Output: true\nprint(getfunctionhash(DummyFunction3) == getfunctionhash(DummyFunction4)) -- Output: false",
@@ -138,7 +138,7 @@
             "string"
         ]
     },
-    "@roblox/global/hookfunction": {
+    "@custom/global/hookfunction": {
         "documentation": "Hooks a function with another wanted function, returning the original unhooked function.",
         "learn_more_link": "https://docs.sunc.su/Closures/hookfunction/",
         "code_sample": "local function DummyFunction()\n\tprint(\"I am not hooked!\")\nend\n\nlocal function DummyHook()\n\tprint(\"I am hooked!\")\nend\n\nDummyFunction() -- Output: I am not hooked!\n\nlocal OldFunction = hookfunction(DummyFunction, DummyHook)\n\nDummyFunction() -- Output: I am hooked!\nOldFunction() -- Output: I am not hooked!",
@@ -158,7 +158,7 @@
             "AnyFunction"
         ]
     },
-    "@roblox/global/hookmetamethod": {
+    "@custom/global/hookmetamethod": {
         "documentation": "Takes any lua value that can have metatable and attempts to hook the specified metamethod of the lua value with the hookfunction function.",
         "learn_more_link": "https://docs.sunc.su/Closures/hookmetamethod/",
         "code_sample": "local Original; Original = hookmetamethod(game, \"__index\", function(...)\n\tlocal Key = select(2, ...)\n\tprint(Key)\n\treturn Original(...)\nend)\n\nlocal _ = game.PlaceId\nhookmetamethod(game, \"__index\", Original) -- Restores game's __index\n\n-- Output: PlaceId",
@@ -183,7 +183,7 @@
             "AnyFunction"
         ]
     },
-    "@roblox/global/iscclosure": {
+    "@custom/global/iscclosure": {
         "documentation": "Checks if the given function is a C closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/iscclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an Executor C Closure\")\nend)\n\nlocal DummyStandardCFunction = print\nlocal DummyGlobalCFunction = getgc\n\nprint(iscclosure(DummyCFunction)) -- Output: true\nprint(iscclosure(DummyGlobalCFunction)) -- Output: true\nprint(iscclosure(DummyStandardCFunction)) -- Output: true\nprint(iscclosure(DummyLuaFunction)) -- Output: false",
@@ -198,7 +198,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/isexecutorclosure": {
+    "@custom/global/isexecutorclosure": {
         "documentation": "Checks if a given function is the executor's closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/isexecutorclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an executor C closure\")\nend)\n\nlocal DummyStandardCFunction = print\nlocal DummyGlobalCFunction = getgc\n\nprint(isexecutorclosure(DummyLuaFunction)) -- Output: true\nprint(isexecutorclosure(DummyCFunction)) -- Output: true\nprint(isexecutorclosure(DummyGlobalCFunction)) -- Output: true\nprint(isexecutorclosure(DummyStandardCFunction)) -- Output: false",
@@ -213,7 +213,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/islclosure": {
+    "@custom/global/islclosure": {
         "documentation": "Checks if a given function is a L closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/islclosure/",
         "code_sample": "local function DummyLuaFunction()\n\tprint(\"This is an executor Lua closure\")\nend\n\nlocal DummyCFunction = newcclosure(function()\n\tprint(\"This is an executor C closure\")\nend)\n\nlocal DummyStandardCFunction = print\n\nprint(islclosure(DummyLuaFunction)) -- Output: true\nprint(islclosure(DummyStandardCFunction)) -- Output: false\nprint(islclosure(DummyCFunction)) -- Output: false",
@@ -228,7 +228,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/newcclosure": {
+    "@custom/global/newcclosure": {
         "documentation": "This function takes in a function and wraps it into a C closure.",
         "learn_more_link": "https://docs.sunc.su/Closures/newcclosure/",
         "code_sample": "local DummyFunction = function(...)\n\treturn ...\nend\n\nprint(iscclosure(DummyFunction)) -- Output: false\n\nlocal WrappedFunction = newcclosure(DummyFunction)\n\nprint(iscclosure(WrappedFunction)) -- Output: true\n\nlocal FunctionResults = WrappedFunction(\"Hello\")\nprint(FunctionResults) -- Output: Hello",
@@ -243,7 +243,7 @@
             "AnyFunction"
         ]
     },
-    "@roblox/global/restorefunction": {
+    "@custom/global/restorefunction": {
         "documentation": "Restores a function that was previously hooked back to its original implementation.",
         "learn_more_link": "https://docs.sunc.su/Closures/restorefunction/",
         "code_sample": "local old; old = hookfunction(print, function(...)\n\treturn old(\"[hooked]\", ...)\nend)\n\nprint(\"Hello!\") -- Output: [hooked] Hello!\n\nrestorefunction(print)\nprint(\"Hello!\") -- Output: Hello!",
@@ -256,33 +256,33 @@
         ],
         "returns": []
     },
-    "@roblox/global/getnamecallmethod": {
+    "@custom/global/getnamecallmethod": {
         "documentation": "Returns the current `__namecall` method name inside a namecall hook.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/metatable.md#L77",
         "code_sample": "local old; old = hookmetamethod(game, \"__namecall\", function(self, ...)\n    local method = getnamecallmethod()\n    if method == \"FireServer\" then\n        print(\"Intercepted FireServer\")\n    end\n    return old(self, ...)\nend)"
     },
-    "@roblox/global/rconsoleclear": {
+    "@custom/global/rconsoleclear": {
         "documentation": "Clears the output of the console window.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleclear",
         "code_sample": "-- Create the console window\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsolecreate()\n\n-- Clears the output \"Hello, world!\"\nrconsoleclear()",
         "params": [],
         "returns": []
     },
-    "@roblox/global/rconsolecreate": {
+    "@custom/global/rconsolecreate": {
         "documentation": "Opens the console window. Text previously output to the console will not be cleared.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsolecreate",
         "code_sample": "-- Create the console window\nrconsolesettitle(\"Beautiful Mountains\")\nrconsolecreate()\n\nlocal function generate()\n\t-- Generate a random decimal number for noise\n\tlocal seed = math.random(100, 999) + math.random()\n\n\t-- Prints 25 lines of text\n\tfor i = 1, 25 do\n\t\tlocal noise = math.noise(i / 8, seed) + 0.5\n\t\tlocal height = math.floor(noise * 50)\n\t\tlocal line = string.rep(\"*\", height)\n\t\trconsoleprint(line .. \"\n\")\n\tend\n\n\t-- Prompts the user to generate a new set of mountains\n\t-- or exit the console window\n\trconsoleprint(\"\nEnter 'Y' to generate a new landscape, or nothing to exit\n\")\n\n\tlocal input = rconsoleinput()\n\n\tif string.lower(input) == \"y\" then\n\t\trconsoleclear()\n\t\tgenerate()\n\telse\n\t\trconsoledestroy()\n\tend\nend\n\ngenerate()",
         "params": [],
         "returns": []
     },
-    "@roblox/global/rconsoledestroy": {
+    "@custom/global/rconsoledestroy": {
         "documentation": "Closes the console window and clears its output. The title will not be changed.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoledestroy",
         "code_sample": "-- Create a console window titled \"New console\" and with the output \"Hello, world!\"\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsolecreate()\n\n-- Close the console window, clearing its output\nrconsoledestroy()\n\n-- Reopen the console window titled \"New console\" with no output\nrconsolecreate()",
         "params": [],
         "returns": []
     },
-    "@roblox/global/rconsoleinput": {
+    "@custom/global/rconsoleinput": {
         "documentation": "Waits for the user to input text into the console window. Returns the result.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleinput",
         "code_sample": "-- Create the console window\nrconsolesettitle(\"Your Info\")\nrconsoleprint(\"What is your name?\nMy name is: \")\nrconsolecreate()\n\n-- Retrieve the user's input\nlocal name = rconsoleinput()\nrconsoleprint(\"Hello, \" .. name .. \"!\")\n\n-- Cleanup\ntask.wait(1)\nrconsoledestroy()",
@@ -291,7 +291,7 @@
             "string"
         ]
     },
-    "@roblox/global/rconsoleprint": {
+    "@custom/global/rconsoleprint": {
         "documentation": "Prints `text` to the console window. Does not clear existing text or create a new line.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleprint",
         "code_sample": "-- Create a console window titled \"New console\" with the\n-- output \"Hello, world!! How are you today?\"\nrconsolesettitle(\"New console\")\nrconsoleprint(\"Hello, world!\")\nrconsoleprint(\"! How are you today?\")\nrconsolecreate()",
@@ -304,7 +304,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/rconsolesettitle": {
+    "@custom/global/rconsolesettitle": {
         "documentation": "Sets the title of the console window to `title`.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsolesettitle",
         "code_sample": "-- Create a console window titled \"My console\"\nrconsolesettitle(\"My console\")\nrconsolecreate()",
@@ -317,19 +317,19 @@
         ],
         "returns": []
     },
-    "@roblox/global/crypt": {
+    "@custom/global/crypt": {
         "documentation": "Functions made for encrypting and decrypting data.",
         "keys": [
-            "@roblox/global/crypt.base64decode",
-            "@roblox/global/crypt.base64encode",
-            "@roblox/global/crypt.encrypt",
-            "@roblox/global/crypt.decrypt",
-            "@roblox/global/crypt.generatebytes",
-            "@roblox/global/crypt.generatekey",
-            "@roblox/global/crypt.hash"
+            "@custom/global/crypt.base64decode",
+            "@custom/global/crypt.base64encode",
+            "@custom/global/crypt.encrypt",
+            "@custom/global/crypt.decrypt",
+            "@custom/global/crypt.generatebytes",
+            "@custom/global/crypt.generatekey",
+            "@custom/global/crypt.hash"
         ]
     },
-    "@roblox/global/crypt.base64decode": {
+    "@custom/global/crypt.base64decode": {
         "documentation": "Decodes a Base64 string into its original form.",
         "learn_more_link": "https://docs.sunc.su/Cryptography/base64decode/",
         "code_sample": "local bytecode = game:HttpGet(\"https://rubis-api.numelon.com/v2/scrap/zuxQZuM9Tnl5MRbo/raw\")\nwritefile(\"sound.mp3\", crypt.base64decode(bytecode)) -- This file should be a valid and working mp3 file.",
@@ -344,7 +344,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.base64encode": {
+    "@custom/global/crypt.base64encode": {
         "documentation": "Encodes a string into Base64 format.",
         "learn_more_link": "https://docs.sunc.su/Cryptography/base64encode/",
         "code_sample": "print(crypt.base64encode(\"DummyString\\0\\2\")) -- Output: RHVtbXlTdHJpbmcAAg==",
@@ -359,7 +359,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.encrypt": {
+    "@custom/global/crypt.encrypt": {
         "documentation": "Encrypts an unencoded string using AES encryption. Returns the base64 encoded and encrypted string, and the IV. If an AES IV is not provided, a random one will be generated for you, and returned as a 2nd base64 encoded string. The cipher mode default is `CBC`.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptencrypt",
         "params": [
@@ -389,7 +389,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.decrypt": {
+    "@custom/global/crypt.decrypt": {
         "documentation": "Decrypts the base64 encoded and encrypted content. Returns the raw string.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptdecrypt",
         "params": [
@@ -418,7 +418,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.generatebytes": {
+    "@custom/global/crypt.generatebytes": {
         "documentation": "Generates a random sequence of bytes of the given size. Returns the sequence as a base64 encoded string.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptgeneratebytes",
         "code_sample": "local bytes = crypt.generatebytes(16)\nprint(bytes) --> bXlzcWwgYm9vbGVhbnM=\nprint(#crypt.base64decode(bytes)) --> 16",
@@ -433,7 +433,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.generatekey": {
+    "@custom/global/crypt.generatekey": {
         "documentation": "Generates a base64 encoded 256-bit key. The result can be used as the second parameter for the [crypt.encrypt] and [crypt.decrypt] functions.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#cryptgeneratekey",
         "code_sample": "local bytes = crypt.generatekey()\nprint(#crypt.base64decode(bytes)) --> 32 (256 bits)",
@@ -442,7 +442,7 @@
             "string"
         ]
     },
-    "@roblox/global/crypt.hash": {
+    "@custom/global/crypt.hash": {
         "documentation": "Returns the result of hashing the data using the given algorithm.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/crypt.md#crypthash",
         "code_sample": "local hash = crypt.hash(\"Hello, World!\", \"md5\")\nprint(hash) --> 65A8E27D8879283831B664BD8B7F0AD4",
@@ -462,7 +462,7 @@
             "string"
         ]
     },
-    "@luau/global/debug.getconstant": {
+    "@custom/global/debug.getconstant": {
         "documentation": "Returns the constant at the specified index. If there is no constant at that index, `nil` is returned.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getconstant/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nlocal Constant = debug.getconstant(DummyFunction, 1)\nprint(Constant) -- Output: Hello",
@@ -482,7 +482,7 @@
             "any"
         ]
     },
-    "@luau/global/debug.getconstants": {
+    "@custom/global/debug.getconstants": {
         "documentation": "Returns the constants of the specified Lua function.",
         "learn_more_link": "https://docs.sunc.su/Closures/debug.getconstants/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nlocal Constants = debug.getconstants(DummyFunction)\nprint(Constants[1]) -- Output: Hello",
@@ -497,7 +497,7 @@
             "AnyTable"
         ]
     },
-    "@luau/global/debug.getproto": {
+    "@custom/global/debug.getproto": {
         "documentation": "Returns the proto at the specified index. If the third argument is `true`, returns a table containing the active functions of the proto.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getproto/",
         "code_sample": "local function OuterFunction()\n\tlocal function InnerFunction1()\n\t\treturn \"Inner1\"\n\tend\n\tlocal function InnerFunction2()\n\t\treturn \"Inner2\"\n\tend\n\treturn InnerFunction1() .. InnerFunction2()\nend\n\nlocal Proto = debug.getproto(OuterFunction, 1)\nprint(Proto()) -- Output: Inner1",
@@ -523,7 +523,7 @@
             "AnyFunction | table"
         ]
     },
-    "@luau/global/debug.getprotos": {
+    "@custom/global/debug.getprotos": {
         "documentation": "Returns all the functions (protos) defined within the given Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getprotos/",
         "code_sample": "local function OuterFunction()\n\tlocal function InnerFunction1()\n\t\treturn \"Inner1\"\n\tend\n\tlocal function InnerFunction2()\n\t\treturn \"Inner2\"\n\tend\n\treturn InnerFunction1() .. InnerFunction2()\nend\n\nlocal Protos = debug.getprotos(OuterFunction)\nprint(\"Number of inner functions:\", #Protos) -- Output: Number of inner functions: 2",
@@ -538,7 +538,7 @@
             "AnyTable"
         ]
     },
-    "@luau/global/debug.getstack": {
+    "@custom/global/debug.getstack": {
         "documentation": "Returns all values used in the call stack of the provided level. If index is given, returns the value at that position inside the stack frame.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getstack/",
         "code_sample": "local function InnerFunction()\n\tlocal StackValues = debug.getstack(2)\n\tfor i, v in ipairs(StackValues) do\n\t\tprint(i, v)\n\tend\nend\n\nlocal function OuterFunction()\n\tlocal LocalVar = \"OuterValue\"\n\tInnerFunction()\nend\n\nOuterFunction()",
@@ -559,7 +559,7 @@
             "any | table"
         ]
     },
-    "@luau/global/debug.getupvalue": {
+    "@custom/global/debug.getupvalue": {
         "documentation": "Returns the upvalue at the specified index.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getupvalue/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nlocal Upvalue = debug.getupvalue(DummyFunction, 1)\nprint(Upvalue) -- Output: Value: ",
@@ -579,7 +579,7 @@
             "any"
         ]
     },
-    "@luau/global/debug.getupvalues": {
+    "@custom/global/debug.getupvalues": {
         "documentation": "Returns the upvalues of the specified Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.getupvalues/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nlocal Upvalues = debug.getupvalues(DummyFunction)\nprint(Upvalues[1]) -- Output: Value: ",
@@ -594,7 +594,7 @@
             "AnyTable"
         ]
     },
-    "@luau/global/debug.setconstant": {
+    "@custom/global/debug.setconstant": {
         "documentation": "Sets the constant at the specified index in the given Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setconstant/",
         "code_sample": "local function DummyFunction()\n\treturn \"Hello\"\nend\n\nprint(debug.getconstant(DummyFunction, 1)) -- Output: Hello\ndebug.setconstant(DummyFunction, 1, \"Goodbye\")\nprint(debug.getconstant(DummyFunction, 1)) -- Output: Goodbye",
@@ -617,7 +617,7 @@
         ],
         "returns": []
     },
-    "@luau/global/debug.setstack": {
+    "@custom/global/debug.setstack": {
         "documentation": "Sets a new value in the call stack at the specified level and index.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setstack/",
         "code_sample": "local function InnerFunction()\n\tlocal Original = debug.getstack(2, 1)\n\tprint(\"Original value:\", Original)\n\tdebug.setstack(2, 1, \"Modified\")\n\tlocal Modified = debug.getstack(2, 1)\n\tprint(\"Modified value:\", Modified)\nend\n\nlocal function OuterFunction()\n\tlocal LocalVar = \"OuterValue\"\n\tInnerFunction()\n\tprint(\"Local variable after modification:\", LocalVar)\nend\n\nOuterFunction()",
@@ -640,7 +640,7 @@
         ],
         "returns": []
     },
-    "@luau/global/debug.setupvalue": {
+    "@custom/global/debug.setupvalue": {
         "documentation": "Replaces the upvalue at the specified index in the given Lua function.",
         "learn_more_link": "https://docs.sunc.su/Debug/debug.setupvalue/",
         "code_sample": "local Prefix = \"Value: \"\nlocal function DummyFunction(Value)\n\treturn Prefix .. Value\nend\n\nprint(DummyFunction(\"Hello\")) -- Output: Value: Hello\ndebug.setupvalue(DummyFunction, 1, \"Modified: \")\nprint(DummyFunction(\"Hello\")) -- Output: Modified: Hello",
@@ -663,7 +663,7 @@
         ],
         "returns": []
     },
-    "@luau/global/debug.getinfo": {
+    "@custom/global/debug.getinfo": {
         "documentation": "Returns debugger information about a function or stack level.\n\n> 🪲 Compatibility\n> Some executors are missing certain fields.\n\n### DebugInfo\n\n| Field | Type | Description |\n| ----- | ---- | ----------- |\n| `source` | string | The name of the chunk that created the function. |\n| `short_src` | string | A \"printable\" version of `source` to be used in error messages. |\n| `func` | function | The function itself. |\n| `what` | string | The string \"Lua\" if the function is a Luau function, or \"C\" if it is a C function. |\n| `currentline` | number | The current line where the given function is executing. When no line information is available, `currentline` is set to -1. |\n| `name` | string | The name of the function. If it cannot find a name, then `name` is a blank string. |\n| `nups` | number | The number of upvalues in the function. |\n| `numparams` | number | The number of parameters in the function (always 0 for C functions). |\n| `is_vararg` | number | Whether the function has a variadic argument (1 if it does, 0 if it does not). |",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuggetinfo",
         "code_sample": "local function foo()\n\tprint(\"Hello, world!\")\nend\n\nfor k, v in pairs(debug.getinfo(foo)) do\n\tprint(k, v, \"(\" .. type(v) .. \")\")\nend",
@@ -678,15 +678,15 @@
             "DebugInfo"
         ]
     },
-    "@roblox/global/Drawing": {
+    "@custom/global/Drawing": {
         "documentation": "The Drawing library provides an interface for rendering shapes and text onto the game window.",
         "learn_more_link": "https://docs.sunc.su/Drawing/",
         "keys": [
-            "@roblox/global/Drawing.new",
-            "@roblox/global/Drawing.Fonts"
+            "@custom/global/Drawing.new",
+            "@custom/global/Drawing.Fonts"
         ]
     },
-    "@roblox/global/Drawing.new": {
+    "@custom/global/Drawing.new": {
         "documentation": "Creates a new drawing object of the specified type.",
         "learn_more_link": "https://docs.sunc.su/Drawing/",
         "code_sample": "local Camera = game.Workspace.CurrentCamera\nlocal Viewport = Camera.ViewportSize\nlocal Position = Vector2.new(Viewport.X / 2, Viewport.Y / 2)\n\nlocal circle = Drawing.new(\"Circle\")\ncircle.Radius = 50\ncircle.Color = Color3.fromRGB(255, 0, 0)\ncircle.Filled = true\ncircle.NumSides = 32\ncircle.Position = Position\ncircle.Transparency = 0.7\ncircle.Visible = true\n\ntask.wait(0.6)\ncircle:Destroy()",
@@ -701,36 +701,36 @@
             "DrawingObject"
         ]
     },
-    "@roblox/global/Drawing.Fonts": {
+    "@custom/global/Drawing.Fonts": {
         "documentation": "Contains font constants for use with [Text](https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text) drawing objects.",
         "learn_more_link": "https://docs.sunc.su/Drawing/",
         "keys": [
-            "@roblox/global/Drawing.Fonts.UI",
-            "@roblox/global/Drawing.Fonts.System",
-            "@roblox/global/Drawing.Fonts.Plex",
-            "@roblox/global/Drawing.Fonts.Monospace"
+            "@custom/global/Drawing.Fonts.UI",
+            "@custom/global/Drawing.Fonts.System",
+            "@custom/global/Drawing.Fonts.Plex",
+            "@custom/global/Drawing.Fonts.Monospace"
         ]
     },
-    "@roblox/global/Drawing.Fonts.UI": {
+    "@custom/global/Drawing.Fonts.UI": {
         "documentation": "The UI font."
     },
-    "@roblox/global/Drawing.Fonts.System": {
+    "@custom/global/Drawing.Fonts.System": {
         "documentation": "The system font."
     },
-    "@roblox/global/Drawing.Fonts.Plex": {
+    "@custom/global/Drawing.Fonts.Plex": {
         "documentation": "The Plex font."
     },
-    "@roblox/global/Drawing.Fonts.Monospace": {
+    "@custom/global/Drawing.Fonts.Monospace": {
         "documentation": "The monospace font."
     },
-    "@roblox/global/cleardrawcache": {
+    "@custom/global/cleardrawcache": {
         "documentation": "Destroys every drawing object in the cache, invalidating references to the drawing objects.",
         "learn_more_link": "https://docs.sunc.su/Drawing/cleardrawcache/",
         "code_sample": "local Camera = game.Workspace.CurrentCamera\nlocal Viewport = Camera.ViewportSize\nlocal Position = Vector2.new(Viewport.X / 2, Viewport.Y / 2)\n\nlocal circle = Drawing.new(\"Circle\")\ncircle.Radius = 50\ncircle.Color = Color3.fromRGB(255, 0, 0)\ncircle.Filled = true\ncircle.NumSides = 1111\ncircle.Position = Position\ncircle.Transparency = 1\ncircle.Visible = true\n\ntask.defer(cleardrawcache)\nprint(circle.__OBJECT_EXISTS) -- Output: true\ntask.wait()\nprint(circle.__OBJECT_EXISTS) -- Output: false",
         "params": [],
         "returns": []
     },
-    "@roblox/global/getrenderproperty": {
+    "@custom/global/getrenderproperty": {
         "documentation": "Gets the value of a drawing property, functionally similar to `drawing[property]`.",
         "learn_more_link": "https://docs.sunc.su/Drawing/getrenderproperty/",
         "code_sample": "local circle = Drawing.new(\"Circle\")\ncircle.Radius = 50\nprint(getrenderproperty(circle, \"Radius\")) -- Output: 50\nprint(getrenderproperty(circle, \"Visible\")) -- Output: false",
@@ -750,7 +750,7 @@
             "any"
         ]
     },
-    "@roblox/global/isrenderobj": {
+    "@custom/global/isrenderobj": {
         "documentation": "Returns whether `object` is a valid [Drawing](https://docs.sunc.su/Drawing) object.",
         "learn_more_link": "https://docs.sunc.su/Drawing/isrenderobj/",
         "code_sample": "print(isrenderobj(Drawing.new(\"Square\"))) -- Output: true\nprint(isrenderobj(game)) -- Output: false",
@@ -765,7 +765,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/setrenderproperty": {
+    "@custom/global/setrenderproperty": {
         "documentation": "Sets the value of a drawing property, functionally similar to `drawing[property] = value`.",
         "learn_more_link": "https://docs.sunc.su/Drawing/setrenderproperty/",
         "code_sample": "local circle = Drawing.new(\"Circle\")\nsetrenderproperty(circle, \"Radius\", 50)\nsetrenderproperty(circle, \"Visible\", true)\nprint(circle.Radius) -- Output: 50\nprint(circle.Visible) -- Output: true",
@@ -788,13 +788,13 @@
         ],
         "returns": []
     },
-    "@roblox/global/getgc": {
+    "@custom/global/getgc": {
         "overloads": {
-            "(false?) -> AnyTable": "@roblox/global/getgc/overload/(false?) -> AnyTable",
-            "(true) -> {AnyTable | any}": "@roblox/global/getgc/overload/(true) -> {AnyTable | any}"
+            "(false?) -> AnyTable": "@custom/global/getgc/overload/(false?) -> AnyTable",
+            "(true) -> {AnyTable | any}": "@custom/global/getgc/overload/(true) -> {AnyTable | any}"
         }
     },
-    "@roblox/global/getgc/overload/(false?) -> AnyTable": {
+    "@custom/global/getgc/overload/(false?) -> AnyTable": {
         "documentation": "Returns a table with all collectible values that aren't dead (referenced by active scripts), excluding tables.",
         "learn_more_link": "https://docs.sunc.su/Environment/getgc/",
         "code_sample": "local gcWithoutTables = getgc()\nprint(\"Number of GC values (without tables):\", #gcWithoutTables)\n\nlocal gcWithTables = getgc(true)\nprint(\"Number of GC values (with tables):\", #gcWithTables)",
@@ -805,7 +805,7 @@
             }
         ]
     },
-    "@roblox/global/getgc/overload/(true) -> {AnyTable | any}": {
+    "@custom/global/getgc/overload/(true) -> {AnyTable | any}": {
         "documentation": "Returns a table with all collectible values that aren't dead (referenced by active scripts), including tables.",
         "learn_more_link": "https://docs.sunc.su/Environment/getgc/",
         "code_sample": "local gcWithoutTables = getgc()\nprint(\"Number of GC values (without tables):\", #gcWithoutTables)\n\nlocal gcWithTables = getgc(true)\nprint(\"Number of GC values (with tables):\", #gcWithTables)",
@@ -816,7 +816,7 @@
             }
         ]
     },
-    "@roblox/global/getgenv": {
+    "@custom/global/getgenv": {
         "documentation": "Returns a table containing all executor functions, serving as the shared environment for all scripts executed by the executor.",
         "learn_more_link": "https://docs.sunc.su/Environment/getgenv/",
         "code_sample": "local executorEnv = getgenv()\nexecutorEnv.MyGlobalVariable = \"This can be accessed from any script!\"\nprint(getgenv().MyGlobalVariable) -- Output: This can be accessed from any script!",
@@ -825,7 +825,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/getreg": {
+    "@custom/global/getreg": {
         "documentation": "Returns the Lua registry table for the current state.",
         "learn_more_link": "https://docs.sunc.su/Environment/getreg/",
         "code_sample": "local registry = getreg()\nprint(\"Registry type:\", type(registry)) -- Output: table\n\n-- Show a few string-keyed entries\nlocal shown = 0\nfor k, v in pairs(registry) do\n    if type(k) == \"string\" then\n        print(k, type(v))\n        shown = shown + 1\n        if shown >= 5 then break end\n    end\nend",
@@ -834,7 +834,7 @@
             "AnyArray"
         ]
     },
-    "@roblox/global/getrenv": {
+    "@custom/global/getrenv": {
         "documentation": "Returns a table containing the Roblox environment.",
         "learn_more_link": "https://docs.sunc.su/Environment/getrenv/",
         "code_sample": "local robloxEnv = getrenv()\nprint(\"Number of items in Roblox environment:\", #robloxEnv) -- Output varies based on game",
@@ -843,15 +843,15 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/filtergc": {
+    "@custom/global/filtergc": {
         "overloads": {
-            "(\"table\", TableFilterOptions, true) -> AnyTable?": "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?",
-            "(\"table\", TableFilterOptions, false?) -> {AnyTable}": "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}",
-            "(\"function\", FunctionFilterOptions, true) -> AnyFunction?": "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> AnyFunction?",
-            "(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}"
+            "(\"table\", TableFilterOptions, true) -> AnyTable?": "@custom/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?",
+            "(\"table\", TableFilterOptions, false?) -> {AnyTable}": "@custom/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}",
+            "(\"function\", FunctionFilterOptions, true) -> AnyFunction?": "@custom/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> AnyFunction?",
+            "(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": "@custom/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}"
         }
     },
-    "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?": {
+    "@custom/global/filtergc/overload/(\"table\", TableFilterOptions, true) -> AnyTable?": {
         "documentation": "Returns a table that matches the specified criteria, or `nil` if no match is found.",
         "learn_more_link": "https://docs.sunc.su/Environment/filtergc/",
         "code_sample": "-- Find a table with specific keys\nlocal table = filtergc(\"table\", { Keys = {\"Players\", \"Settings\"} }, true)\nif table then\n\tprint(\"Found matching table\")\nend",
@@ -873,7 +873,7 @@
             "AnyTable?"
         ]
     },
-    "@roblox/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}": {
+    "@custom/global/filtergc/overload/(\"table\", TableFilterOptions, false?) -> {AnyTable}": {
         "documentation": "Returns a table with all Lua tables that match the specified criteria.",
         "learn_more_link": "https://docs.sunc.su/Environment/filtergc/",
         "code_sample": "-- Find all tables with specific keys\nlocal tables = filtergc(\"table\", { Keys = {\"Players\", \"Settings\"} }, false)\nprint(\"Found\", #tables, \"tables\")",
@@ -895,7 +895,7 @@
             "{AnyTable}"
         ]
     },
-    "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> ((...any) -> (...any))?": {
+    "@custom/global/filtergc/overload/(\"function\", FunctionFilterOptions, true) -> ((...any) -> (...any))?": {
         "documentation": "Returns a function that matches the specified criteria, or `nil` if no match is found.",
         "learn_more_link": "https://docs.sunc.su/Environment/filtergc/",
         "code_sample": "-- Find a function with a specific name\nlocal function = filtergc(\"function\", { Name = \"UpdateClient\" }, true)\nif function then\n\tprint(\"Found matching function\")\nend",
@@ -917,7 +917,7 @@
             "AnyFunction?"
         ]
     },
-    "@roblox/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": {
+    "@custom/global/filtergc/overload/(\"function\", FunctionFilterOptions, false?) -> {(...any) -> (...any)}": {
         "documentation": "Returns a table with all Lua functions that match the specified criteria.",
         "learn_more_link": "https://docs.sunc.su/Environment/filtergc/",
         "code_sample": "-- Find all functions with a specific name\nlocal functions = filtergc(\"function\", { Name = \"UpdateClient\" }, false)\nprint(\"Found\", #functions, \"functions\")",
@@ -939,7 +939,7 @@
             "{AnyFunction}"
         ]
     },
-    "@roblox/global/appendfile": {
+    "@custom/global/appendfile": {
         "documentation": "Appends data to the end of the file at the specified path, creating the file if it doesn't already exist.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/appendfile/",
         "code_sample": "writefile(\"example.txt\", \"Hello\")\nappendfile(\"example.txt\", \" World!\")\n\nlocal content = readfile(\"example.txt\")\nprint(content) -- Output: Hello World!",
@@ -957,7 +957,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/delfile": {
+    "@custom/global/delfile": {
         "documentation": "Deletes the file at the specified path.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/delfile/",
         "code_sample": "writefile(\"example.txt\", \"Hello\")\nprint(isfile(\"example.txt\")) -- Output: true\n\ndelfile(\"example.txt\")\nprint(isfile(\"example.txt\")) -- Output: false",
@@ -970,7 +970,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/delfolder": {
+    "@custom/global/delfolder": {
         "documentation": "Deletes the folder at the specified path.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/delfolder/",
         "code_sample": "makefolder(\"examplefolder\")\nprint(isfolder(\"examplefolder\")) -- Output: true\n\ndelfolder(\"examplefolder\")\nprint(isfolder(\"examplefolder\")) -- Output: false",
@@ -983,7 +983,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/getcustomasset": {
+    "@custom/global/getcustomasset": {
         "documentation": "Returns a content URL (e.g., rbxasset://) that can be used with UI elements, sounds, meshes, and more.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/getcustomasset/",
         "code_sample": "-- First, create or download an image file\nwritefile(\"image.png\", game:HttpGet(\"https://example.com/image.png\"))\n\n-- Then use it in a UI element\nlocal frame = Instance.new(\"Frame\")\nframe.Size = UDim2.new(0, 200, 0, 200)\nframe.Position = UDim2.new(0.5, -100, 0.5, -100)\nframe.Parent = game.CoreGui\n\nlocal image = Instance.new(\"ImageLabel\")\nimage.Size = UDim2.new(1, 0, 1, 0)\nimage.Image = getcustomasset(\"image.png\")\nimage.Parent = frame",
@@ -998,7 +998,7 @@
             "string"
         ]
     },
-    "@roblox/global/isfile": {
+    "@custom/global/isfile": {
         "documentation": "Determines if the specified path is a file.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/isfile/",
         "code_sample": "writefile(\"example.txt\", \"Hello\")\nmakefolder(\"examplefolder\")\n\nprint(isfile(\"example.txt\")) -- Output: true\nprint(isfile(\"examplefolder\")) -- Output: false\nprint(isfile(\"nonexistent.txt\")) -- Output: false",
@@ -1013,7 +1013,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/isfolder": {
+    "@custom/global/isfolder": {
         "documentation": "Determines if the specified path is a folder.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/isfolder/",
         "code_sample": "makefolder(\"examplefolder\")\nwritefile(\"example.txt\", \"Hello\")\n\nprint(isfolder(\"examplefolder\")) -- Output: true\nprint(isfolder(\"example.txt\")) -- Output: false\nprint(isfolder(\"nonexistent\")) -- Output: false",
@@ -1028,7 +1028,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/listfiles": {
+    "@custom/global/listfiles": {
         "documentation": "Provides a list of files and folders within a specified directory.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/listfiles/",
         "code_sample": "-- Create a folder and some files\nmakefolder(\"testfolder\")\nwritefile(\"testfolder/file1.txt\", \"Hello\")\nwritefile(\"testfolder/file2.txt\", \"World\")\n\n-- List the files\nlocal files = listfiles(\"testfolder\")\nfor _, file in ipairs(files) do\n\tprint(file)\nend\n-- Output might be:\n-- testfolder/file1.txt\n-- testfolder/file2.txt",
@@ -1043,7 +1043,7 @@
             "{string}"
         ]
     },
-    "@roblox/global/loadfile": {
+    "@custom/global/loadfile": {
         "documentation": "Generates a chunk from the file at the given path, using the global environment. Returns the chunk or `nil` with an error message.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/loadfile/",
         "code_sample": "writefile(\"script.lua\", \"return function() print(\\\"Hello from loadfile!\\\") end\")\n\nlocal chunk = loadfile(\"script.lua\")\nif chunk then\n\tlocal func = chunk()\n\tfunc() -- Output: Hello from loadfile!\nelse\n\tprint(\"Error loading file\")\nend",
@@ -1058,7 +1058,7 @@
             "(AnyFunction?, string?)"
         ]
     },
-    "@roblox/global/makefolder": {
+    "@custom/global/makefolder": {
         "documentation": "Creates a folder at the specified path if it doesn't already exist.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/makefolder/",
         "code_sample": "makefolder(\"examplefolder\")\nprint(isfolder(\"examplefolder\")) -- Output: true\n\n-- Create nested folders\nmakefolder(\"parent/child/grandchild\")\nprint(isfolder(\"parent/child/grandchild\")) -- Output: true",
@@ -1071,7 +1071,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/readfile": {
+    "@custom/global/readfile": {
         "documentation": "Retrieves the content of the file at the specified path.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/readfile/",
         "code_sample": "-- First create a file\nwritefile(\"example.txt\", \"Hello, world!\")\n\n-- Then read it\nlocal content = readfile(\"example.txt\")\nprint(content) -- Output: Hello, world!",
@@ -1086,7 +1086,7 @@
             "string"
         ]
     },
-    "@roblox/global/writefile": {
+    "@custom/global/writefile": {
         "documentation": "Writes data to a specified file path.",
         "learn_more_link": "https://docs.sunc.su/Filesystem/writefile/",
         "code_sample": "writefile(\"example.txt\", \"Hello, world!\")\nprint(\"File created successfully!\")\n\n-- Read the file to verify\nlocal content = readfile(\"example.txt\")\nprint(content) -- Output: Hello, world!",
@@ -1104,7 +1104,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/dofile": {
+    "@custom/global/dofile": {
         "documentation": "Attempts to load the file located at `path` and execute it on a new thread.",
         "code_sample": "writefile(\"code.lua\", \"print('Hello, world!')\")\ndofile(\"code.lua\") --> \"Hello, world!\"",
         "params": [
@@ -1116,7 +1116,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/isrbxactive": {
+    "@custom/global/isrbxactive": {
         "documentation": "Returns whether the game's window is in focus. Must be true for other input functions to work.\n\n### Aliases\n\n* `isgameactive`",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#isrbxactive",
         "code_sample": "if isrbxactive() then\n\tmouse1click()\nend",
@@ -1125,43 +1125,43 @@
             "boolean"
         ]
     },
-    "@roblox/global/mouse1click": {
+    "@custom/global/mouse1click": {
         "documentation": "Dispatches a left mouse button click.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1click",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mouse1press": {
+    "@custom/global/mouse1press": {
         "documentation": "Dispatches a left mouse button press.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1press",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mouse1release": {
+    "@custom/global/mouse1release": {
         "documentation": "Dispatches a left mouse button release.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1release",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mouse2click": {
+    "@custom/global/mouse2click": {
         "documentation": "Dispatches a right mouse button click.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2click",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mouse2press": {
+    "@custom/global/mouse2press": {
         "documentation": "Dispatches a right mouse button press.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2press",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mouse2release": {
+    "@custom/global/mouse2release": {
         "documentation": "Dispatches a right mouse button release.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse2release",
         "params": [],
         "returns": []
     },
-    "@roblox/global/mousemoveabs": {
+    "@custom/global/mousemoveabs": {
         "documentation": "Moves the mouse cursor to the specified absolute position.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousemoveabs",
         "code_sample": "-- Wait for the game window to be selected\nwhile not isrbxactive() do\n\ttask.wait()\nend\n\nlocal size = workspace.CurrentCamera.ViewportSize\n\t\nfor i = 0, 50 do\n\tlocal x = math.sin(i / 50 * math.pi * 2) / 2 + 0.5\n\tlocal y = math.cos(i / 50 * math.pi * 2) / 2 + 0.5\n\tmousemoveabs(x * size.X, y * size.Y)\n\ttask.wait(0.05)\nend",
@@ -1179,7 +1179,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/mousemoverel": {
+    "@custom/global/mousemoverel": {
         "documentation": "Adjusts the mouse cursor by the specified relative amount.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousemoverel",
         "code_sample": "-- Wait for the game window to be selected\nwhile not isrbxactive() do\n\ttask.wait()\nend\n\nfor i = 0, 20 do\n\tlocal x = math.sin(i / 20 * math.pi * 2)\n\tlocal y = math.cos(i / 20 * math.pi * 2)\n\tmousemoverel(x * 100, y * 100)\n\ttask.wait(0.05)\nend",
@@ -1197,7 +1197,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/mousescroll": {
+    "@custom/global/mousescroll": {
         "documentation": "Dispatches a mouse scroll by the specified number of pixels.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mousescroll",
         "params": [
@@ -1209,7 +1209,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/cloneref": {
+    "@custom/global/cloneref": {
         "documentation": "Returns a copy of the given Instance. The copy should not be equal to the original Instance.",
         "learn_more_link": "https://docs.sunc.su/Instances/cloneref/",
         "code_sample": "local original = game.Workspace\nlocal clone = cloneref(original)\n\nprint(original == clone) -- Output: false\nprint(compareinstances(original, clone)) -- Output: true\nprint(clone.Name) -- Output: Workspace",
@@ -1224,7 +1224,7 @@
             "T"
         ]
     },
-    "@roblox/global/compareinstances": {
+    "@custom/global/compareinstances": {
         "documentation": "Checks if two instances are equal. This is primarily used for comparing instances returned by [cloneref](https://docs.sunc.su/Instances/cloneref/) since the normal equality check may fail.",
         "learn_more_link": "https://docs.sunc.su/Instances/compareinstances/",
         "code_sample": "local original = game.Workspace\nlocal clone = cloneref(original)\nlocal different = game.Players\n\nprint(original == clone) -- Output: false\nprint(compareinstances(original, clone)) -- Output: true\nprint(compareinstances(original, different)) -- Output: false",
@@ -1244,7 +1244,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/fireclickdetector": {
+    "@custom/global/fireclickdetector": {
         "documentation": "Triggers a specified event on a [ClickDetector](https://create.roblox.com/docs/reference/engine/classes/ClickDetector).",
         "learn_more_link": "https://docs.sunc.su/Instances/fireclickdetector/",
         "code_sample": "-- Find a ClickDetector in the workspace\nlocal function findClickDetector()\n\tfor _, v in pairs(workspace:GetDescendants()) do\n\t\tif v:IsA(\"ClickDetector\") then\n\t\t\treturn v\n\t\tend\n\tend\n\treturn nil\nend\n\nlocal clickDetector = findClickDetector()\nif clickDetector then\n\tprint(\"Found ClickDetector, firing...\")\n\tfireclickdetector(clickDetector)\nelse\n\tprint(\"No ClickDetector found\")\nend",
@@ -1267,7 +1267,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/fireproximityprompt": {
+    "@custom/global/fireproximityprompt": {
         "documentation": "Triggers a [ProximityPrompt](https://create.roblox.com/docs/reference/engine/classes/ProximityPrompt) instantly, regardless of distance or duration.",
         "learn_more_link": "https://docs.sunc.su/Instances/fireproximityprompt/",
         "code_sample": "-- Find a ProximityPrompt in the workspace\nlocal function findProximityPrompt()\n\tfor _, v in pairs(workspace:GetDescendants()) do\n\t\tif v:IsA(\"ProximityPrompt\") then\n\t\t\treturn v\n\t\tend\n\tend\n\treturn nil\nend\n\nlocal proximityPrompt = findProximityPrompt()\nif proximityPrompt then\n\tprint(\"Found ProximityPrompt, firing...\")\n\tfireproximityprompt(proximityPrompt)\nelse\n\tprint(\"No ProximityPrompt found\")\nend",
@@ -1280,7 +1280,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/firetouchinterest": {
+    "@custom/global/firetouchinterest": {
         "documentation": "Triggers a [BasePart.Touched](https://create.roblox.com/docs/reference/engine/classes/BasePart#Touched) event on a [BasePart](https://create.roblox.com/docs/reference/engine/classes/BasePart).",
         "learn_more_link": "https://docs.sunc.su/Instances/firetouchinterest/",
         "code_sample": "local part1 = Instance.new(\"Part\")\npart1.Position = Vector3.new(0, 10, 0)\npart1.Anchored = true\npart1.Parent = workspace\n\nlocal part2 = Instance.new(\"Part\")\npart2.Position = Vector3.new(0, 5, 0)\npart2.Anchored = true\npart2.Parent = workspace\n\npart2.Touched:Connect(function(hit)\n\tprint(\"Touched by\", hit.Name)\nend)\n\n-- Start touch\nfiretouchinterest(part1, part2, 0)\n-- End touch after a short delay\ntask.wait(0.1)\nfiretouchinterest(part1, part2, 1)",
@@ -1303,7 +1303,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/getcallbackvalue": {
+    "@custom/global/getcallbackvalue": {
         "documentation": "Returns the callback function assigned to an object's callback property. This function retrieves the underlying function that is otherwise inaccessible through normal indexing.",
         "learn_more_link": "https://docs.sunc.su/Instances/getcallbackvalue/",
         "code_sample": "local part = Instance.new(\"Part\")\npart.Touched:Connect(function()\n\tprint(\"Touched!\")\nend)\n\nlocal touchedCallback = getcallbackvalue(part, \"Touched\")\nif touchedCallback then\n\tprint(\"Successfully retrieved callback!\")\n\t-- You can now analyze or modify the callback\nelse\n\tprint(\"Failed to retrieve callback\")\nend",
@@ -1323,7 +1323,7 @@
             "AnyFunction"
         ]
     },
-    "@roblox/global/gethui": {
+    "@custom/global/gethui": {
         "documentation": "Returns a hidden UI container that minimizes detection. This container should not be directly discoverable via standard search methods.",
         "learn_more_link": "https://docs.sunc.su/Instances/gethui/",
         "code_sample": "local container = gethui()\n\n-- Create a UI element in the hidden container\nlocal frame = Instance.new(\"Frame\")\nframe.Size = UDim2.new(0, 200, 0, 100)\nframe.Position = UDim2.new(0.5, -100, 0.5, -50)\nframe.BackgroundColor3 = Color3.fromRGB(50, 50, 50)\nframe.Parent = container\n\nlocal text = Instance.new(\"TextLabel\")\ntext.Size = UDim2.new(1, 0, 1, 0)\ntext.Text = \"Hidden UI\"\ntext.TextColor3 = Color3.fromRGB(255, 255, 255)\ntext.Parent = frame",
@@ -1332,7 +1332,7 @@
             "Instance"
         ]
     },
-    "@roblox/global/getinstances": {
+    "@custom/global/getinstances": {
         "documentation": "Returns a list of all instances referenced by the client.",
         "learn_more_link": "https://docs.sunc.su/Instances/getinstances/",
         "code_sample": "local instances = getinstances()\nprint(\"Total instances:\", #instances)\n\n-- Count instances by class\nlocal classCounts = {}\nfor _, instance in ipairs(instances) do\n\tlocal className = instance.ClassName\n\tclassCounts[className] = (classCounts[className] or 0) + 1\nend\n\n-- Print the top 5 most common classes\nlocal sortedClasses = {}\nfor class, count in pairs(classCounts) do\n\ttable.insert(sortedClasses, {class = class, count = count})\nend\ntable.sort(sortedClasses, function(a, b) return a.count > b.count end)\n\nfor i = 1, math.min(5, #sortedClasses) do\n\tprint(sortedClasses[i].class, sortedClasses[i].count)\nend",
@@ -1341,7 +1341,7 @@
             "{Instance}"
         ]
     },
-    "@roblox/global/getnilinstances": {
+    "@custom/global/getnilinstances": {
         "documentation": "Returns a list of instances that have their Instance.Parent property set to `nil`.",
         "learn_more_link": "https://docs.sunc.su/Instances/getnilinstances/",
         "code_sample": "local nilInstances = getnilinstances()\nprint(\"Total nil instances:\", #nilInstances)\n\n-- Count nil instances by class\nlocal classCounts = {}\nfor _, instance in ipairs(nilInstances) do\n\tlocal className = instance.ClassName\n\tclassCounts[className] = (classCounts[className] or 0) + 1\nend\n\n-- Print classes\nfor class, count in pairs(classCounts) do\n\tprint(class, count)\nend",
@@ -1350,7 +1350,7 @@
             "{Instance}"
         ]
     },
-    "@roblox/global/isscriptable": {
+    "@custom/global/isscriptable": {
         "documentation": "Returns whether the given property is scriptable (does not have the `notscriptable` tag).\n\nIf `true`, the property is scriptable and can be indexed normally. If `nil`, the property does not exist.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/instances.md#isscriptable",
         "params": [
@@ -1369,7 +1369,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/setrbxclipboard": {
+    "@custom/global/setrbxclipboard": {
         "documentation": "Sets the Studio client's clipboard to the given `rbxm` or `rbxmx` model data. This allows data from the game to be copied into a Studio client.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/instances.md#setrbxclipboard",
         "code_sample": "local data = readfile(\"model.rbxm\")\nsetrbxclipboard(data) -- Can be pasted into Studio",
@@ -1384,7 +1384,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/getrawmetatable": {
+    "@custom/global/getrawmetatable": {
         "documentation": "Returns the metatable of object, bypassing the `__metatable` field.",
         "learn_more_link": "https://docs.sunc.su/Metatables/getrawmetatable/",
         "code_sample": "local exampleTable = {}\nlocal meta = {\n\t__index = function(tbl, key)\n\t\treturn \"Custom value for \" .. tostring(key)\n\tend,\n\t__metatable = \"Protected metatable\"\n}\nsetmetatable(exampleTable, meta)\n\nprint(getmetatable(exampleTable)) -- Output: Protected metatable\n\nlocal rawMeta = getrawmetatable(exampleTable)\nprint(rawMeta == meta) -- Output: true\nprint(exampleTable.nonexistent) -- Output: Custom value for nonexistent",
@@ -1399,7 +1399,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/isreadonly": {
+    "@custom/global/isreadonly": {
         "documentation": "Checks whether the provided table is read-only.",
         "learn_more_link": "https://docs.sunc.su/Metatables/isreadonly/",
         "code_sample": "local exampleTable = {value = 10}\nprint(isreadonly(exampleTable)) -- Output: false\n\n-- Make the table read-only\nsetreadonly(exampleTable, true)\nprint(isreadonly(exampleTable)) -- Output: true\n\n-- Make the table writable again\nsetreadonly(exampleTable, false)\nprint(isreadonly(exampleTable)) -- Output: false",
@@ -1414,7 +1414,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/setrawmetatable": {
+    "@custom/global/setrawmetatable": {
         "documentation": "Sets the metatable of object to the provided metatable, bypassing the `__metatable` field.",
         "learn_more_link": "https://docs.sunc.su/Metatables/setrawmetatable/",
         "code_sample": "local exampleTable = {}\nlocal originalMeta = {\n\t__index = function()\n\t\treturn \"Original value\"\n\tend,\n\t__metatable = \"Protected metatable\"\n}\nsetmetatable(exampleTable, originalMeta)\n\nlocal newMeta = {\n\t__index = function()\n\t\treturn \"New value\"\n\tend\n}\n\nprint(exampleTable.test) -- Output: Original value\nsetrawmetatable(exampleTable, newMeta)\nprint(exampleTable.test) -- Output: New value",
@@ -1434,7 +1434,7 @@
             "T"
         ]
     },
-    "@roblox/global/setreadonly": {
+    "@custom/global/setreadonly": {
         "documentation": "Sets the read-only state of the table to the provided boolean value, allowing or disallowing modifications.",
         "learn_more_link": "https://docs.sunc.su/Metatables/setreadonly/",
         "code_sample": "local exampleTable = {value = 10}\n\n-- Make the table read-only\nsetreadonly(exampleTable, true)\n\n-- This will error\npcall(function()\n\texampleTable.value = 20\nend)\n\n-- Make the table writable again\nsetreadonly(exampleTable, false)\n\n-- This will succeed\nexampleTable.value = 20\nprint(exampleTable.value) -- Output: 20",
@@ -1452,7 +1452,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/identifyexecutor": {
+    "@custom/global/identifyexecutor": {
         "documentation": "Returns the name and version of the current executor.",
         "learn_more_link": "https://docs.sunc.su/Miscellaneous/identifyexecutor/",
         "code_sample": "local executorName, executorVersion = identifyexecutor()\nprint(\"Running on\", executorName, \"version\", executorVersion)",
@@ -1462,7 +1462,7 @@
             "string"
         ]
     },
-    "@roblox/global/request": {
+    "@custom/global/request": {
         "documentation": "Sends an HTTP request with the given options, yielding until the request is finished, and returns the response.",
         "learn_more_link": "https://docs.sunc.su/Miscellaneous/request/",
         "code_sample": "local response = request({\n\tUrl = \"https://httpbin.org/get\",\n\tMethod = \"GET\",\n\tHeaders = {\n\t\t[\"Content-Type\"] = \"application/json\"\n\t}\n})\n\nif response.Success then\n\tprint(\"Status:\", response.StatusCode)\n\tprint(\"Body:\", response.Body)\nelse\n\tprint(\"Request failed:\", response.StatusMessage)\nend",
@@ -1477,7 +1477,7 @@
             "Response"
         ]
     },
-    "@roblox/global/setclipboard": {
+    "@custom/global/setclipboard": {
         "documentation": "Copies `text` to the clipboard.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L202",
         "code_sample": "setclipboard(\"Copied from Roblox!\")",
@@ -1490,7 +1490,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/setfpscap": {
+    "@custom/global/setfpscap": {
         "documentation": "Sets a frame-rate cap for the client (executor-specific behavior).",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#L228",
         "code_sample": "setfpscap(144)",
@@ -1503,7 +1503,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/gethiddenproperty": {
+    "@custom/global/gethiddenproperty": {
         "documentation": "Returns the hidden, non-scriptable property's value regardless of its type, along with a boolean indicating if the property is hidden.",
         "learn_more_link": "https://docs.sunc.su/Reflection/gethiddenproperty/",
         "code_sample": "local part = Instance.new(\"Part\")\nlocal networkOwner, isHidden = gethiddenproperty(part, \"NetworkOwner\")\nprint(\"NetworkOwner:\", networkOwner)\nprint(\"Is hidden property:\", isHidden)",
@@ -1524,7 +1524,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/getthreadidentity": {
+    "@custom/global/getthreadidentity": {
         "documentation": "Retrieves the identity of the current thread.",
         "learn_more_link": "https://docs.sunc.su/Environment/getthreadidentity/",
         "code_sample": "print(\"Current thread identity:\", getthreadidentity())\n\n-- Different identities have different permissions\n-- Common values:\n-- 0: System/highest privilege\n-- 2: Regular game scripts\n-- 7: Executor thread (common default)",
@@ -1533,7 +1533,7 @@
             "number"
         ]
     },
-    "@roblox/global/sethiddenproperty": {
+    "@custom/global/sethiddenproperty": {
         "documentation": "Sets the hidden, non-scriptable property's value regardless of its type.",
         "learn_more_link": "https://docs.sunc.su/Reflection/sethiddenproperty/",
         "code_sample": "local part = Instance.new(\"Part\")\npart.Parent = workspace\n\n-- Get the current value\nlocal currentValue = gethiddenproperty(part, \"NetworkIsSleeping\")\nprint(\"Current value:\", currentValue)\n\n-- Set to the opposite value\nlocal success = sethiddenproperty(part, \"NetworkIsSleeping\", not currentValue)\nif success then\n\tprint(\"Successfully changed property\")\n\tprint(\"New value:\", gethiddenproperty(part, \"NetworkIsSleeping\"))\nelse\n\tprint(\"Failed to change property\")\nend",
@@ -1558,7 +1558,7 @@
             "boolean"
         ]
     },
-    "@roblox/global/setscriptable": {
+    "@custom/global/setscriptable": {
         "documentation": "Sets a hidden property to be scriptable so that it can be indexed as if it weren't hidden.",
         "learn_more_link": "https://docs.sunc.su/Reflection/setscriptable/",
         "code_sample": "local part = Instance.new(\"Part\")\npart.Parent = workspace\n\n-- Try to access a hidden property (will error)\nlocal success1, error1 = pcall(function()\n\tlocal value = part.NetworkIsSleeping\nend)\nprint(\"Direct access:\", success1 and \"Succeeded\" or \"Failed: \" .. error1)\n\n-- Make the property scriptable\nlocal result = setscriptable(part, \"NetworkIsSleeping\", true)\nif result then\n\t-- Now try again\n\tlocal success2, result2 = pcall(function()\n\t\tlocal value = part.NetworkIsSleeping\n\t\treturn value\n\tend)\n\tprint(\"After setscriptable:\", success2 and (\"Succeeded: \" .. tostring(result2)) or (\"Failed: \" .. result2))\nelse\n\tprint(\"Failed to make property scriptable\")\nend",
@@ -1583,7 +1583,7 @@
             "boolean?"
         ]
     },
-    "@roblox/global/setthreadidentity": {
+    "@custom/global/setthreadidentity": {
         "documentation": "Sets the current thread's identity to the specified value.",
         "learn_more_link": "https://docs.sunc.su/Environment/setthreadidentity/",
         "code_sample": "print(\"Original thread identity:\", getthreadidentity())\n\n-- Change identity to 2 (typical game script level)\nsetthreadidentity(2)\nprint(\"New thread identity:\", getthreadidentity())\n\n-- Change back to default identity (usually 7 for executor threads)\nsetthreadidentity(7)\nprint(\"Restored thread identity:\", getthreadidentity())",
@@ -1596,7 +1596,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/getcallingscript": {
+    "@custom/global/getcallingscript": {
         "documentation": "Returns the script that is currently executing. For executor threads, this function returns `nil`.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getcallingscript/",
         "code_sample": "-- This will return nil since it's run directly by the executor\nprint(\"Direct call:\", getcallingscript())\n\n-- Create a dummy script execution context\nlocal bindable = Instance.new(\"BindableFunction\")\nbindable.OnInvoke = function()\n\tlocal callingScript = getcallingscript()\n\treturn callingScript and callingScript:GetFullName() or \"nil\"\nend\n\nprint(\"From bindable:\", bindable:Invoke())",
@@ -1605,7 +1605,7 @@
             "GenericScript?"
         ]
     },
-    "@roblox/global/getloadedmodules": {
+    "@custom/global/getloadedmodules": {
         "documentation": "Returns all ModuleScripts that are currently loaded in the caller's global state.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getloadedmodules/",
         "code_sample": "local loadedModules = getloadedmodules()\n\nprint(\"Total loaded modules:\", #loadedModules)\n\n-- Print the first few modules\nfor i = 1, math.min(5, #loadedModules) do\n\tlocal module = loadedModules[i]\n\tprint(i, module:GetFullName())\nend",
@@ -1620,7 +1620,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/getrunningscripts": {
+    "@custom/global/getrunningscripts": {
         "documentation": "Returns all the running scripts in the caller's global state. CoreScripts are filtered by default.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getrunningscripts/",
         "code_sample": "local runningScripts = getrunningscripts()\n\n-- Count scripts by type\nlocal scriptCounts = {\n\tLocalScript = 0,\n\tModuleScript = 0,\n\tOther = 0\n}\n\nfor _, script in ipairs(runningScripts) do\n\tif script:IsA(\"LocalScript\") then\n\t\tscriptCounts.LocalScript = scriptCounts.LocalScript + 1\n\telseif script:IsA(\"ModuleScript\") then\n\t\tscriptCounts.ModuleScript = scriptCounts.ModuleScript + 1\n\telse\n\t\tscriptCounts.Other = scriptCounts.Other + 1\n\tend\nend\n\nprint(\"Total running scripts:\", #runningScripts)\nprint(\"Running LocalScripts:\", scriptCounts.LocalScript)\nprint(\"Running ModuleScripts:\", scriptCounts.ModuleScript)\nprint(\"Other running scripts:\", scriptCounts.Other)",
@@ -1629,7 +1629,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/getscriptbytecode": {
+    "@custom/global/getscriptbytecode": {
         "documentation": "Returns the bytecode of the given script. If the script has no bytecode, returns `nil`.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscriptbytecode/",
         "code_sample": "-- Find a LocalScript in the game\nlocal function findScript()\n\tfor _, instance in ipairs(game:GetDescendants()) do\n\t\tif instance:IsA(\"LocalScript\") and not instance:IsA(\"CoreScript\") then\n\t\t\treturn instance\n\t\tend\n\tend\nend\n\nlocal script = findScript()\nif script then\n\tlocal bytecode = getscriptbytecode(script)\n\tif bytecode then\n\t\tprint(\"Bytecode length:\", #bytecode)\n\t\tprint(\"First 10 bytes:\", string.byte(bytecode, 1, 10))\n\telse\n\t\tprint(\"No bytecode available\")\n\tend\nelse\n\tprint(\"No suitable script found\")\nend",
@@ -1644,7 +1644,7 @@
             "string?"
         ]
     },
-    "@roblox/global/getscriptclosure": {
+    "@custom/global/getscriptclosure": {
         "documentation": "Creates a new closure (function) from the provided script's bytecode. This closure is typically used to retrieve constants.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscriptclosure/",
         "code_sample": "-- Find a LocalScript in the game\nlocal function findScript()\n\tfor _, instance in ipairs(game:GetDescendants()) do\n\t\tif instance:IsA(\"LocalScript\") and not instance:IsA(\"CoreScript\") then\n\t\t\treturn instance\n\t\tend\n\tend\nend\n\nlocal script = findScript()\nif script then\n\tlocal closure = getscriptclosure(script)\n\tif closure then\n\t\tprint(\"Got script closure\")\n\t\t-- Now we can inspect the closure using debug functions\n\t\tlocal constants = debug.getconstants(closure)\n\t\tprint(\"Script constants:\")\n\t\tfor i, constant in ipairs(constants) do\n\t\t\tprint(i, constant)\n\t\tend\n\telse\n\t\tprint(\"Could not get closure\")\n\tend\nelse\n\tprint(\"No suitable script found\")\nend",
@@ -1659,7 +1659,7 @@
             "AnyFunction?"
         ]
     },
-    "@roblox/global/getscripthash": {
+    "@custom/global/getscripthash": {
         "documentation": "Returns a SHA384 hash (in hex) of the given script's compressed and encrypted bytecode. If the script has no bytecode, returns `nil`.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscripthash/",
         "code_sample": "-- Find a LocalScript in the game\nlocal function findScript()\n\tfor _, instance in ipairs(game:GetDescendants()) do\n\t\tif instance:IsA(\"LocalScript\") and not instance:IsA(\"CoreScript\") then\n\t\t\treturn instance\n\t\tend\n\tend\nend\n\nlocal script = findScript()\nif script then\n\tlocal hash = getscripthash(script)\n\tif hash then\n\t\tprint(\"Script hash:\", hash)\n\t\tprint(\"Hash length:\", #hash)\n\telse\n\t\tprint(\"No hash available\")\n\tend\nelse\n\tprint(\"No suitable script found\")\nend",
@@ -1674,7 +1674,7 @@
             "string?"
         ]
     },
-    "@roblox/global/getscripts": {
+    "@custom/global/getscripts": {
         "documentation": "Returns all the scripts in the game. CoreScripts are filtered by default.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getscripts/",
         "code_sample": "local scripts = getscripts()\n\n-- Count scripts by type\nlocal scriptCounts = {\n\tLocalScript = 0,\n\tModuleScript = 0,\n\tOther = 0\n}\n\nfor _, script in ipairs(scripts) do\n\tif script:IsA(\"LocalScript\") then\n\t\tscriptCounts.LocalScript = scriptCounts.LocalScript + 1\n\telseif script:IsA(\"ModuleScript\") then\n\t\tscriptCounts.ModuleScript = scriptCounts.ModuleScript + 1\n\telse\n\t\tscriptCounts.Other = scriptCounts.Other + 1\n\tend\nend\n\nprint(\"Total scripts:\", #scripts)\nprint(\"LocalScripts:\", scriptCounts.LocalScript)\nprint(\"ModuleScripts:\", scriptCounts.ModuleScript)\nprint(\"Other scripts:\", scriptCounts.Other)",
@@ -1683,7 +1683,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/getsenv": {
+    "@custom/global/getsenv": {
         "documentation": "Returns the environment (globals table) of the given script thread.",
         "learn_more_link": "https://docs.sunc.su/Scripts/getsenv/",
         "code_sample": "-- Find a LocalScript in the game\nlocal function findScript()\n\tfor _, instance in ipairs(game:GetDescendants()) do\n\t\tif instance:IsA(\"LocalScript\") and not instance:IsA(\"CoreScript\") then\n\t\t\treturn instance\n\t\tend\n\tend\nend\n\nlocal script = findScript()\nif script then\n\tlocal env = getsenv(script)\n\tprint(\"Script environment:\")\n\tlocal count = 0\n\tfor k, v in pairs(env) do\n\t\tif type(v) ~= \"function\" then -- Skip functions to keep output clean\n\t\t\tprint(k, v)\n\t\t\tcount = count + 1\n\t\t\tif count >= 10 then break end -- Limit output\n\t\tend\n\tend\nelse\n\tprint(\"No suitable script found\")\nend",
@@ -1698,7 +1698,7 @@
             "AnyTable"
         ]
     },
-    "@roblox/global/loadstring": {
+    "@custom/global/loadstring": {
         "documentation": "Compiles the given Lua source into a function. The returned function is runnable and its environment becomes 'unsafe'.",
         "learn_more_link": "https://docs.sunc.su/Scripts/loadstring/",
         "code_sample": "local source = [[return function()\n\tprint(\"Hello from loadstring!\")\n\treturn 42\nend]]\n\nlocal func, err = loadstring(source, \"DynamicScript\")\nif func then\n\tlocal result = func()()\n\tprint(\"Function returned:\", result) -- Output: Function returned: 42\nelse\n\tprint(\"Error:\", err)\nend",
@@ -1720,7 +1720,7 @@
             "string?"
         ]
     },
-    "@roblox/global/firesignal": {
+    "@custom/global/firesignal": {
         "documentation": "Fires a signal's Lua connections.",
         "learn_more_link": "https://docs.sunc.su/Signals/firesignal/",
         "code_sample": "local part = Instance.new(\"Part\")\npart.ChildAdded:Connect(function(arg1)\n    print(typeof(arg1))\nend)\n\nfiresignal(part.ChildAdded) -- Output: nil\nfiresignal(part.ChildAdded, workspace) -- Output: Instance",
@@ -1739,7 +1739,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/getconnections": {
+    "@custom/global/getconnections": {
         "documentation": "Returns the connections of the specified [RBXScriptSignal](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal).",
         "learn_more_link": "https://docs.sunc.su/Signals/getconnections/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function() return \"Triggered\" end)\nlocal connection = getconnections(DummyFolder.ChildAdded)[1] -- First connection in the returned table\n\nprint(`{connection.Function()}, {type(connection.Thread)}`) -- Output: Triggered, thread\n\n-- Example with C-Signal\nlocal CConnection = getconnections(game.Players.LocalPlayer.Idled)[1]\nprint(`{CConnection.Function}, {CConnection.Thread}`) -- Output: nil, nil",
@@ -1754,7 +1754,7 @@
             "{Connection}"
         ]
     },
-    "@roblox/global/lz4compress": {
+    "@custom/global/lz4compress": {
         "documentation": "Compresses `data` using LZ4 compression.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#lz4compress",
         "code_sample": "local text = \"Hello, world! Hello, world! Goodbye, world!\"\nprint(#text) --> 43\nprint(#lz4compress(text)) --> 34",
@@ -1769,7 +1769,7 @@
             "string"
         ]
     },
-    "@roblox/global/lz4decompress": {
+    "@custom/global/lz4decompress": {
         "documentation": "Decompresses `data` using LZ4 compression, with the decompressed size specified by `size`.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#lz4decompress",
         "code_sample": "local text = \"Hello, world! Hello, world!\"\nlocal compressed = lz4compress(text)\nprint(lz4decompress(compressed, #text)) --> \"Hello, world! Hello, world!\"",
@@ -1789,7 +1789,7 @@
             "string"
         ]
     },
-    "@roblox/global/messagebox": {
+    "@custom/global/messagebox": {
         "documentation": "Creates a message box with the specified text, caption, and flags. Yields until the message box is closed, and returns the user input code.\n\nDocumentation regarding the flags and return codes can be found here: https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#messagebox",
         "code_sample": "local MB_ICONWARNING = 0x00000030\nlocal MB_CANCELTRYCONTINUE = 0x00000006\nlocal MB_DEFBUTTON2 = 0x00000100\n\nlocal IDCANCEL = 0x00000002\nlocal IDTRYAGAIN = 0x00000004\nlocal IDCONTINUE = 0x00000005\n\nlocal input = messagebox(\n\t\"Resource not available\\nDo you want to try again?\",\n\t\"Resource not found\",\n\tbit32.bor(MB_ICONWARNING, MB_CANCELTRYCONTINUE, MB_DEFBUTTON2)\n)\n\nif input == IDCANCEL then\n\tprint(\"Canceled\")\nelseif input == IDTRYAGAIN then\n\tprint(\"Try again\")\nelseif input == IDCONTINUE then\n\tprint(\"Continue\")\nend",
@@ -1814,7 +1814,7 @@
             "number"
         ]
     },
-    "@roblox/global/queue_on_teleport": {
+    "@custom/global/queue_on_teleport": {
         "documentation": "Queues the specified script to be executed after the player teleports to a different place.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/misc.md#queue_on_teleport",
         "code_sample": "local source = game:GetObjects(\"rbxassetid://1234\")[1].Source\nqueue_on_teleport(source)\nloadstring(source)()",
@@ -1827,7 +1827,7 @@
         ],
         "returns": []
     },
-    "@roblox/global/replicatesignal": {
+    "@custom/global/replicatesignal": {
         "documentation": "If possible, replicates the specified signal to the server with the provided arguments. The arguments must match the signal's expected parameters.",
         "learn_more_link": "https://docs.sunc.su/Signals/replicatesignal/",
         "code_sample": "local Players = game:GetService(\"Players\")\nlocal LocalPlayer = Players.LocalPlayer\n\n-- Replicate a jump signal to the server\nreplicatesignal(LocalPlayer.Character.Humanoid.Jumping, true)\n\n-- The server should now see your character jump",
@@ -1846,13 +1846,13 @@
         ],
         "returns": []
     },
-    "@roblox/global/WebSocket": {
+    "@custom/global/WebSocket": {
         "documentation": "The WebSocket type provides a simple interface for sending and receiving data over a WebSocket connection.",
         "keys": [
-            "@roblox/global/WebSocket.connect"
+            "@custom/global/WebSocket.connect"
         ]
     },
-    "@roblox/global/WebSocket.connect": {
+    "@custom/global/WebSocket.connect": {
         "documentation": "Establishes a WebSocket connection to the specified URL.",
         "learn_more_link": "https://docs.sunc.su/WebSocket/WebSocket.connect/",
         "code_sample": "local connection = WebSocket.connect(\"wss://echo.websocket.org\")\n\n-- Set up message handler\nconnection.OnMessage:Connect(function(message)\n    print(\"Received message:\", message)\nend)\n\n-- Set up close handler\nconnection.OnClose:Connect(function()\n    print(\"Connection closed\")\nend)\n\n-- Send a message\nconnection:Send(\"Hello WebSocket!\")\n\n-- Wait a bit then close the connection\ntask.wait(5)\nconnection:Close()",
@@ -1867,42 +1867,42 @@
             "WebSocketConnection"
         ]
     },
-    "@roblox/globaltype/Connection": {
+    "@custom/globaltype/Connection": {
         "documentation": "Represents a connection to a signal, allowing you to disconnect it later.",
         "keys": [
-            "@roblox/globaltype/Connection.Enabled",
-            "@roblox/globaltype/Connection.ForeignState",
-            "@roblox/globaltype/Connection.LuaConnection",
-            "@roblox/globaltype/Connection.Function",
-            "@roblox/globaltype/Connection.Thread",
-            "@roblox/globaltype/Connection.Fire",
-            "@roblox/globaltype/Connection.Defer",
-            "@roblox/globaltype/Connection.Disconnect",
-            "@roblox/globaltype/Connection.Disable",
-            "@roblox/globaltype/Connection.Enable"
+            "@custom/globaltype/Connection.Enabled",
+            "@custom/globaltype/Connection.ForeignState",
+            "@custom/globaltype/Connection.LuaConnection",
+            "@custom/globaltype/Connection.Function",
+            "@custom/globaltype/Connection.Thread",
+            "@custom/globaltype/Connection.Fire",
+            "@custom/globaltype/Connection.Defer",
+            "@custom/globaltype/Connection.Disconnect",
+            "@custom/globaltype/Connection.Disable",
+            "@custom/globaltype/Connection.Enable"
         ]
     },
-    "@roblox/globaltype/Connection.Enabled": {
+    "@custom/globaltype/Connection.Enabled": {
         "documentation": "Whether the connection can receive events.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/"
     },
-    "@roblox/globaltype/Connection.ForeignState": {
+    "@custom/globaltype/Connection.ForeignState": {
         "documentation": "Whether the function was connected by a foreign Lua state (i.e. `CoreScript`s, [Actor](https://create.roblox.com/docs/reference/engine/classes/Actor)s).",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/"
     },
-    "@roblox/globaltype/Connection.LuaConnection": {
+    "@custom/globaltype/Connection.LuaConnection": {
         "documentation": "Whether the connection was created in Luau code.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/"
     },
-    "@roblox/globaltype/Connection.Function": {
+    "@custom/globaltype/Connection.Function": {
         "documentation": "The function bound to this connection. `nil` when `ForeignState` is true, or `LuaConnection` is `false`.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/"
     },
-    "@roblox/globaltype/Connection.Thread": {
+    "@custom/globaltype/Connection.Thread": {
         "documentation": "The thread that created the connection. `mil` when `ForeignState` is true, or `LuaConnection` is `false`.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/"
     },
-    "@roblox/globaltype/Connection.Fire": {
+    "@custom/globaltype/Connection.Fire": {
         "documentation": "Fires this connection with the provided arguments.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function(child)\n    print(\"Child added:\", child.Name)\nend)\n\nlocal connection = getconnections(DummyFolder.ChildAdded)[1]\nlocal newPart = Instance.new(\"Part\")\nnewPart.Name = \"TestPart\"\n\n-- Fire the connection directly without actually adding the part\nconnection.Fire(newPart) -- Output: Child added: TestPart",
@@ -1919,7 +1919,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/Connection.Defer": {
+    "@custom/globaltype/Connection.Defer": {
         "documentation": "Defers an event to connection with the provided arguments.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function(child)\n    print(\"Child added (deferred):\", child.Name)\nend)\n\nlocal connection = getconnections(DummyFolder.ChildAdded)[1]\nlocal newPart = Instance.new(\"Part\")\nnewPart.Name = \"TestPart\"\n\n-- Defer the event to the connection\nconnection.Defer(newPart) -- Output: Child added (deferred): TestPart",
@@ -1936,7 +1936,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/Connection.Disconnect": {
+    "@custom/globaltype/Connection.Disconnect": {
         "documentation": "Disconnects the connection from the function.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function()\n    print(\"Child added!\")\nend)\n\nlocal connection = getconnections(DummyFolder.ChildAdded)[1]\n\n-- Disconnect the connection\nconnection.Disconnect()\n\n-- This won't print anything since the connection was disconnected\nlocal newPart = Instance.new(\"Part\")\nnewPart.Parent = DummyFolder",
@@ -1948,7 +1948,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/Connection.Disable": {
+    "@custom/globaltype/Connection.Disable": {
         "documentation": "Prevents the connection from firing.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function()\n    print(\"Child added!\")\nend)\n\nlocal connection = getconnections(DummyFolder.ChildAdded)[1]\n\n-- Disable the connection\nconnection.Disable()\n\n-- This won't print anything since the connection is disabled\nlocal newPart1 = Instance.new(\"Part\")\nnewPart1.Parent = DummyFolder\n\n-- Enable the connection again\nconnection.Enable()\n\n-- This will print since the connection is enabled again\nlocal newPart2 = Instance.new(\"Part\")\nnewPart2.Parent = DummyFolder -- Output: Child added!",
@@ -1960,7 +1960,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/Connection.Enable": {
+    "@custom/globaltype/Connection.Enable": {
         "documentation": "Enables the connection, allowing it to fire.",
         "learn_more_link": "https://docs.sunc.su/Signals/Connection/",
         "code_sample": "local DummyFolder = Instance.new(\"Folder\")\nDummyFolder.ChildAdded:Connect(function()\n    print(\"Child added!\")\nend)\n\nlocal connection = getconnections(DummyFolder.ChildAdded)[1]\n\n-- Disable the connection\nconnection.Disable()\n\n-- This won't print anything\nlocal newPart1 = Instance.new(\"Part\")\nnewPart1.Parent = DummyFolder\n\n-- Enable the connection\nconnection.Enable()\n\n-- This will print since the connection is enabled\nlocal newPart2 = Instance.new(\"Part\")\nnewPart2.Parent = DummyFolder -- Output: Child added!",
@@ -1972,16 +1972,16 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection": {
+    "@custom/globaltype/WebSocketConnection": {
         "documentation": "Represents a connection to a WebSocket server.",
         "keys": [
-            "@roblox/globaltype/WebSocketConnection.Send",
-            "@roblox/globaltype/WebSocketConnection.Close",
-            "@roblox/globaltype/WebSocketConnection.OnMessage",
-            "@roblox/globaltype/WebSocketConnection.OnClose"
+            "@custom/globaltype/WebSocketConnection.Send",
+            "@custom/globaltype/WebSocketConnection.Close",
+            "@custom/globaltype/WebSocketConnection.OnMessage",
+            "@custom/globaltype/WebSocketConnection.OnClose"
         ]
     },
-    "@roblox/globaltype/WebSocketConnection.Send": {
+    "@custom/globaltype/WebSocketConnection.Send": {
         "documentation": "Sends a message over the WebSocket connection.",
         "params": [
             {
@@ -1997,7 +1997,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.Close": {
+    "@custom/globaltype/WebSocketConnection.Close": {
         "documentation": "Closes the WebSocket connection.",
         "params": [
             {
@@ -2008,17 +2008,17 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnMessage": {
+    "@custom/globaltype/WebSocketConnection.OnMessage": {
         "documentation": "Event triggered when a message is received over the WebSocket connection.",
         "learn_more_link": "https://docs.sunc.su/WebSocket/#events",
         "keys": {
-            "Connect": "@roblox/globaltype/WebSocketConnection.OnMessage.Connect",
-            "ConnectParallel": "@roblox/globaltype/WebSocketConnection.OnMessage.ConnectParallel",
-            "Once": "@roblox/globaltype/WebSocketConnection.OnMessage.Once",
-            "Wait": "@roblox/globaltype/WebSocketConnection.OnMessage.Wait"
+            "Connect": "@custom/globaltype/WebSocketConnection.OnMessage.Connect",
+            "ConnectParallel": "@custom/globaltype/WebSocketConnection.OnMessage.ConnectParallel",
+            "Once": "@custom/globaltype/WebSocketConnection.OnMessage.Once",
+            "Wait": "@custom/globaltype/WebSocketConnection.OnMessage.Wait"
         }
     },
-    "@roblox/globaltype/WebSocketConnection.OnMessage.Connect": {
+    "@custom/globaltype/WebSocketConnection.OnMessage.Connect": {
         "documentation": "Connects the given function to the event and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Connect",
         "params": [
@@ -2033,7 +2033,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnMessage.ConnectParallel": {
+    "@custom/globaltype/WebSocketConnection.OnMessage.ConnectParallel": {
         "documentation": "Connects the given function to the event and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#ConnectParallel",
         "params": [
@@ -2048,7 +2048,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnMessage.Once": {
+    "@custom/globaltype/WebSocketConnection.OnMessage.Once": {
         "documentation": "Connects the given function to the event (for a single invocation) and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Once",
         "params": [
@@ -2063,7 +2063,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnMessage.Wait": {
+    "@custom/globaltype/WebSocketConnection.OnMessage.Wait": {
         "documentation": "Yields the current thread until the signal fires and returns the arguments provided by the signal.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Wait",
         "params": [
@@ -2074,17 +2074,17 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnClose": {
+    "@custom/globaltype/WebSocketConnection.OnClose": {
         "documentation": "Event triggered when the WebSocket connection closes.",
         "learn_more_link": "https://docs.sunc.su/WebSocket/#events",
         "keys": {
-            "Connect": "@roblox/globaltype/WebSocketConnection.OnClose.Connect",
-            "ConnectParallel": "@roblox/globaltype/WebSocketConnection.OnClose.ConnectParallel",
-            "Once": "@roblox/globaltype/WebSocketConnection.OnClose.Once",
-            "Wait": "@roblox/globaltype/WebSocketConnection.OnClose.Wait"
+            "Connect": "@custom/globaltype/WebSocketConnection.OnClose.Connect",
+            "ConnectParallel": "@custom/globaltype/WebSocketConnection.OnClose.ConnectParallel",
+            "Once": "@custom/globaltype/WebSocketConnection.OnClose.Once",
+            "Wait": "@custom/globaltype/WebSocketConnection.OnClose.Wait"
         }
     },
-    "@roblox/globaltype/WebSocketConnection.OnClose.Connect": {
+    "@custom/globaltype/WebSocketConnection.OnClose.Connect": {
         "documentation": "Connects the given function to the event and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Connect",
         "params": [
@@ -2099,7 +2099,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnClose.ConnectParallel": {
+    "@custom/globaltype/WebSocketConnection.OnClose.ConnectParallel": {
         "documentation": "Connects the given function to the event and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#ConnectParallel",
         "params": [
@@ -2114,7 +2114,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnClose.Once": {
+    "@custom/globaltype/WebSocketConnection.OnClose.Once": {
         "documentation": "Connects the given function to the event (for a single invocation) and returns an [RBXScriptConnection](https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptConnection) that represents it.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Once",
         "params": [
@@ -2129,7 +2129,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/WebSocketConnection.OnClose.Wait": {
+    "@custom/globaltype/WebSocketConnection.OnClose.Wait": {
         "documentation": "Yields the current thread until the signal fires and returns the arguments provided by the signal.",
         "learn_more_link": "https://create.roblox.com/docs/reference/engine/datatypes/RBXScriptSignal#Wait",
         "params": [
@@ -2140,39 +2140,39 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/DrawingObject": {
+    "@custom/globaltype/DrawingObject": {
         "documentation": "Represents a drawing object that can be used to render 2D graphics in Roblox.",
         "keys": [
-            "@roblox/globaltype/DrawingObject.Visible",
-            "@roblox/globaltype/DrawingObject.ZIndex",
-            "@roblox/globaltype/DrawingObject.Transparency",
-            "@roblox/globaltype/DrawingObject.Color",
-            "@roblox/globaltype/DrawingObject.__OBJECT_EXISTS",
-            "@roblox/globaltype/DrawingObject.Destroy",
-            "@roblox/globaltype/DrawingObject.Remove"
+            "@custom/globaltype/DrawingObject.Visible",
+            "@custom/globaltype/DrawingObject.ZIndex",
+            "@custom/globaltype/DrawingObject.Transparency",
+            "@custom/globaltype/DrawingObject.Color",
+            "@custom/globaltype/DrawingObject.__OBJECT_EXISTS",
+            "@custom/globaltype/DrawingObject.Destroy",
+            "@custom/globaltype/DrawingObject.Remove"
         ]
     },
-    "@roblox/globaltype/DrawingObject.Visible": {
+    "@custom/globaltype/DrawingObject.Visible": {
         "documentation": "Whether the drawing is visible. Defaults to `false`.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1"
     },
-    "@roblox/globaltype/DrawingObject.ZIndex": {
+    "@custom/globaltype/DrawingObject.ZIndex": {
         "documentation": "Determines the order in which a Drawing renders relative to others.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1"
     },
-    "@roblox/globaltype/DrawingObject.Transparency": {
+    "@custom/globaltype/DrawingObject.Transparency": {
         "documentation": "The opacity of the drawing (1 - opaque, 0 - transparent).",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1"
     },
-    "@roblox/globaltype/DrawingObject.Color": {
+    "@custom/globaltype/DrawingObject.Color": {
         "documentation": "The color of the drawing.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1"
     },
-    "@roblox/globaltype/DrawingObject.__OBJECT_EXISTS": {
+    "@custom/globaltype/DrawingObject.__OBJECT_EXISTS": {
         "documentation": "Whether the object exists.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1"
     },
-    "@roblox/globaltype/DrawingObject.Destroy": {
+    "@custom/globaltype/DrawingObject.Destroy": {
         "documentation": "Destroys the drawing object.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1",
         "params": [
@@ -2183,7 +2183,7 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/DrawingObject.Remove": {
+    "@custom/globaltype/DrawingObject.Remove": {
         "documentation": "Alias for `Destroy`, removes the drawing object.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#drawing-1",
         "params": [
@@ -2194,268 +2194,268 @@
         ],
         "returns": []
     },
-    "@roblox/globaltype/DrawingLine": {
+    "@custom/globaltype/DrawingLine": {
         "documentation": "Renders a line starting at `From` and ending at `To`.",
         "keys": [
-            "@roblox/globaltype/DrawingLine.From",
-            "@roblox/globaltype/DrawingLine.To",
-            "@roblox/globaltype/DrawingLine.Thickness"
+            "@custom/globaltype/DrawingLine.From",
+            "@custom/globaltype/DrawingLine.To",
+            "@custom/globaltype/DrawingLine.Thickness"
         ]
     },
-    "@roblox/globaltype/DrawingLine.From": {
+    "@custom/globaltype/DrawingLine.From": {
         "documentation": "The starting point of the line.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#line"
     },
-    "@roblox/globaltype/DrawingLine.To": {
+    "@custom/globaltype/DrawingLine.To": {
         "documentation": "The ending point of the line.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#line"
     },
-    "@roblox/globaltype/DrawingLine.Thickness": {
+    "@custom/globaltype/DrawingLine.Thickness": {
         "documentation": "The thickness of the line.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#line"
     },
-    "@roblox/globaltype/DrawingText": {
+    "@custom/globaltype/DrawingText": {
         "documentation": "Renders text at a specified position.",
         "keys": [
-            "@roblox/globaltype/DrawingText.Text",
-            "@roblox/globaltype/DrawingText.TextBounds",
-            "@roblox/globaltype/DrawingText.Font",
-            "@roblox/globaltype/DrawingText.Size",
-            "@roblox/globaltype/DrawingText.Position",
-            "@roblox/globaltype/DrawingText.Center",
-            "@roblox/globaltype/DrawingText.Outline",
-            "@roblox/globaltype/DrawingText.OutlineColor"
+            "@custom/globaltype/DrawingText.Text",
+            "@custom/globaltype/DrawingText.TextBounds",
+            "@custom/globaltype/DrawingText.Font",
+            "@custom/globaltype/DrawingText.Size",
+            "@custom/globaltype/DrawingText.Position",
+            "@custom/globaltype/DrawingText.Center",
+            "@custom/globaltype/DrawingText.Outline",
+            "@custom/globaltype/DrawingText.OutlineColor"
         ]
     },
-    "@roblox/globaltype/DrawingText.Text": {
+    "@custom/globaltype/DrawingText.Text": {
         "documentation": "The text to render.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.TextBounds": {
+    "@custom/globaltype/DrawingText.TextBounds": {
         "documentation": "The size of the text when rendered. Cannot be set.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.Font": {
+    "@custom/globaltype/DrawingText.Font": {
         "documentation": "The font to use.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.Size": {
+    "@custom/globaltype/DrawingText.Size": {
         "documentation": "The size of the text.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.Position": {
+    "@custom/globaltype/DrawingText.Position": {
         "documentation": "The position of the text.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.Center": {
+    "@custom/globaltype/DrawingText.Center": {
         "documentation": "Whether the text should be centered horizontally.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.Outline": {
+    "@custom/globaltype/DrawingText.Outline": {
         "documentation": "Whether the text should have be outlined.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingText.OutlineColor": {
+    "@custom/globaltype/DrawingText.OutlineColor": {
         "documentation": "The color of the outline.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#text"
     },
-    "@roblox/globaltype/DrawingImage": {
+    "@custom/globaltype/DrawingImage": {
         "documentation": "Draws the image data to the screen. `Data` *must* be the raw image data.",
         "keys": [
-            "@roblox/globaltype/DrawingImage.Data",
-            "@roblox/globaltype/DrawingImage.Size",
-            "@roblox/globaltype/DrawingImage.Position",
-            "@roblox/globaltype/DrawingImage.Rounding"
+            "@custom/globaltype/DrawingImage.Data",
+            "@custom/globaltype/DrawingImage.Size",
+            "@custom/globaltype/DrawingImage.Position",
+            "@custom/globaltype/DrawingImage.Rounding"
         ]
     },
-    "@roblox/globaltype/DrawingImage.Data": {
+    "@custom/globaltype/DrawingImage.Data": {
         "documentation": "The raw image data of the file. You can use [readfile](https://docs.sunc.su/Filesystem/readfile/) or another method to read the raw bytecode of the image.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#image"
     },
-    "@roblox/globaltype/DrawingImage.Size": {
+    "@custom/globaltype/DrawingImage.Size": {
         "documentation": "The size of the image.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#image"
     },
-    "@roblox/globaltype/DrawingImage.Position": {
+    "@custom/globaltype/DrawingImage.Position": {
         "documentation": "The position of the image.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#image"
     },
-    "@roblox/globaltype/DrawingImage.Rounding": {
+    "@custom/globaltype/DrawingImage.Rounding": {
         "documentation": "The rounding of the image.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#image"
     },
-    "@roblox/globaltype/DrawingCircle": {
+    "@custom/globaltype/DrawingCircle": {
         "documentation": "Draws a circle that is centered at `Position`.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle",
         "keys": [
-            "@roblox/globaltype/DrawingCircle.NumSides",
-            "@roblox/globaltype/DrawingCircle.Radius",
-            "@roblox/globaltype/DrawingCircle.Position",
-            "@roblox/globaltype/DrawingCircle.Thickness",
-            "@roblox/globaltype/DrawingCircle.Filled"
+            "@custom/globaltype/DrawingCircle.NumSides",
+            "@custom/globaltype/DrawingCircle.Radius",
+            "@custom/globaltype/DrawingCircle.Position",
+            "@custom/globaltype/DrawingCircle.Thickness",
+            "@custom/globaltype/DrawingCircle.Filled"
         ]
     },
-    "@roblox/globaltype/DrawingCircle.NumSides": {
+    "@custom/globaltype/DrawingCircle.NumSides": {
         "documentation": "The number of sides of the circle.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle"
     },
-    "@roblox/globaltype/DrawingCircle.Radius": {
+    "@custom/globaltype/DrawingCircle.Radius": {
         "documentation": "The radius of the circle.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle"
     },
-    "@roblox/globaltype/DrawingCircle.Position": {
+    "@custom/globaltype/DrawingCircle.Position": {
         "documentation": "The center position of the circle.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle"
     },
-    "@roblox/globaltype/DrawingCircle.Thickness": {
+    "@custom/globaltype/DrawingCircle.Thickness": {
         "documentation": "If `Filled` is `false`, specifies the thickness of the outline.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle"
     },
-    "@roblox/globaltype/DrawingCircle.Filled": {
+    "@custom/globaltype/DrawingCircle.Filled": {
         "documentation": "Whether the circle should be filled.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#circle"
     },
-    "@roblox/globaltype/DrawingSquare": {
+    "@custom/globaltype/DrawingSquare": {
         "documentation": "Draws a rectangle starting at `Position` and ending at `Position` + `Size`.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#square",
         "keys": [
-            "@roblox/globaltype/DrawingSquare.Size",
-            "@roblox/globaltype/DrawingSquare.Position",
-            "@roblox/globaltype/DrawingSquare.Thickness",
-            "@roblox/globaltype/DrawingSquare.Filled"
+            "@custom/globaltype/DrawingSquare.Size",
+            "@custom/globaltype/DrawingSquare.Position",
+            "@custom/globaltype/DrawingSquare.Thickness",
+            "@custom/globaltype/DrawingSquare.Filled"
         ]
     },
-    "@roblox/globaltype/DrawingSquare.Size": {
+    "@custom/globaltype/DrawingSquare.Size": {
         "documentation": "The size of the square.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#square"
     },
-    "@roblox/globaltype/DrawingSquare.Position": {
+    "@custom/globaltype/DrawingSquare.Position": {
         "documentation": "The top-left corner position of the square.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#square"
     },
-    "@roblox/globaltype/DrawingSquare.Thickness": {
+    "@custom/globaltype/DrawingSquare.Thickness": {
         "documentation": "If `Filled` is `false`, specifies the thickness of the outline.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#square"
     },
-    "@roblox/globaltype/DrawingSquare.Filled": {
+    "@custom/globaltype/DrawingSquare.Filled": {
         "documentation": "Whether the square should be filled.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#square"
     },
-    "@roblox/globaltype/DrawingQuad": {
+    "@custom/globaltype/DrawingQuad": {
         "documentation": "Draws a four-sided figure connecting to each of the four points.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad",
         "keys": [
-            "@roblox/globaltype/DrawingQuad.PointA",
-            "@roblox/globaltype/DrawingQuad.PointB",
-            "@roblox/globaltype/DrawingQuad.PointC",
-            "@roblox/globaltype/DrawingQuad.PointD",
-            "@roblox/globaltype/DrawingQuad.Thickness",
-            "@roblox/globaltype/DrawingQuad.Filled"
+            "@custom/globaltype/DrawingQuad.PointA",
+            "@custom/globaltype/DrawingQuad.PointB",
+            "@custom/globaltype/DrawingQuad.PointC",
+            "@custom/globaltype/DrawingQuad.PointD",
+            "@custom/globaltype/DrawingQuad.Thickness",
+            "@custom/globaltype/DrawingQuad.Filled"
         ]
     },
-    "@roblox/globaltype/DrawingQuad.PointA": {
+    "@custom/globaltype/DrawingQuad.PointA": {
         "documentation": "The first point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingQuad.PointB": {
+    "@custom/globaltype/DrawingQuad.PointB": {
         "documentation": "The second point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingQuad.PointC": {
+    "@custom/globaltype/DrawingQuad.PointC": {
         "documentation": "The third point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingQuad.PointD": {
+    "@custom/globaltype/DrawingQuad.PointD": {
         "documentation": "The fourth point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingQuad.Thickness": {
+    "@custom/globaltype/DrawingQuad.Thickness": {
         "documentation": "If `Filled` is `false`, specifies the thickness of the outline.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingQuad.Filled": {
+    "@custom/globaltype/DrawingQuad.Filled": {
         "documentation": "Whether the quad should be filled.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#quad"
     },
-    "@roblox/globaltype/DrawingTriangle": {
+    "@custom/globaltype/DrawingTriangle": {
         "documentation": "Draws a triangle connecting to each of the three points.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle",
         "keys": [
-            "@roblox/globaltype/DrawingTriangle.PointA",
-            "@roblox/globaltype/DrawingTriangle.PointB",
-            "@roblox/globaltype/DrawingTriangle.PointC",
-            "@roblox/globaltype/DrawingTriangle.Thickness",
-            "@roblox/globaltype/DrawingTriangle.Filled"
+            "@custom/globaltype/DrawingTriangle.PointA",
+            "@custom/globaltype/DrawingTriangle.PointB",
+            "@custom/globaltype/DrawingTriangle.PointC",
+            "@custom/globaltype/DrawingTriangle.Thickness",
+            "@custom/globaltype/DrawingTriangle.Filled"
         ]
     },
-    "@roblox/globaltype/DrawingTriangle.PointA": {
+    "@custom/globaltype/DrawingTriangle.PointA": {
         "documentation": "The first point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
     },
-    "@roblox/globaltype/DrawingTriangle.PointB": {
+    "@custom/globaltype/DrawingTriangle.PointB": {
         "documentation": "The second point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
     },
-    "@roblox/globaltype/DrawingTriangle.PointC": {
+    "@custom/globaltype/DrawingTriangle.PointC": {
         "documentation": "The third point.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
     },
-    "@roblox/globaltype/DrawingTriangle.Thickness": {
+    "@custom/globaltype/DrawingTriangle.Thickness": {
         "documentation": "If `Filled` is `false`, specifies the thickness of the outline.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
     },
-    "@roblox/globaltype/DrawingTriangle.Filled": {
+    "@custom/globaltype/DrawingTriangle.Filled": {
         "documentation": "Whether the triangle should be filled.",
         "learn_more_link": "https://github.com/sUNC-Utilities/Global-Functions-Documentation/blob/main/Libraries/Drawing.md#triangle"
     },
-    "@roblox/globaltype/DebugInfo": {
+    "@custom/globaltype/DebugInfo": {
         "documentation": "A table describing a function or stack level as returned by debug.getinfo.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo",
         "keys": [
-            "@roblox/globaltype/DebugInfo.source",
-            "@roblox/globaltype/DebugInfo.short_src",
-            "@roblox/globaltype/DebugInfo.func",
-            "@roblox/globaltype/DebugInfo.what",
-            "@roblox/globaltype/DebugInfo.currentline",
-            "@roblox/globaltype/DebugInfo.name",
-            "@roblox/globaltype/DebugInfo.nups",
-            "@roblox/globaltype/DebugInfo.numparams",
-            "@roblox/globaltype/DebugInfo.is_vararg"
+            "@custom/globaltype/DebugInfo.source",
+            "@custom/globaltype/DebugInfo.short_src",
+            "@custom/globaltype/DebugInfo.func",
+            "@custom/globaltype/DebugInfo.what",
+            "@custom/globaltype/DebugInfo.currentline",
+            "@custom/globaltype/DebugInfo.name",
+            "@custom/globaltype/DebugInfo.nups",
+            "@custom/globaltype/DebugInfo.numparams",
+            "@custom/globaltype/DebugInfo.is_vararg"
         ]
     },
-    "@roblox/globaltype/DebugInfo.source": {
+    "@custom/globaltype/DebugInfo.source": {
         "documentation": "string — The name of the chunk that created the function.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.short_src": {
+    "@custom/globaltype/DebugInfo.short_src": {
         "documentation": "string — A printable version of `source` to be used in error messages.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.func": {
+    "@custom/globaltype/DebugInfo.func": {
         "documentation": "function — The function itself.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.what": {
+    "@custom/globaltype/DebugInfo.what": {
         "documentation": "string — \"Lua\" if the function is a Luau function, or \"C\" if it is a C function.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.currentline": {
+    "@custom/globaltype/DebugInfo.currentline": {
         "documentation": "number — The current line where the given function is executing. When no line information is available, `currentline` is -1.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.name": {
+    "@custom/globaltype/DebugInfo.name": {
         "documentation": "string — The name of the function. If it cannot find a name, then `name` is a blank string.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.nups": {
+    "@custom/globaltype/DebugInfo.nups": {
         "documentation": "number — The number of upvalues in the function.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.numparams": {
+    "@custom/globaltype/DebugInfo.numparams": {
         "documentation": "number — The number of parameters in the function (always 0 for C functions).",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     },
-    "@roblox/globaltype/DebugInfo.is_vararg": {
+    "@custom/globaltype/DebugInfo.is_vararg": {
         "documentation": "number — Whether the function has a variadic argument (1 if it does, 0 if it does not).",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/debug.md#debuginfo"
     }
