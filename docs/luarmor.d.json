@@ -44,5 +44,15 @@
     "@luarmor/global/LRM_ScriptVersion": {
         "documentation": "The version of the script. It's in the format of `x.x.x.x` where `x` is a number. For example: `0.0.1.2`.",
         "learn_more_link": "https://docs.luarmor.net/luarmor-user-manual-and-f.a.q#runtime-variables"
+    },
+    "@luarmor/global/LRM_SEND_WEBHOOK": {
+        "documentation": "Sends a webhook to the given discord webhook url with the given data.",
+        "learn_more_link": "https://docs.luarmor.net/webhook-protection#how-to-implement-it-in-your-script",
+        "code_sample": " LRM_SEND_WEBHOOK( \"https://discord.com/api/webhooks/......\", {\n        username = \"Cat Delivery\",\n        embeds = {\n            { \n              title = \"High bounty user detected!\",\n              description = \"Bounty: \" .. LRM_SANITIZE(bounty, \"[0-9]{1,6}\"),\n              color = 16711680, -- red\n              \n              fields = {\n                  {\n                      name = \"Player Name:\",\n                      value = LRM_SANITIZE(plrName, \"[a-zA-Z0-9_]{3,40}\"),\n                      inline = true\n                  },\n                  {\n                      name = \"Caught by:\",\n                      value = \"<@%DISCORD_ID%>\",\n                      inline = true\n                  }\n              }\n            }\n        }\n    });"
+    },
+    "@luarmor/global/LRM_SANITIZE": {
+        "documentation": "Sanitizes the given value of the webhook body with the given regex.",
+        "learn_more_link": "https://docs.luarmor.net/webhook-protection#how-to-implement-it-in-your-script",
+        "code_sample": "LRM_SANITIZE(\"Hello, world!\", \"^[a-zA-Z0-9]+$\")"
     }
 }

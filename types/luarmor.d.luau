@@ -8,3 +8,5 @@ declare LRM_UserNote: string
 declare LRM_ScriptVersion: string
 
 declare function LRM_INIT_SCRIPT(f: () -> ()): ()
+declare function LRM_SEND_WEBHOOK(url: string, data: { [string]: any }): ()
+declare function LRM_SANITIZE(value: any, regex: string): ()
