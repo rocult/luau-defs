@@ -1,0 +1,72 @@
+{
+    "@moonsec/global/MS_ENCRYPT": {
+        "documentation": "Encrypts the provided string literal using MoonSec's internal string-encryption system. This macro only accepts literal strings, as the encryption is performed at parse time. The macro call is removed and replaced with an encrypted constant in the final output.",
+        "learn_more_link": "https://raw.githubusercontent.com/spxnso/lua-obfuscators/refs/heads/master/obfuscators/moonsec/versions/v3/README.md",
+        "code_sample": "print(MS_ENCRYPT('Hello World'))\nlocal a = MS_ENCRYPT([[Oh god]])\nprint(a, \"ENCRYPT:Another hello world\")",
+        "params": [
+            {
+                "name": "toEncrypt",
+                "type": "string",
+                "documentation": "A literal string to be encrypted at compile time."
+            }
+        ],
+        "returns": [
+            "string"
+        ]
+    },
+
+    "@moonsec/global/MS_WATERMARK": {
+        "documentation": "Sets a custom watermark to be injected into the obfuscated file. The watermark is required to remain present; removing or altering it will break the script at runtime. This macro is only usable with literal strings, as it is processed and removed before final compilation.",
+        "learn_more_link": "https://raw.githubusercontent.com/spxnso/lua-obfuscators/refs/heads/master/obfuscators/moonsec/versions/v3/README.md",
+        "code_sample": "MS_WATERMARK('This file was skidded with your mom in my bed')\nprint('hello world')",
+        "params": [
+            {
+                "name": "watermark",
+                "type": "string",
+                "documentation": "A literal string to embed as the file's required watermark."
+            }
+        ],
+        "returns": []
+    },
+
+    "@moonsec/global/MOONSEC_EXIT": {
+        "documentation": "Immediately terminates the executing script and all of its threads. This is a hard stop that halts the interpreter context and guarantees no further Lua code will continue executing.",
+        "learn_more_link": "https://raw.githubusercontent.com/spxnso/lua-obfuscators/refs/heads/master/obfuscators/moonsec/versions/v3/README.md",
+        "code_sample": "for i = 1, 15 do\n    spawn(function()\n        while wait(1) do print('x') end\n    end)\nend\n\nprint('bye bye')\nMOONSEC_EXIT()\nprint('this will never be printed')",
+        "params": [],
+        "returns": [
+            "never"
+        ]
+    },
+
+    "@moonsec/global/MOONSEC_GET_SCRIPT_ID": {
+        "documentation": "Returns the unique script identifier assigned to this specific obfuscated output. The ID is newly generated for every obfuscation pass, and always falls between 111111111 and 999999999.",
+        "learn_more_link": "https://raw.githubusercontent.com/spxnso/lua-obfuscators/refs/heads/master/obfuscators/moonsec/versions/v3/README.md",
+        "code_sample": "print(MOONSEC_GET_SCRIPT_ID())",
+        "params": [],
+        "returns": [
+            "number"
+        ]
+    },
+
+    "@moonsec/settings": {
+        "documentation": "MoonSec V3 global obfuscation settings available during compilation.",
+        "settings": {
+            "anti_tamper": {
+                "type": "boolean",
+                "default": false,
+                "documentation": "Enables bytecode tamper detection. When enabled, any modification to the compiled output will cause the script to break or terminate immediately."
+            },
+            "max_security": {
+                "type": "boolean",
+                "default": false,
+                "documentation": "Enables the highest level of virtualization and mutation. Significantly slows execution but applies maximum-strength protection."
+            },
+            "constant_protection": {
+                "type": "boolean",
+                "default": false,
+                "documentation": "Enables heavy obfuscation over constant values, making static analysis more difficult."
+            }
+        }
+    }
+}
