@@ -47,26 +47,5 @@
         "returns": [
             "number"
         ]
-    },
-
-    "@moonsec/settings": {
-        "documentation": "MoonSec V3 global obfuscation settings available during compilation.",
-        "settings": {
-            "anti_tamper": {
-                "type": "boolean",
-                "default": false,
-                "documentation": "Enables bytecode tamper detection. When enabled, any modification to the compiled output will cause the script to break or terminate immediately."
-            },
-            "max_security": {
-                "type": "boolean",
-                "default": false,
-                "documentation": "Enables the highest level of virtualization and mutation. Significantly slows execution but applies maximum-strength protection."
-            },
-            "constant_protection": {
-                "type": "boolean",
-                "default": false,
-                "documentation": "Enables heavy obfuscation over constant values, making static analysis more difficult."
-            }
-        }
     }
 }
