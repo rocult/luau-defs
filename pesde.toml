@@ -1,5 +1,5 @@
 name = "stefanuk12/luau_defs"
-version = "0.2.3"
+version = "0.2.4"
 description = "Luau definitions for a Roblox exploit environment, based upon sUNC."
 authors = ["Stefanuk12"]
 repository = "https://github.com/rocult/luau-defs"

@@ -1396,7 +1396,7 @@
             }
         ],
         "returns": [
-            "AnyTable"
+            "AnyTable?"
         ]
     },
     "@custom/global/isreadonly": {

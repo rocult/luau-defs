@@ -268,7 +268,7 @@ declare function setrbxclipboard(data: string): boolean
 --#endregion
 
 --#region Metatable
-declare function getrawmetatable(object: any): AnyTable
+declare function getrawmetatable(object: any): AnyTable?
 declare function isreadonly(table: AnyTable): boolean
 declare function setrawmetatable<T>(object: T, metatable: AnyTable): T
 declare function setreadonly(table: AnyTable, state: boolean): ()
