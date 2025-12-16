@@ -52,6 +52,7 @@ declare function newcclosure<A..., R...>(function_to_wrap: GenericFunction<A...,
 declare function restorefunction(functionToRestore: AnyFunction): ()
 
 declare function getnamecallmethod(): string
+declare function setnamecallmethod(ncm: string): any?
 --#endregion
 
 --#region Console
@@ -354,3 +355,5 @@ type WebSocket = {
 }
 declare WebSocket: WebSocket
 --#endregion
+declare getthreadcontext(): number
+declare setthreadcontext(context: number): any?
