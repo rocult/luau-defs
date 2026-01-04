@@ -261,6 +261,11 @@
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/metatable.md#L77",
         "code_sample": "local old; old = hookmetamethod(game, \"__namecall\", function(self, ...)\n    local method = getnamecallmethod()\n    if method == \"FireServer\" then\n        print(\"Intercepted FireServer\")\n    end\n    return old(self, ...)\nend)"
     },
+    "@custom/global/setnamecallmethod": {
+        "documentation": "Sets the method `__namecall` will be called with.",
+        "learn_more_link": "https://synapsexdocs.github.io/custom-lua-functions/misc-functions/",
+        "code_sample": "setnamecallmethod('Kick')\ngetrawmetatable(game).__namecall(game:GetService('Players').LocalPlayer)"
+    },
     "@custom/global/rconsoleclear": {
         "documentation": "Clears the output of the console window.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/console.md#rconsoleclear",

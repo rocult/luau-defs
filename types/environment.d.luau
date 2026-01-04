@@ -52,6 +52,7 @@ declare function newcclosure<A..., R...>(function_to_wrap: GenericFunction<A...,
 declare function restorefunction(functionToRestore: AnyFunction): ()
 
 declare function getnamecallmethod(): string
+declare function setnamecallmethod(method: string): ()
 --#endregion
 
 --#region Console
