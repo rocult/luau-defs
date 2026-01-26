@@ -1725,6 +1725,21 @@
             "string?"
         ]
     },
+    "@custom/global/getscriptfromthread": {
+        "documentation": "Retrieves the Roblox script associated with the given thread. If the thread has no associated script or the script is expired, returns `nil`.",
+        "learn_more_link": "https://github.com/sUNC-Utilities/docs.sunc.su/issues/172",
+        "code_sample": "-- Identify which Script fired a specific RemoteEvent\nlocal function getScript(remoteEvent)\n    -- Create a connection to the RemoteEvent\n    local connection = remoteEvent.OnClientEvent:Connect(function(...)\n        -- Get the thread of the function where the RemoteEvent is fired\n        local thread = coroutine.running()\n        \n        -- Get the script of the thread\n        local script = getscriptfromthread(thread)\n        \n        print(string.format(\n            \"RemoteEvent %s fired by script %s\",\n            remoteEvent:GetFullName(),\n            script:GetFullName()\n        ))\n    end)\nend",
+        "params": [
+            {
+                "name": "thread",
+                "type": "Thread",
+                "documentation": "The thread to retrieve script from"
+            }
+        ],
+        "returns": [
+            "(LocalScript | ModuleScript)?"
+        ]
+    },
     "@custom/global/firesignal": {
         "documentation": "Fires a signal's Lua connections.",
         "learn_more_link": "https://docs.sunc.su/Signals/firesignal/",
