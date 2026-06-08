@@ -241,6 +241,17 @@ declare function writefile(path: string, data: string): ()
 declare function dofile(path: string): ()
 --#endregion
 
+--#region Hooking
+type oth = {
+    hook: <A..., R...>(target: GenericFunction<A..., R...>, hook: GenericFunction<A..., R...>) -> GenericFunction<A..., R...>,
+    unhook: (target: AnyFunction) -> boolean,
+    get_root_callback: (target: AnyFunction) -> AnyFunction?,
+    is_hook_thread: () -> boolean,
+}
+declare oth: oth
+declare function get_original_thread(): thread?
+--#endregion
+
 --#region Input
 declare function isrbxactive(): boolean
 declare function mouse1click(): ()

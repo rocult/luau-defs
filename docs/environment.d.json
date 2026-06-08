@@ -1121,6 +1121,82 @@
         ],
         "returns": []
     },
+    "@custom/global/oth": {
+        "documentation": "The oth library provides secure alternatives to `hookfunction` for C functions. Hooks are executed on separate threads, providing better isolation and safety.\n\nThe library allows you to:\n\n* Hook C functions securely on separate threads\n* Remove hooks when no longer needed\n* Access the original function even after multiple hooks\n* Detect if code is running in a hook thread",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth",
+        "keys": [
+            "@custom/global/oth.hook",
+            "@custom/global/oth.unhook",
+            "@custom/global/oth.get_root_callback",
+            "@custom/global/oth.is_hook_thread"
+        ]
+    },
+    "@custom/global/oth.hook": {
+        "documentation": "Secure alternative to `hookfunction` for C functions. `oth.hook` replaces the target C function with your hook function. Unlike `hookfunction`, hooks are executed on separate threads, providing better isolation and safety. The function returns a reference to the original, allowing you to call it from within your hook.\n\n## Notes\n\n* Only works with C functions (not Luau closures)\n* Hooks execute on separate threads for better isolation\n* Use `oth.is_hook_thread` to detect hook context\n* The returned original can be called to bypass the hook\n* Remove hooks with `oth.unhook`",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth/hook",
+        "code_sample": "-- Hook a C function\nlocal originalFunc = oth.hook(someCFunction, function(...)\n    print(\"Hooked call:\", ...)\n    return originalFunc(...)\nend)\n\n-- Call the original\noriginalFunc(\"test\")",
+        "params": [
+            {
+                "name": "target",
+                "type": "function",
+                "documentation": "The C function to hook."
+            },
+            {
+                "name": "hook",
+                "type": "function",
+                "documentation": "The replacement function."
+            }
+        ],
+        "returns": [
+            "function"
+        ]
+    },
+    "@custom/global/oth.unhook": {
+        "documentation": "Removes a hook created with `oth.hook`. The function is restored to its original behavior. Returns `true` if the hook was successfully removed.\n\n## Notes\n\n* Only works on functions hooked with `oth.hook`\n* Returns `false` if the function wasn't hooked or hook removal failed\n* The original function reference from `oth.hook` remains valid after unhooking",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth/unhook",
+        "code_sample": "-- Hook a function\nlocal originalFunc = oth.hook(someCFunction, function(...)\n    print(\"Hooked:\", ...)\n    return originalFunc(...)\nend)\n\n-- Later, remove the hook\nlocal success = oth.unhook(someCFunction)\nif success then\n    print(\"Hook removed successfully\")\nend",
+        "params": [
+            {
+                "name": "target",
+                "type": "function",
+                "documentation": "The hooked function to remove."
+            }
+        ],
+        "returns": [
+            "boolean"
+        ]
+    },
+    "@custom/global/oth.get_root_callback": {
+        "documentation": "Returns the original function that was hooked, even if multiple hooks have been applied. This allows you to bypass all hooks and call the true original function.\n\n## Notes\n\n* Returns `nil` if the function was never hooked or is not a C function\n* Always returns the true original, regardless of how many hooks exist\n* Useful for completely bypassing all hook layers",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth/get_root_callback",
+        "code_sample": "-- Get the original, bypassing all hooks\nlocal original = oth.get_root_callback(someCFunction)\nif original then\n    original(\"test\") -- Calls the true original, bypassing all hooks\nend",
+        "params": [
+            {
+                "name": "target",
+                "type": "function",
+                "documentation": "The hooked function."
+            }
+        ],
+        "returns": [
+            "function?"
+        ]
+    },
+    "@custom/global/oth.is_hook_thread": {
+        "documentation": "Checks whether the current code is executing within a hook thread created by `oth.hook`. This allows you to detect hook context and behave differently.\n\n## Notes\n\n* Returns `true` only when executing within a hook created by `oth.hook`\n* Returns `false` on the main thread or in other contexts",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth/is_hook_thread",
+        "code_sample": "local originalPrint = oth.hook(print, function(...)\n    if oth.is_hook_thread() then\n        print(\"[HOOK THREAD]\", ...)\n    else\n        print(\"[MAIN THREAD]\", ...)\n    end\n    return originalPrint(...)\nend)\n\nprint(\"Test\") -- Output: [HOOK THREAD] Test",
+        "returns": [
+            "boolean"
+        ]
+    },
+    "@custom/global/get_original_thread": {
+        "documentation": "Returns the original thread that called the hooked function, or `nil` if not currently executing in a hook thread. This is useful for accessing thread-local data or resuming execution on the original thread.\n\n## Notes\n\n* Returns `nil` if not currently executing in a hook thread\n* The returned thread is the one that originally called the hooked function\n* Useful for thread-local data access or debugging",
+        "learn_more_link": "https://docs.voltbz.net/docs/oth/get_original_thread",
+        "code_sample": "local originalPrint = oth.hook(print, function(...)\n    local originalThread = get_original_thread()\n    if originalThread then\n        print(\"Original thread:\", originalThread)\n        print(\"Arguments:\", ...)\n    end\n    return originalPrint(...)\nend)\n\nprint(\"Test\")",
+        "returns": [
+            "thread?"
+        ]
+    },
     "@custom/global/isrbxactive": {
         "documentation": "Returns whether the game's window is in focus. Must be true for other input functions to work.\n\n### Aliases\n\n* `isgameactive`",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#isrbxactive",
