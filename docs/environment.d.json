@@ -1185,6 +1185,7 @@
         "documentation": "Checks whether the current code is executing within a hook thread created by `oth.hook`. This allows you to detect hook context and behave differently.\n\n## Notes\n\n* Returns `true` only when executing within a hook created by `oth.hook`\n* Returns `false` on the main thread or in other contexts",
         "learn_more_link": "https://docs.voltbz.net/docs/oth/is_hook_thread",
         "code_sample": "local originalPrint = oth.hook(print, function(...)\n    if oth.is_hook_thread() then\n        print(\"[HOOK THREAD]\", ...)\n    else\n        print(\"[MAIN THREAD]\", ...)\n    end\n    return originalPrint(...)\nend)\n\nprint(\"Test\") -- Output: [HOOK THREAD] Test",
+        "params": [],
         "returns": [
             "boolean"
         ]
@@ -1193,6 +1194,7 @@
         "documentation": "Returns the original thread that called the hooked function, or `nil` if not currently executing in a hook thread. This is useful for accessing thread-local data or resuming execution on the original thread.\n\n## Notes\n\n* Returns `nil` if not currently executing in a hook thread\n* The returned thread is the one that originally called the hooked function\n* Useful for thread-local data access or debugging",
         "learn_more_link": "https://docs.voltbz.net/docs/oth/get_original_thread",
         "code_sample": "local originalPrint = oth.hook(print, function(...)\n    local originalThread = get_original_thread()\n    if originalThread then\n        print(\"Original thread:\", originalThread)\n        print(\"Arguments:\", ...)\n    end\n    return originalPrint(...)\nend)\n\nprint(\"Test\")",
+        "params": [],
         "returns": [
             "thread?"
         ]
