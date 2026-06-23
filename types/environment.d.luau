@@ -254,6 +254,9 @@ declare function get_original_thread(): thread?
 
 --#region Input
 declare function isrbxactive(): boolean
+declare function keyclick(keycode: number): ()
+declare function keypress(keycode: number): ()
+declare function keyrelease(keycode: number): ()
 declare function mouse1click(): ()
 declare function mouse1press(): ()
 declare function mouse1release(): ()

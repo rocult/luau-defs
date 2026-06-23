@@ -1206,6 +1206,45 @@
             "boolean"
         ]
     },
+    "@custom/global/keyclick": {
+        "documentation": "Simulates a complete key press and release in one operation.",
+        "learn_more_link": "https://docs.voltbz.net/docs/input/keyclick",
+        "code_sample": "-- Click the E key\nkeyclick(0x45)",
+        "params": [
+            {
+                "name": "keycode",
+                "type": "number",
+                "documentation": "Virtual key code."
+            }
+        ],
+        "returns": []
+    },
+    "@custom/global/keypress": {
+        "documentation": "Simulates pressing a keyboard key down. The key stays pressed until `keyrelease` is called.\n\n### Aliases\n\n* `keytap`",
+        "learn_more_link": "https://docs.voltbz.net/docs/input/keypress",
+        "code_sample": "-- Press and release the W key\nkeypress(0x57)\ntask.wait(0.5)\nkeyrelease(0x57)",
+        "params": [
+            {
+                "name": "keycode",
+                "type": "number",
+                "documentation": "Virtual key code to press."
+            }
+        ],
+        "returns": []
+    },
+    "@custom/global/keyrelease": {
+        "documentation": "Simulates releasing a keyboard key that was previously pressed with `keypress`.",
+        "learn_more_link": "https://docs.voltbz.net/docs/input/keyrelease",
+        "code_sample": "-- Hold shift for 1 second\nkeypress(0x10) -- Shift\ntask.wait(1)\nkeyrelease(0x10)",
+        "params": [
+            {
+                "name": "keycode",
+                "type": "number",
+                "documentation": "Virtual key code to release."
+            }
+        ],
+        "returns": []
+    },
     "@custom/global/mouse1click": {
         "documentation": "Dispatches a left mouse button click.",
         "learn_more_link": "https://github.com/unified-naming-convention/NamingStandard/blob/main/api/input.md#mouse1click",
