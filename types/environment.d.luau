@@ -41,14 +41,14 @@ declare cache: cache
 
 --#region Closures
 declare function checkcaller(): boolean
-declare function clonefunction<A..., R...>(function_to_clone: GenericFunction<A..., R...>): GenericFunction<A..., R...>
+declare function clonefunction<T, A..., R...>(function_to_clone: T & GenericFunction<A..., R...>): T
 declare function getfunctionhash(function_to_hash: AnyFunction): string
-declare function hookfunction<A..., R...>(function_to_hook: GenericFunction<A..., R...>, hook: GenericFunction<A..., R...>): GenericFunction<A..., R...>
-declare function hookmetamethod<A..., R...>(object: AnyTable | Instance, metamethod_name: string, hook: GenericFunction<A..., R...>): GenericFunction<A..., R...>
+declare function hookfunction<T, U, A..., R...>(function_to_hook: T & GenericFunction<A..., R...>, hook: U & GenericFunction<A..., R...>): T
+declare function hookmetamethod<T, A..., R...>(object: AnyTable | Instance, metamethod_name: string, hook: T & GenericFunction<A..., R...>): T
 declare function iscclosure(func: AnyFunction): boolean
 declare function isexecutorclosure(func: AnyFunction): boolean
 declare function islclosure(func: AnyFunction): boolean
-declare function newcclosure<A..., R...>(function_to_wrap: GenericFunction<A..., R...>): GenericFunction<A..., R...>
+declare function newcclosure<T, A..., R...>(function_to_wrap: T & GenericFunction<A..., R...>): T
 declare function restorefunction(functionToRestore: AnyFunction): ()
 
 declare function getnamecallmethod(): string
