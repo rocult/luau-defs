@@ -1,5 +1,5 @@
 --#region Helper types
-type GenericFunction<A..., R...> = (A...) -> R...
+type GenericFunction<R...> = (...any) -> R...
 type GenericScript = LocalScript | ModuleScript
 type AnyFunction = <A..., R...>(A...) -> R...
 type AnyTable = { [any]: any }
@@ -41,14 +41,14 @@ declare cache: cache
 
 --#region Closures
 declare function checkcaller(): boolean
-declare function clonefunction<T, A..., R...>(function_to_clone: T & GenericFunction<A..., R...>): T
+declare function clonefunction<T, R...>(function_to_clone: T & GenericFunction<R...>): T
 declare function getfunctionhash(function_to_hash: AnyFunction): string
-declare function hookfunction<T, U, A..., R...>(function_to_hook: T & GenericFunction<A..., R...>, hook: U & GenericFunction<A..., R...>): T
-declare function hookmetamethod<T, A..., R...>(object: AnyTable | Instance, metamethod_name: string, hook: T & GenericFunction<A..., R...>): T
+declare function hookfunction<T, U, R...>(function_to_hook: T & GenericFunction<R...>, hook: U & GenericFunction<R...>): T
+declare function hookmetamethod<T, R...>(object: AnyTable | Instance, metamethod_name: string, hook: T & GenericFunction<R...>): T
 declare function iscclosure(func: AnyFunction): boolean
 declare function isexecutorclosure(func: AnyFunction): boolean
 declare function islclosure(func: AnyFunction): boolean
-declare function newcclosure<T, A..., R...>(function_to_wrap: T & GenericFunction<A..., R...>): T
+declare function newcclosure<T, R...>(function_to_wrap: T & GenericFunction<R...>): T
 declare function restorefunction(functionToRestore: AnyFunction): ()
 
 declare function getnamecallmethod(): string
@@ -243,7 +243,7 @@ declare function dofile(path: string): ()
 
 --#region Hooking
 type oth = {
-    hook: <A..., R...>(target: GenericFunction<A..., R...>, hook: GenericFunction<A..., R...>) -> GenericFunction<A..., R...>,
+    hook: <T, U, R...>(target: T & GenericFunction<R...>, hook: U & GenericFunction<R...>) -> T,
     unhook: (target: AnyFunction) -> boolean,
     get_root_callback: (target: AnyFunction) -> AnyFunction?,
     is_hook_thread: () -> boolean,

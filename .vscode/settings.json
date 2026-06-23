@@ -1,4 +1,5 @@
 {
+  "luau-lsp.fflags.enableNewSolver": true,
   "luau-lsp.types.definitionFiles": {
     "@custom": "./types/environment.d.luau",
     "@luarmor": "./types/luarmor.d.luau",
